@@ -4,9 +4,28 @@ import SendCommnet from "../component/SendCommnet";
 import ReceiveComment from "../component/ReciveComment";
 import MyProfile from "../component/MyProfile";
 import Storyslide from "../component/Storyslide";
+import { useNavigate } from "react-router-dom";
+import { getUserInfo } from "../api/getUserInfo";
 // import QuestionerProfile from "../component/QuestionerProfile";
 
+// Main 매개변수로 {isLogin} 넣어주어야함.
 function Main() {
+  // const navigate = useNavigate();
+  // const [info, setInfo] = useState({
+  //   email: '',
+  //   name: ''
+  // });
+
+  // useEffect(() => {
+  //   if(!isLogin) navigate('/login');
+
+  //   const initUserInfo = async () => {
+  //     const newInfo = await getUserInfo();
+  //     setInfo(newInfo);
+  //   };
+  //   initUserInfo();
+  // }, [isLogin]);
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   const tabContArr = [

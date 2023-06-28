@@ -1,10 +1,27 @@
-import React from "react";
+import React,{ useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { postLoginToken } from "../api/postLoginToken";
+import GoogleLogin from "../component/GoogleLogin"
 
 import Rabbit from "./../img/Group 12.png";
 import Goggle from "./../img/icon/icGoggle.png";
 import Cacao from "./../img/icon/icCacao.png";
 
+// Login 매개변수로 {isLogin, setIsLogin} 넣어주어야함. 
 const Login = () => {
+  // const navigate = useNavigate();
+
+  // const onGoogleSignIn = async res => {
+  //   const {credential} = res;
+  //   const result = await postLoginToken(credential, setIsLogin);
+  //   setIsLogin(result);
+  // };
+
+  // useEffect(() => {
+  //   if(!isLogin) return;
+  //   navigate('/main');
+  // }, [isLogin]);
+
   return (
     <div className="wrap">
       <div className="content">
@@ -24,14 +41,15 @@ const Login = () => {
               </p>
             </div>
             <div className="buttonWrap">
-              <button>
+              {/* <GoogleLogin onGoogleSignIn={onGoogleSignIn} text="로그인"/> */}
+              {/* <button>
                 <img src={Goggle} alt="" />
                 Google 계정으로 계속
-              </button>
-              <button>
+              </button> */}
+              {/* <button>
                 <img src={Cacao} alt="" />
                 Kakao 계정으로 계속
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
