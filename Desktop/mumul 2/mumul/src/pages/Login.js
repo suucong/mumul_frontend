@@ -2,25 +2,25 @@ import React,{ useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { postLoginToken } from "../api/postLoginToken";
 import GoogleLogin from "../component/GoogleLogin"
+import axios from "axios";
 
 import Rabbit from "./../img/Group 12.png";
 import Goggle from "./../img/icon/icGoggle.png";
 import Cacao from "./../img/icon/icCacao.png";
 
-// Login 매개변수로 {isLogin, setIsLogin} 넣어주어야함. 
-const Login = () => {
-  // const navigate = useNavigate();
+const Login = ({isLogin, setIsLogin}) => {
+  const navigate = useNavigate();
 
-  // const onGoogleSignIn = async res => {
-  //   const {credential} = res;
-  //   const result = await postLoginToken(credential, setIsLogin);
-  //   setIsLogin(result);
-  // };
+  const onGoogleSignIn = async res => {
+    const {credential} = res;
+    const result = await postLoginToken(credential, setIsLogin);
+    setIsLogin(result);
+  };
 
-  // useEffect(() => {
-  //   if(!isLogin) return;
-  //   navigate('/main');
-  // }, [isLogin]);
+  useEffect(() => {
+    if(!isLogin) return;
+    navigate('/main');
+  }, [isLogin]);
 
   return (
     <div className="wrap">
@@ -41,7 +41,7 @@ const Login = () => {
               </p>
             </div>
             <div className="buttonWrap">
-              {/* <GoogleLogin onGoogleSignIn={onGoogleSignIn} text="로그인"/> */}
+              <GoogleLogin onGoogleSignIn={onGoogleSignIn} text="로그인"/>
               {/* <button>
                 <img src={Goggle} alt="" />
                 Google 계정으로 계속

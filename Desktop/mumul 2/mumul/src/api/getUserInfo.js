@@ -5,7 +5,7 @@ export const getUserInfo = async () => {
   const token = localStorage.getItem('token');
 
   try {
-    const response = await axios.get(`${path}`, {
+    const response = await axios.get(process.env.REACT_APP_API_URL+`${path}`, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',

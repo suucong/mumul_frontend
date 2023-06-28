@@ -9,22 +9,22 @@ import { getUserInfo } from "../api/getUserInfo";
 // import QuestionerProfile from "../component/QuestionerProfile";
 
 // Main 매개변수로 {isLogin} 넣어주어야함.
-function Main() {
-  // const navigate = useNavigate();
-  // const [info, setInfo] = useState({
-  //   email: '',
-  //   name: ''
-  // });
+function Main({isLogin}) {
+  const navigate = useNavigate();
+  const [info, setInfo] = useState({
+    email: '',
+    name: ''
+  });
 
-  // useEffect(() => {
-  //   if(!isLogin) navigate('/login');
+  useEffect(() => {
+    if(!isLogin) navigate('/login');
 
-  //   const initUserInfo = async () => {
-  //     const newInfo = await getUserInfo();
-  //     setInfo(newInfo);
-  //   };
-  //   initUserInfo();
-  // }, [isLogin]);
+    const initUserInfo = async () => {
+      const newInfo = await getUserInfo();
+      setInfo(newInfo);
+    };
+    initUserInfo();
+  }, [isLogin]);
 
   const [activeIndex, setActiveIndex] = useState(0);
 

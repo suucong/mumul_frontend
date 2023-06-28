@@ -2,23 +2,32 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../component/Header";
 import Comment from "../component/Comment";
-import axios from "axios";
+import { getTestHello } from "../api/getTestHello";
+// import axios from "axios";
 
 const Intro = () => {
   const [hello, setHello] = useState('');
 
-  useEffect(() => {
-    axios.get('/api/message')
-    .then(response => setHello(response.data))
-    .catch(error => console.log(error))
-  }, []);
+  // useEffect(() => {
+  //   const initHello = async () => {
+  //     const newHello = await getTestHello();
+  //     setHello(newHello);
+  //   };
+  //   initHello();
+  // }, []);
+
+  // useEffect(() => {
+  //   axios.get('/api/message')
+  //   .then(response => setHello(response.data))
+  //   .catch(error => console.log(error))
+  // }, []);
 
 
   return (
     <div className="wrap intro">
       <Header></Header>
       <div className="contentWrap">
-        <div>{hello}</div>
+        {/* <div>{hello}</div> */}
         <p className="introTitle">🐇토끼🐇로 무물에 녹아 들자</p>
         <Comment></Comment>
         <Link to="/main" className="goSpace">
@@ -33,3 +42,5 @@ const Intro = () => {
 };
 
 export default Intro;
+
+

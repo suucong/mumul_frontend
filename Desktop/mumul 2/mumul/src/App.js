@@ -12,22 +12,22 @@ import { useState, useEffect } from "react";
 import { getUserInfo } from "./api/getUserInfo";
 
 function App() {
-  // const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
-  // useEffect(() => {
-  //   const initLogin = async () => {
-  //     const name = await getUserInfo();
-  //     setIsLogin(!!name);
-  //   };
-  //   initLogin();
-  // }, []);
+  useEffect(() => {
+    const initLogin = async () => {
+      const name = await getUserInfo();
+      setIsLogin(!!name);
+    };
+    initLogin();
+  }, []);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Intro />} />
-        <Route path="/login" element={<Login/>}/>
-        {/* <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} />  */}
+        {/* <Route path="/login" element={<Login/>}/> */}
+        <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} /> 
         <Route path="/main" element={<Main />} />
         <Route path="/main2" element={<Main2 />} />
         <Route path="/policy" element={<Policy />} />

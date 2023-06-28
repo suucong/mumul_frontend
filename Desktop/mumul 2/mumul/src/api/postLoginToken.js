@@ -7,7 +7,7 @@ export const postLoginToken = async (idToken) => {
     console.log("API 요청");
     console.log(idToken);
 
-    const response = await axios.post(path, idToken, {
+    const response = await axios.post(process.env.REACT_APP_API_URL+`${path}`, idToken, {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Accept': 'application/json',
