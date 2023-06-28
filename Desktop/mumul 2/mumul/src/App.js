@@ -30,8 +30,8 @@ function App() {
         <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} /> 
         <Route
             path="/main"
-            element={isLogin ? <Main isLogin={isLogin} /> : <Navigate to="/" />}
-          />
+            element={<Main isLogin={isLogin} />}
+        />
         <Route path="/main2" element={<Main2 />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/setting" element={<Setting />} />
