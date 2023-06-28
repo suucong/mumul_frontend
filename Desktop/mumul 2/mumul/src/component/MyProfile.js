@@ -3,7 +3,7 @@ import ProfileEdit from "../component/popup/ProfileEdit";
 import MyprofileImg from "../img/Ellipse 104.png";
 import InstaLogo from "../img/icon/instaLogo.jpeg";
 
-function MyProfile() {
+function MyProfile({name,picture}) {
   const [modal, setModal] = useState(false);
 
   const onClickEdit = () => {
@@ -17,14 +17,14 @@ function MyProfile() {
   return (
     <div className="myProfileWrap">
       <div className="profile">
-        <img src={MyprofileImg} alt="myprofile" />
+        <img src={picture} alt="myprofile" />
         <button className="editProfile" onClick={onClickEdit}>
           프로필수정
         </button>
       </div>
       <div className="myInfo">
         <p className="id">
-          sliver-0-stack
+          {name}
           <span className="intro">개발합시다</span>
         </p>
         <p className="snsLink">
