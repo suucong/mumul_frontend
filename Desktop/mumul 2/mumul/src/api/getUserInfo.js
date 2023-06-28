@@ -5,7 +5,7 @@ export const getUserInfo = async () => {
   const token = localStorage.getItem('token');
 
   try {
-    const response = await axios.get(process.env.REACT_APP_API_URL+`${path}`, {
+    const response = await axios.get(path, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -14,6 +14,7 @@ export const getUserInfo = async () => {
     });
 
     console.log(token);
+    console.log(response.data);
 
     if (response.status !== 200) {
       throw new Error('bad server condition');

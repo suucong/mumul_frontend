@@ -6,7 +6,7 @@ import { getTestHello } from "../api/getTestHello";
 // import axios from "axios";
 
 const Intro = () => {
-  const [hello, setHello] = useState('');
+  // const [hello, setHello] = useState('');
 
   // useEffect(() => {
   //   const initHello = async () => {

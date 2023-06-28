@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../api/getUserInfo";
 // import QuestionerProfile from "../component/QuestionerProfile";
 
-// Main 매개변수로 {isLogin} 넣어주어야함.
 function Main({isLogin}) {
   const navigate = useNavigate();
   const [info, setInfo] = useState({
@@ -43,6 +42,8 @@ function Main({isLogin}) {
   return (
     <div className="wrap">
       <Header></Header>
+      <p>email: {`${info.email}`}</p> {/* 유저 이메일 표시 */}
+      <p>name: {`${info.lastName} ${info.firstName}`}</p> {/* 유저 이름 표시 */}
       <div className="contentWrap">
         <Storyslide></Storyslide>
         {/*  로그인 : 본인 일 때  */}

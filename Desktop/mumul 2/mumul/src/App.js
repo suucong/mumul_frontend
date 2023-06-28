@@ -28,7 +28,10 @@ function App() {
         <Route path="/" element={<Intro />} />
         {/* <Route path="/login" element={<Login/>}/> */}
         <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} /> 
-        <Route path="/main" element={<Main />} />
+        <Route
+            path="/main"
+            element={isLogin ? <Main isLogin={isLogin} /> : <Navigate to="/" />}
+          />
         <Route path="/main2" element={<Main2 />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/setting" element={<Setting />} />
