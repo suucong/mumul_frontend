@@ -16,8 +16,6 @@ function Main({isLogin}) {
   });
 
   useEffect(() => {
-    if(!isLogin) navigate('/login');
-
     const initUserInfo = async () => {
       const newInfo = await getUserInfo();
       setInfo(newInfo);

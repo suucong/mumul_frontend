@@ -35,10 +35,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Intro />} />
         <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />} />
-        {/* <Route
-          path="/main"
-          element={isLogin ? <Navigate to={spaceMappingAddress} /> : <Navigate to="/" />}
-        /> */}
         <Route path={spaceMappingAddress} element={<Main isLogin={isLogin} spaceMappingAddress={spaceMappingAddress} />} />
         <Route path="/main2" element={<Main2 />} />
         <Route path="/policy" element={<Policy />} />
