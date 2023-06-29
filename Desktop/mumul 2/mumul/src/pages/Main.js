@@ -41,7 +41,7 @@ function Main({isLogin, spaceMappingAddress}) {
   // 유저의 고유 아이디를 사용하여 매핑
   return (
     <div className="wrap">
-      <Header></Header>
+      <Header isLogin={isLogin}></Header>
       <div className="contentWrap">
         <Storyslide></Storyslide>
         {/*  로그인 : 본인 일 때  */}

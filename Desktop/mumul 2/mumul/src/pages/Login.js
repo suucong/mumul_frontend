@@ -19,9 +19,14 @@ const Login = ({ isLogin, setIsLogin }) => {
   useEffect(() => {
     const initLogin = async () => {
       const userInfo = await getUserInfo();
-      if (localStorage.getItem("token") !== null) {
-        navigate(`/space/${userInfo.userId}`);
+      if (localStorage.getItem('token') === null) {
+        // 'token'의 값이 null인 경우에 실행할 코드
+        console.log('Token is null');
+      } else {
+        // 'token'의 값이 null이 아닌 경우에 실행할 코드
+        console.log('Token is not null');
       }
+      console.log(localStorage.getItem('token'));
     };
 
     if (isLogin) {

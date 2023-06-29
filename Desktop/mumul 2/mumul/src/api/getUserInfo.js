@@ -3,6 +3,7 @@ import axios from 'axios';
 export const getUserInfo = async () => {
   const path = '/v1/oauth/user/info';
   const token = localStorage.getItem('token');
+  console.log(token);
 
   try {
     const response = await axios.get(path, {

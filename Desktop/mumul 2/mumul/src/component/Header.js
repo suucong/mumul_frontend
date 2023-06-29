@@ -4,7 +4,7 @@ import Profile from "./../img/Ellipse 102.png";
 
 import {logoutUserToken} from "../api/logoutUserToken";
 
-function Header() {
+function Header({isLogin, setIsLogin}) {
   const [modal, setModal] = useState(false);
 
   return (
@@ -13,18 +13,20 @@ function Header() {
       <div className="profile" onClick={() => setModal(!modal)}>
         <img src={Profile} alt="profile" />
       </div>
-      {modal && <HeaderPopup></HeaderPopup>}
+      {modal && <HeaderPopup isLogin={isLogin} setIsLogin={setIsLogin}></HeaderPopup>}
     </header>
   );
 }
 
-function HeaderPopup() {
+function HeaderPopup({isLogin, setIsLogin}) {
   const handleLogout = async () => {
     try {
       const result = await logoutUserToken();
       if(result) {
         // 로그아웃 성공
         console.log('로그아웃 성공');
+        setIsLogin(false);
+        console.log(isLogin);
       } else {
         console.log('로그아웃 실패')
       }
