@@ -4,12 +4,14 @@ import SendCommnet from "../component/SendCommnet";
 import ReceiveComment from "../component/ReciveComment";
 import MyProfile from "../component/MyProfile";
 import Storyslide from "../component/Storyslide";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import { getUserInfo } from "../api/getUserInfo";
 // import QuestionerProfile from "../component/QuestionerProfile";
 
-function Main({isLogin, spaceMappingAddress}) {
+function Main({isLogin}) {
+  const {id} = useParams();
+  console.log(id);
   const navigate = useNavigate();
   const [info, setInfo] = useState({
     picture: '',
@@ -18,7 +20,7 @@ function Main({isLogin, spaceMappingAddress}) {
 
   useEffect(() => {
     const initUserInfo = async () => {
-      const newInfo = await getSpaceInfo(spaceMappingAddress);
+      const newInfo = await getSpaceInfo(id);
       setInfo(newInfo);
     };
     initUserInfo();
