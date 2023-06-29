@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../api/getUserInfo";
 // import QuestionerProfile from "../component/QuestionerProfile";
 
-function Main({isLogin}) {
+function Main({isLogin, spaceNumber}) {
   const navigate = useNavigate();
   const [info, setInfo] = useState({
     picture: '',

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import Intro from "./pages/Intro";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
@@ -13,6 +13,7 @@ import { getUserInfo } from "./api/getUserInfo";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
+  const { spaceNumber } = useParams();  // 동적 매개변수 값을 가져옴
 
   useEffect(() => {
     const initLogin = async () => {
@@ -29,8 +30,8 @@ function App() {
         {/* <Route path="/login" element={<Login/>}/> */}
         <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} /> 
         <Route
-            path="/main"
-            element={<Main isLogin={isLogin} />}
+            path="/main/:spaceNumber"
+            element={<Main isLogin={isLogin} spaceNumber={spaceNumber}/>}
         />
         <Route path="/main2" element={<Main2 />} />
         <Route path="/policy" element={<Policy />} />
