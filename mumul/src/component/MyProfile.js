@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ProfileEdit from "../component/popup/ProfileEdit";
 import MyprofileImg from "../img/Ellipse 104.png";
 import InstaLogo from "../img/icon/instaLogo.jpeg";
+import CloseIcon from "../img/icon/close.png"; 
 
 function MyProfile({ userId, name, picture, introduce, instaId, link }) {
   const [modal, setModal] = useState(false);

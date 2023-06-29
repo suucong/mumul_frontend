@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-
-import MyprofileImg from "../img/Ellipse 105.png";
+import QuestionRegister from "./popup/QuestionRegister";
 import InstaLogo from "../img/icon/instaLogo.jpeg";
 
-import QuestionRegister from "./popup/QuestionRegister";
-
-function QuestionerProfile({name,picture}) {
+function QuestionerProfile({ name, picture, currentUserInfo }) {
   const [queModal, setQueModal] = useState(false);
 
   const showQueModal = () => {
@@ -15,6 +12,7 @@ function QuestionerProfile({name,picture}) {
   const onClose = () => {
     setQueModal(false);
   };
+
   return (
     <>
       <div className="myProfileWrap">
@@ -34,7 +32,6 @@ function QuestionerProfile({name,picture}) {
           </p>
           <p className="snsLink">
             <img src={InstaLogo} alt="instaLogo" />
-
             <a href="https://www.instagram.com/2ruka_/" target="_blank">
               <span>https://www.instagram.com/2ruka_/</span>
             </a>
@@ -49,7 +46,7 @@ function QuestionerProfile({name,picture}) {
           </div>
         </div>
       </div>
-      {queModal && <QuestionRegister onClose={onClose}></QuestionRegister>}
+      {queModal && <QuestionRegister currentUserInfo={currentUserInfo} onClose={onClose}></QuestionRegister>}
     </>
   );
 }
