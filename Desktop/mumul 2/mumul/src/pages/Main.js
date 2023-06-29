@@ -5,6 +5,7 @@ import ReceiveComment from "../component/ReciveComment";
 import MyProfile from "../component/MyProfile";
 import Storyslide from "../component/Storyslide";
 import { useNavigate } from "react-router-dom";
+import { getSpaceInfo } from "../api/getSpaceInfo";
 import { getUserInfo } from "../api/getUserInfo";
 // import QuestionerProfile from "../component/QuestionerProfile";
 
@@ -17,7 +18,7 @@ function Main({isLogin, spaceMappingAddress}) {
 
   useEffect(() => {
     const initUserInfo = async () => {
-      const newInfo = await getUserInfo();
+      const newInfo = await getSpaceInfo(spaceMappingAddress);
       setInfo(newInfo);
     };
     initUserInfo();
