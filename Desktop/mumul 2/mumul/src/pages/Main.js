@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../api/getUserInfo";
 // import QuestionerProfile from "../component/QuestionerProfile";
 
-function Main({isLogin}) {
+function Main({isLogin, spaceMappingAddress}) {
   const navigate = useNavigate();
   const [info, setInfo] = useState({
     picture: '',
@@ -41,7 +41,7 @@ function Main({isLogin}) {
   // 유저의 고유 아이디를 사용하여 매핑
   return (
     <div className="wrap">
-      <Header></Header>
+      <Header isLogin={isLogin}></Header>
       <div className="contentWrap">
         <Storyslide></Storyslide>
         {/*  로그인 : 본인 일 때  */}
