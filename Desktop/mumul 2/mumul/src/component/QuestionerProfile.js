@@ -5,7 +5,7 @@ import InstaLogo from "../img/icon/instaLogo.jpeg";
 
 import QuestionRegister from "./popup/QuestionRegister";
 
-function QuestionerProfile() {
+function QuestionerProfile({name,picture}) {
   const [queModal, setQueModal] = useState(false);
 
   const showQueModal = () => {
@@ -19,7 +19,7 @@ function QuestionerProfile() {
     <>
       <div className="myProfileWrap">
         <div className="profile">
-          <img src={MyprofileImg} alt="myprofile" />
+          <img src={picture} alt="myprofile" />
           <div className="QueBtnWrap">
             <button className="followingBtn">팔로잉</button>
             <button className="QueBtn" onClick={showQueModal}>
@@ -29,7 +29,7 @@ function QuestionerProfile() {
         </div>
         <div className="myInfo">
           <p className="id">
-            Gold-0-stack
+            {name}
             <span className="intro">맑은 공기 맑은 정신</span>
           </p>
           <p className="snsLink">
