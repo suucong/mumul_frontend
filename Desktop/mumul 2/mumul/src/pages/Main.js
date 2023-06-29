@@ -5,14 +5,12 @@ import ReceiveComment from "../component/ReciveComment";
 import MyProfile from "../component/MyProfile";
 import QuestionerProfile from "../component/QuestionerProfile";
 import Storyslide from "../component/Storyslide";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import { getUserInfo } from "../api/getUserInfo";
-// import QuestionerProfile from "../component/QuestionerProfile";
 
 function Main({isLogin}) {
   const {id} = useParams();
-  const navigate = useNavigate();
   const [info, setInfo] = useState({
     userId: '',
     picture: '',
@@ -22,8 +20,6 @@ function Main({isLogin}) {
     userId: '',
   });
 
-  const [isOwner, setIsOwner] = useState(false);
-
   useEffect(() => {
     const initUserInfo = async () => {
       const newInfo = await getSpaceInfo(id);
@@ -32,18 +28,10 @@ function Main({isLogin}) {
       setInfo(newInfo);
     };
     initUserInfo();
-    if (!currentUserInfo) {
-      setIsOwner(false);
-    } else if(currentUserInfo.userId === info.userId) {
-      setIsOwner(true);
-    } else {
-      setIsOwner(false);
-    }
-  }, [isLogin]);
+  }, []);
 
   console.log(currentUserInfo.userId);
   console.log(info.userId);
-  console.log(isOwner);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -66,10 +54,10 @@ function Main({isLogin}) {
       <Header isLogin={isLogin}></Header>
       <div className="contentWrap">
         <Storyslide></Storyslide>
-        {isOwner ? (
+        {currentUserInfo.userId === info.userId ? (
             <MyProfile name={info.name} picture={info.picture}></MyProfile>
           ) : (
-            <QuestionerProfile></QuestionerProfile>
+            <QuestionerProfile name={info.name} picture={info.picture}></QuestionerProfile>
         )}
         <ul className="tabMenu">
           {tabContArr.map((item) => (
