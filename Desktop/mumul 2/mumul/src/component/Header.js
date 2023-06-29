@@ -25,7 +25,7 @@ function HeaderPopup({isLogin, setIsLogin}) {
       if(result) {
         // 로그아웃 성공
         console.log('로그아웃 성공');
-        setIsLogin(false);
+        setIsLogin(!result);
         console.log(isLogin);
       } else {
         console.log('로그아웃 실패')
