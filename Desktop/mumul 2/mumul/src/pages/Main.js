@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import Header from "../component/Header";
 import SendCommnet from "../component/SendCommnet";
 import ReceiveComment from "../component/ReciveComment";
 import MyProfile from "../component/MyProfile";
 import QuestionerProfile from "../component/QuestionerProfile";
 import Storyslide from "../component/Storyslide";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import { getUserInfo } from "../api/getUserInfo";
-// import QuestionerProfile from "../component/QuestionerProfile";
 
 function Main({ isLogin }) {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [info, setInfo] = useState({
-    userId: "",
-    picture: "",
-    name: "",
+    userId: '',
+    picture: '',
+    name: '',
   });
   const [currentUserInfo, setCurrentUserInfo] = useState({
-    userId: "",
+    userId: '',
+    picture: '',
+    name: '',
   });
-
-  const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
     const initUserInfo = async () => {
@@ -31,21 +29,8 @@ function Main({ isLogin }) {
       setCurrentUserInfo(userInfo);
       setInfo(newInfo);
     };
-    
     initUserInfo();
-    
-    if (!currentUserInfo) {
-      setIsOwner(false);
-    } else if (currentUserInfo.userId === info.userId) {
-      setIsOwner(true);
-    } else {
-      setIsOwner(false);
-    }
-  }, [isLogin]);
-
-  console.log(currentUserInfo.userId);
-  console.log(info.userId);
-  console.log(isOwner);
+  }, []);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -62,22 +47,23 @@ function Main({ isLogin }) {
     },
   ];
 
-  // 유저의 고유 아이디를 사용하여 매핑
   return (
     <div className="wrap">
-
       <Header isLogin={isLogin}></Header>
-
       <div className="contentWrap">
-
         <Storyslide></Storyslide>
-
-        {isOwner ? (
-          <MyProfile name={info.name} picture={info.picture}></MyProfile>
+        {currentUserInfo.userId === info.userId ? (
+          <MyProfile
+            name={currentUserInfo.name}
+            picture={currentUserInfo.picture}
+          ></MyProfile>
         ) : (
-          <QuestionerProfile></QuestionerProfile>
+          <QuestionerProfile
+            name={info.name}
+            picture={info.picture}
+            currentUserInfo={currentUserInfo}
+          ></QuestionerProfile>
         )}
-
         <ul className="tabMenu">
           {tabContArr.map((item) => (
             <li
@@ -89,7 +75,6 @@ function Main({ isLogin }) {
             </li>
           ))}
         </ul>
-
         <div>
           {tabContArr
             .filter((item) => activeIndex === item.id)

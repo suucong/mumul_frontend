@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Close from "../../img/icon/close.png";
 import Profile1 from "../../img/Ellipse 102.png";
-function QuestionRegister({ onClose }) {
+
+function QuestionRegister({ currentUserInfo, onClose }) {
   let [inputCount, setInputCount] = useState(0);
   const [btn, setBtn] = useState(false);
 
@@ -12,6 +13,7 @@ function QuestionRegister({ onClose }) {
   const onTextareaHandler = (e) => {
     setInputCount(e.target.value.length);
   };
+
   return (
     <div className="popupWrap">
       <div className="popup registerPopup">
@@ -22,10 +24,10 @@ function QuestionRegister({ onClose }) {
           <div className="popupContent">
             <div className="profile">
               <div>
-                <img src={Profile1} alt="profile" />
+                <img src={currentUserInfo.picture} alt="profile" />
               </div>
               <div>
-                <p className="myId">stack-0-slack</p>
+                <p className="myId">{currentUserInfo.name}</p>
                 {btn ? (
                   <button className="openBtn" onClick={clickOpenBtn}>
                     🔒공개 무물하기
