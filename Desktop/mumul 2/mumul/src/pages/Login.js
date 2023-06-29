@@ -1,26 +1,33 @@
-import React,{ useEffect } from "react";
+// Login.js
+
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { postLoginToken } from "../api/postLoginToken";
-import GoogleLogin from "../component/GoogleLogin"
-import axios from "axios";
-
+import GoogleLogin from "../component/GoogleLogin";
 import Rabbit from "./../img/Group 12.png";
-import Goggle from "./../img/icon/icGoggle.png";
-import Cacao from "./../img/icon/icCacao.png";
+import { getUserInfo } from "../api/getUserInfo";
 
-const Login = ({isLogin, setIsLogin}) => {
+const Login = ({ isLogin, setIsLogin }) => {
   const navigate = useNavigate();
 
-  const onGoogleSignIn = async res => {
-    const {credential} = res;
+  const onGoogleSignIn = async (res) => {
+    const { credential } = res;
     const result = await postLoginToken(credential, setIsLogin);
     setIsLogin(result);
   };
 
   useEffect(() => {
-    if(!isLogin) return;
-    navigate('/main');
-  }, [isLogin]);
+    const initLogin = async () => {
+      const userInfo = await getUserInfo();
+      if (localStorage.getItem("token") !== null) {
+        navigate(`/space/${userInfo.userId}`);
+      }
+    };
+
+    if (isLogin) {
+      initLogin();
+    }
+  }, [isLogin, navigate]);
 
   return (
     <div className="wrap">
@@ -33,7 +40,7 @@ const Login = ({isLogin, setIsLogin}) => {
           <div>
             <div className="text">
               <p className="loginTitle">
-                바쁘다 바빠 현대 사회!<br></br>
+                바쁘다 바빠 현대 사회!<br />
                 반가워 난 토끼야🐰
               </p>
               <p className="loginDecs">
@@ -41,7 +48,8 @@ const Login = ({isLogin, setIsLogin}) => {
               </p>
             </div>
             <div className="buttonWrap">
-              <GoogleLogin onGoogleSignIn={onGoogleSignIn} text="로그인"/>
+              {/* <GoogleLoginButton /> */}
+              <GoogleLogin onGoogleSignIn={onGoogleSignIn} text="로그인" />
               {/* <button>
                 <img src={Goggle} alt="" />
                 Google 계정으로 계속

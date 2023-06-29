@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Profile from "./../img/Ellipse 102.png";
 
+import {logoutUserToken} from "../api/logoutUserToken";
+
 function Header() {
   const [modal, setModal] = useState(false);
 
@@ -17,6 +19,20 @@ function Header() {
 }
 
 function HeaderPopup() {
+  const handleLogout = async () => {
+    try {
+      const result = await logoutUserToken();
+      if(result) {
+        // 로그아웃 성공
+        console.log('로그아웃 성공');
+      } else {
+        console.log('로그아웃 실패')
+      }
+    } catch (error) {
+      console.error('로그아웃 오류: ', error.message);
+    }
+  };
+
   return (
     <ul className="headerPopup">
       <li className="list">
@@ -24,7 +40,7 @@ function HeaderPopup() {
           <p>내 스페이스</p>
         </Link>
       </li>
-      <li className="list">
+      <li className="list" onClick={handleLogout}>
         <Link to="/login">
           <p>로그아웃</p>
         </Link>
