@@ -1,19 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Close from "../../img/icon/close.png";
 import Profile1 from "../../img/Ellipse 102.png";
+import axios from "axios"; // Import axios for making API requests
+import { useParams } from "react-router-dom";
+import { getSpaceInfo } from "../../api/getSpaceInfo";
+import { createQuestion } from "../../api/createQuestion";
+
 
 function QuestionRegister({ currentUserInfo, onClose }) {
+  const { id } = useParams();
   let [inputCount, setInputCount] = useState(0);
   const [btn, setBtn] = useState(false);
+  const [questionText, setQuestionText] = useState(""); // 질문 텍스트를 저장하기 위한 state 변수
 
+
+  
   const clickOpenBtn = () => {
     setBtn(!btn);
   };
 
   const onTextareaHandler = (e) => {
     setInputCount(e.target.value.length);
+    setQuestionText(e.target.value);
   };
 
+
+  const registerQuestion = async () => {
+    try {
+      await createQuestion(id, currentUserInfo, questionText);
+      onClose(); // 질문 등록 후 팝업을 닫습니다.
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        console.error("로그인이 필요합니다.");
+        // 로그인이 필요한 경우에 대한 처리를 추가합니다.
+      } else {
+        console.error("질문 등록에 실패함:", error);
+        // 필요한 에러 처리 로직을 추가합니다.
+      }
+    }
+  };
+
+
+  
   return (
     <div className="popupWrap">
       <div className="popup registerPopup">
@@ -48,7 +76,9 @@ function QuestionRegister({ currentUserInfo, onClose }) {
               <span>{inputCount}</span>
               <span>/500</span>
             </p>
-            <button className="btnSave">남기기</button>
+            <button className="btnSave" onClick={registerQuestion}>
+              남기기
+            </button>
           </div>
         </div>
       </div>
