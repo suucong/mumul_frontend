@@ -204,6 +204,7 @@ a {
 
 .profileArea img {
   width: 80px;
+  border-radius: 50%;
 }
 
 .cnt {
@@ -283,6 +284,7 @@ button.space {
   width: 120px;
   display: inline-block;
   margin-bottom: 20px;
+  border-radius: 50%;
 }
 
 .editProfile {
