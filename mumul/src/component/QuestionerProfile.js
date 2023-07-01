@@ -19,7 +19,7 @@ function QuestionerProfile({ name, picture, currentUserInfo }) {
         <div className="profile">
           <img src={picture} alt="myprofile" />
           <div className="QueBtnWrap">
-            <button className="followingBtn">팔로잉</button>
+            <button className="followingBtn">팔로우</button>
             <button className="QueBtn" onClick={showQueModal}>
               무물하기
             </button>
@@ -38,7 +38,7 @@ function QuestionerProfile({ name, picture, currentUserInfo }) {
           </p>
           <div className="follow">
             <p className="follower">
-              팔로워 <span className="num">15</span>
+              팔로우 <span className="num">15</span>
             </p>
             <p className="following">
               팔로잉 <span className="num">15</span>
