@@ -25,6 +25,7 @@ function QuestionRegister({ currentUserInfo, onClose }) {
   };
 
 
+  // 질문 등록하는 API 
   const registerQuestion = async () => {
     try {
       await createQuestion(id, currentUserInfo, questionText);

@@ -33,7 +33,7 @@ function Main({isLogin}) {
       setInfo(newInfo);
     };
     initUserInfo();
-  }, []);
+  }, [id]);
 
   const [activeIndex, setActiveIndex] = useState(0);
 

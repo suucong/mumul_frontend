@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const createQuestion = async (id, currentUserInfo, questionText) => {
   console.log("질문 api 요청");
-  console.log("questionText: "+questionText, "질문보내는 사람: "+currentUserInfo.name);
+  console.log("질문: "+questionText, "질문자 이름: "+currentUserInfo.name, "질문자 사진:"+currentUserInfo.picture);
   
   try {
     console.log("질문 api 요청");
