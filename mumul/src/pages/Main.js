@@ -50,12 +50,15 @@ function Main({isLogin}) {
     },
   ];
 
+  console.log('현재 스페이스주인: '+info.userId);
+  console.log('현재 로그인유저: '+currentUserInfo.userId);
+
   // 유저의 고유 아이디를 사용하여 매핑
   return (
     <div className="wrap">
       <Header isLogin={isLogin}></Header>
       <div className="contentWrap">
-        <Storyslide></Storyslide>
+        <Storyslide spaceId={id}></Storyslide>
         {currentUserInfo.userId === info.userId ? (
             <MyProfile userId={currentUserInfo.userId} name={currentUserInfo.name} picture={currentUserInfo.picture} introduce={currentUserInfo.introduce} instaId={currentUserInfo.instaId} link={currentUserInfo.link} ></MyProfile>
           ) : (

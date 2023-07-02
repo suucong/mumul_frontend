@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getIsFollow = async (spaceId, currentUserId) => {
-    const path = '/spaces/' + spaceId + '/isFollow';
+    const path = `/spaces/isFollow/${spaceId}?currentUserId=${currentUserId}`;
 
     try {
         const response = await axios.get(path, {spaceId, currentUserId});

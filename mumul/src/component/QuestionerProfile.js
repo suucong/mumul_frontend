@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import QuestionRegister from "./popup/QuestionRegister";
 import InstaLogo from "../img/icon/instaLogo.jpeg";
 
@@ -7,9 +7,19 @@ import { postUnFollow } from "../api/postUnFollow";
 import { getIsFollow } from "../api/getIsFollow";
 
 function QuestionerProfile({ spaceId, currentUserId, name, picture, currentUserInfo }) {
-  const isFollow = getIsFollow(spaceId, currentUserId);
   const [queModal, setQueModal] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(isFollow);
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  useEffect(() => {
+    getIsFollow(spaceId, currentUserId)
+      .then((result) => {
+        setIsFollowing(result);
+        setIsFollowing(result);
+      })
+      .catch((error) => {
+        console.error('getIsFollow Error: ', error.message);
+      });
+  }, [spaceId, currentUserId]);
 
   const showQueModal = () => {
     setQueModal(true);
