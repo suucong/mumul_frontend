@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const getSpaceInfo = async (spaceId) => {
-    const path = '/spaces/' + spaceId;
+export const getReceivedComment = async (spaceId) => {
+    const path = '/spaces/' + spaceId+'/sent/get';
 
     try {
         const response = await axios.get(path,{
@@ -10,10 +10,10 @@ export const getSpaceInfo = async (spaceId) => {
                 Accept: 'application/json'
               }
         });
-        console.log("getSpaceInfo: "+response.data);
+        console.log("getReceivedComment: "+response.data);
         return response.data;
     } catch(e) {
-        console.error('getSpaceInfo Error: ', e.message);
+        console.error('getReceivedComment Error: ', e.message);
         return false;
     }
 };

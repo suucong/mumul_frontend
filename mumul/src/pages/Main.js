@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from "react";
 import Header from "../component/Header";
-import SendCommnet from "../component/SendCommnet";
-import ReceiveComment from "../component/ReciveComment";
+import SendComment from "../component/SendComment";
+import ReceiveComment from "../component/ReceiveComment";
 import MyProfile from "../component/MyProfile";
 import QuestionerProfile from "../component/QuestionerProfile";
 import Storyslide from "../component/Storyslide";
@@ -9,7 +9,9 @@ import { useParams } from "react-router-dom";
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import { getUserInfo } from "../api/getUserInfo";
 
-function Main({isLogin}) {
+
+function Main({isLogin,setIsLogin}) {
+
   const {id} = useParams();
   const [info, setInfo] = useState({
     userId: '',
@@ -41,19 +43,19 @@ function Main({isLogin}) {
     {
       id: 0,
       tabTitle: "받은 질문",
-      tabCont: <ReceiveComment></ReceiveComment>,
+      tabCont: <ReceiveComment spaceId={id}></ReceiveComment>,
     },
     {
       id: 1,
       tabTitle: "보낸 질문",
-      tabCont: <SendCommnet></SendCommnet>,
+      tabCont: <SendComment spaceId={id}></SendComment>,
     },
   ];
 
   // 유저의 고유 아이디를 사용하여 매핑
   return (
     <div className="wrap">
-      <Header isLogin={isLogin}></Header>
+      <Header isLogin={isLogin} setIsLogin={setIsLogin}></Header>
       <div className="contentWrap">
         <Storyslide></Storyslide>
         {currentUserInfo.userId === info.userId ? (

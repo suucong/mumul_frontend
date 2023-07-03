@@ -1,5 +1,4 @@
 import React from "react";
-
 import Profile1 from "./../img/Ellipse 103.png";
 import Profile2 from "./../img/Ellipse 104.png";
 import Heart from "./../img/icHeaderBlack.png";
@@ -7,19 +6,18 @@ import More from "./../img/icon/icMore.png";
 import Share from "./../img/icon/icShare.png";
 import Good from "./../img/icon/icGood.png";
 
-function Comment() {
+export function Comment(currentUserInfo, questionText) {
   return (
     <>
       <div className="commentWrap questionWrap">
         <div className="profileArea">
-          <img src={Profile1} alt="profile1" className="questioner" />
+          <img src={currentUserInfo.picture} alt="profile1" className="questioner" />
         </div>
         <div className="cnt">
-          <p className="Nicname">익명의 토끼</p>
+          <p className="Nicname">{currentUserInfo.name}</p>
           <p className="min">20분 전🔒</p>
           <p className="commentCnt">
-            중요한 결정을 내려야 할 때 찾는 장소가 있나요? 마음 속의 장소도
-            좋아요. <br></br>그곳은 어떤 곳인가요?
+            questionText
           </p>
           <div className="heart">
             <img src={Heart} alt="하트" />
@@ -32,6 +30,8 @@ function Comment() {
           </div>
         </div>
       </div>
+
+
       <div className="commentWrap answerWrap">
         <div className="profileArea">
           <img src={Profile2} alt="profile1" className="respondent" />

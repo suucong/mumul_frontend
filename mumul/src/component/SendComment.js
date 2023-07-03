@@ -12,9 +12,9 @@ import InstaLogo from "./../img/icon/instaLogo.jpeg";
 import CopyLink from "./../img/icon/CopyLink.png";
 import Bin from "./../img/icon/icBin.png";
 
-import Delete from "./../component/popup/Delete";
+import Delete from "./popup/Delete";
 
-function SendCommnet() {
+function SendComment() {
   //하트 상태값
   const [heartState, setHeartState] = useState(false);
   //좋아요 상태값
@@ -153,6 +153,9 @@ function SendCommnet() {
           </div>
         </div>
       </div>
+
+
+      
       <div className="commentWrap answerWrap">
         <div className="profileArea">
           <img src={Profile2} alt="profile2" className="respondent" />
@@ -201,4 +204,4 @@ function SendCommnet() {
   );
 }
 
-export default SendCommnet;
+export default SendComment;

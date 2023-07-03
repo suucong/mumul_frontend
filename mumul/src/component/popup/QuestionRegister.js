@@ -5,16 +5,14 @@ import axios from "axios"; // Import axios for making API requests
 import { useParams } from "react-router-dom";
 import { getSpaceInfo } from "../../api/getSpaceInfo";
 import { createQuestion } from "../../api/createQuestion";
-
+import { Comment } from "../Comment";
 
 function QuestionRegister({ currentUserInfo, onClose }) {
   const { id } = useParams();
   let [inputCount, setInputCount] = useState(0);
-  const [btn, setBtn] = useState(false);
+  const [btn, setBtn] = useState(true);
   const [questionText, setQuestionText] = useState(""); // 질문 텍스트를 저장하기 위한 state 변수
 
-
-  
   const clickOpenBtn = () => {
     setBtn(!btn);
   };
@@ -24,11 +22,10 @@ function QuestionRegister({ currentUserInfo, onClose }) {
     setQuestionText(e.target.value);
   };
 
-
-  // 질문 등록하는 API 
+  // 질문 등록하는 API
   const registerQuestion = async () => {
     try {
-      await createQuestion(id, currentUserInfo, questionText);
+      await createQuestion(id, currentUserInfo, questionText, btn);
       onClose(); // 질문 등록 후 팝업을 닫습니다.
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -41,8 +38,6 @@ function QuestionRegister({ currentUserInfo, onClose }) {
     }
   };
 
-
-  
   return (
     <div className="popupWrap">
       <div className="popup registerPopup">
@@ -59,11 +54,11 @@ function QuestionRegister({ currentUserInfo, onClose }) {
                 <p className="myId">{currentUserInfo.name}</p>
                 {btn ? (
                   <button className="openBtn" onClick={clickOpenBtn}>
-                    🔒공개 무물하기
+                    🔒 토끼로 녹아 들기
                   </button>
                 ) : (
                   <button className="openBtn" onClick={clickOpenBtn}>
-                    🔒 토끼로 녹아 들기
+                    🔓 공개 무물하기
                   </button>
                 )}
               </div>

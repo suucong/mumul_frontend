@@ -3,7 +3,6 @@ import axios from 'axios';
 export const getUserInfo = async () => {
   const path = '/v1/oauth/user/info';
   const token = localStorage.getItem('token');
-  console.log(token);
 
   try {
     const response = await axios.get(path, {
@@ -14,8 +13,8 @@ export const getUserInfo = async () => {
       }
     });
 
-    console.log(token);
-    console.log(response.data);
+    console.log("token: "+token);
+    console.log("getUserInfo: "+response.data);
 
     if (response.status !== 200) {
       throw new Error('bad server condition');

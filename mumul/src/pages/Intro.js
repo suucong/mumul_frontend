@@ -23,7 +23,7 @@ const Intro = () => {
       <div className="contentWrap">
         <p className="introTitle">🐇토끼🐇로 무물에 녹아 들자</p>
         <Comment></Comment>
-        {info.userId !== undefined ? (
+        {info.userId !== undefined || window.localStorage.getItem("token") !== null ? (
           <Link to={'/space/' + info.userId} className="goSpace">
             <button className="space">스페이스 입장</button>
           </Link>

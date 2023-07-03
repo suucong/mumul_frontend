@@ -19,7 +19,9 @@ const Login = ({isLogin, setIsLogin}) => {
   useEffect(() => {
     const initLogin = async () => {
       const userInfo = await getUserInfo();
+      //isLogin이 false면 로그인 페이지 반환
       if (!isLogin) return;
+      //isLogin이 true면 스페이스 매핑시켜서 navigate
       navigate(`/space/${userInfo.userId}`);
     };
 
@@ -27,24 +29,6 @@ const Login = ({isLogin, setIsLogin}) => {
       initLogin();
     }
   }, [isLogin, navigate]);
-
-  // useEffect(() => {
-  //   const initLogin = async () => {
-  //     const userInfo = await getUserInfo();
-  //     if (localStorage.getItem('token') === null) {
-  //       // 'token'의 값이 null인 경우에 실행할 코드
-  //       console.log('Token is null');
-  //     } else {
-  //       // 'token'의 값이 null이 아닌 경우에 실행할 코드
-  //       console.log('Token is not null');
-  //     }
-  //     console.log(localStorage.getItem('token'));
-  //   };
-
-  //   if (isLogin) {
-  //     initLogin();
-  //   }
-  // }, [isLogin, navigate]);
 
   return (
     <div className="wrap">
@@ -67,14 +51,7 @@ const Login = ({isLogin, setIsLogin}) => {
             <div className="buttonWrap">
               {/* <GoogleLoginButton /> */}
               <GoogleLogin onGoogleSignIn={onGoogleSignIn} text="로그인" />
-              {/* <button>
-                <img src={Goggle} alt="" />
-                Google 계정으로 계속
-              </button> */}
-              {/* <button>
-                <img src={Cacao} alt="" />
-                Kakao 계정으로 계속
-              </button> */}
+              
             </div>
           </div>
         </div>

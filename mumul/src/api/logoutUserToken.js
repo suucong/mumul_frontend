@@ -13,11 +13,13 @@ export const logoutUserToken = async () => {
             withCredentials: true,
         });
 
-        console.log(response);
+        console.log("로그아웃 api 응답: "+response);
         localStorage.setItem('token', null);
-        
+        window.localStorage.removeItem("token")
+
+
         // 응답이 성공적인지 확인
-        if (response.status != 200) {
+        if (response.status !== 200) {
             throw new Error('bad server condition');
         }
         

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "../component/Header";
-import SendCommnet from "../component/SendCommnet";
-import ReceiveComment from "../component/ReciveComment";
+import SendComment from "../component/SendComment";
+import ReceiveComment from "../component/ReceiveComment";
 import MyProfile from "../component/MyProfile";
 import Storyslide from "../component/Storyslide";
 import QuestionerProfile from "../component/QuestionerProfile";
@@ -23,7 +23,7 @@ function Main() {
       tabTitle: "보낸 질문",
       tabCont: (
         <div>
-          <SendCommnet></SendCommnet>
+          <SendComment></SendComment>
         </div>
       ),
     },
