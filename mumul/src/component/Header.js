@@ -48,7 +48,7 @@ function HeaderPopup({ isLogin, setIsLogin }) {
       </li>
       <li className="list" onClick={handleLogout}>
         <Link to="/login">
-          <p>{!token || token === "null" ? "로그인" : "로그아웃"}</p>
+          <p>{(!token || token === "null") ? "로그인" : "로그아웃"}</p>
         </Link>
       </li>
       <li className="list">
