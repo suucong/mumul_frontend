@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import Profile1 from "./../img/Ellipse 103.png";
-import Profile2 from "./../img/Ellipse 104.png";
 import Heart from "./../img/icHeaderBlack.png";
 import LineHeart from "./../img/icHeartWhite.png";
 import More from "./../img/icon/icMore.png";
@@ -11,10 +9,41 @@ import GoodRed from "./../img/icon/icGoodRed.png";
 import InstaLogo from "./../img/icon/instaLogo.jpeg";
 import CopyLink from "./../img/icon/CopyLink.png";
 import Bin from "./../img/icon/icBin.png";
-
+import { getSpaceInfo } from "../api/getSpaceInfo";
 import Delete from "./popup/Delete";
+import { getSentComment } from "../api/getSentComment"; 
+import UntilAnswering from "./UntilAnswering";
+import AnonymousAnswer from "./AnonymousAnswer";
 
-function SendComment() {
+function SendComment({ spaceId, info }) {
+  const [sentComments, setSentComments] = useState([]);
+
+  const [spaceOwner, setSpaceOwner] = useState({
+    userId: "",
+    picture: "",
+    name: "",
+  });
+
+  useEffect(() => {
+    const fetchSentComments = async () => {
+      try {
+        const spaInfo = await getSpaceInfo(spaceId);
+        const sent = await getSentComment(spaceId);
+
+        console.log("sent:", sent);
+
+        const sentArray = Object.values(sent.data).map((item) => item || {});
+        console.log("sentArray:", sentArray);
+        setSentComments(sentArray);
+        setSpaceOwner(spaInfo);
+      } catch (error) {
+        console.error("Error fetching sent comments:", error);
+      }
+    };
+
+    fetchSentComments();
+  }, [spaceId]);
+
   //하트 상태값
   const [heartState, setHeartState] = useState(false);
   //좋아요 상태값
@@ -111,95 +140,97 @@ function SendComment() {
   };
   return (
     <>
-      <div className="commentWrap questionWrap">
-        <div className="profileArea">
-          <img src={Profile1} alt="profile1" className="questioner" />
-        </div>
-        <div className="cnt">
-          <p className="Nicname">익명의 토끼</p>
-          <p className="min">20분 전🔒</p>
-          <p className="commentCnt">
-            중요한 결정을 내려야 할 때 찾는 장소가 있나요? 마음 속의 장소도
-            좋아요. <br></br>그곳은 어떤 곳인가요?
-          </p>
-          <div className="heart">
-            <img src={heart} alt="하트" onClick={clickHeart} />
-          </div>
-          <div className="more">
-            <img src={More} alt="more" onClick={clickMore} />
-            {del && (
-              <div className="del" onClick={showDelModal}>
-                <p>
-                  <img src={Bin} alt="btin" />
-                  삭제하기
-                </p>
+      {sentComments.length === 0 && <p>첫 질문을 보내 보세요👻</p>}
+      {sentComments.map((sent, index) => (
+        <>
+          <div key={index} className="commentWrap questionWrap">
+            <div className="profileArea">
+              <img src={sent.sentUserPic} alt="profile1" className="questioner" />
+            </div>
+            <div className="cnt">
+              <p className="Nicname">{sent.userId}</p>
+              <p className="min">{sent.createdTime}</p>
+              <p className="commentCnt"> {sent.questionText} </p>
+              <div className="heart">
+                <img src={heart} alt="하트" onClick={clickHeart} />
               </div>
-            )}
-          </div>
-          <div className="share">
-            <img src={Share} alt="share" onClick={showShareModal} />
-            {share && (
-              <div className="sharePopup">
-                <p>
-                  <img src={InstaLogo} alt="insta" />
-                  스토리
-                </p>
-                <p onClick={onClickcopy}>
-                  <img src={CopyLink} alt="link" />
-                  링크 복사
-                </p>
+              <div className="more">
+                <img src={More} alt="more" onClick={clickMore} />
+                {del && (
+                  <div className="del" onClick={showDelModal}>
+                    <p>
+                      <img src={Bin} alt="btin" />
+                      삭제하기
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
+              <div className="share">
+                <img src={Share} alt="share" onClick={showShareModal} />
+                {share && (
+                  <div className="sharePopup">
+                    <p>
+                      <img src={InstaLogo} alt="insta" />
+                      스토리
+                    </p>
+                    <p onClick={onClickcopy}>
+                      <img src={CopyLink} alt="link" />
+                      링크 복사
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-
-      
-      <div className="commentWrap answerWrap">
-        <div className="profileArea">
-          <img src={Profile2} alt="profile2" className="respondent" />
-        </div>
-        <div className="cnt">
-          <p className="Nicname">냥냥이</p>
-          <p className="min">방금 전🔒</p>
-          <p className="commentCnt">
-            스벅 창가자리 가서 맥 키보드 쾅쾅 내리 치는 편입니다.
-          </p>
-          <div className="heart">
-            <img src={good} alt="good" onClick={clickGood} />
-          </div>
-          <div className="more">
-            <img src={More} alt="more" onClick={clickMore_1} />
-            {del_1 && (
-              <div className="del" onClick={showDelModal}>
-                <p>
-                  <img src={Bin} alt="btin" />
-                  삭제하기
-                </p>
+          <div className="commentWrap answerWrap">
+            <div className="profileArea">
+              <img src={sent.receivedUserPic} alt="profile2" className="respondent" />
+            </div>
+            <div className="cnt">
+              <p className="Nicname">{sent.receivedUserName}</p>
+              <p className="min">???</p>
+              {sent.answers.length === 0  ? (
+                <UntilAnswering></UntilAnswering>
+              ) : (
+                <AnonymousAnswer></AnonymousAnswer>
+              )}
+              <div className="heart">
+                <img src={good} alt="good" onClick={clickGood} />
               </div>
-            )}
-          </div>
-          <div className="share">
-            <img src={Share} alt="share" onClick={showShareModal_1} />
-            {share_1 && (
-              <div className="sharePopup">
-                <p>
-                  <img src={InstaLogo} alt="insta" />
-                  스토리
-                </p>
-                <p onClick={onClickcopy}>
-                  <img src={CopyLink} alt="link" />
-                  링크 복사
-                </p>
+              <div className="more">
+                <img src={More} alt="more" onClick={clickMore_1} />
+                {del_1 && (
+                  <div className="del" onClick={showDelModal}>
+                    <p>
+                      <img src={Bin} alt="btin" />
+                      삭제하기
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
+              <div className="share">
+                <img src={Share} alt="share" onClick={showShareModal_1} />
+                {share_1 && (
+                  <div className="sharePopup">
+                    <p>
+                      <img src={InstaLogo} alt="insta" />
+                      스토리
+                    </p>
+                    <p onClick={onClickcopy}>
+                      <img src={CopyLink} alt="link" />
+                      링크 복사
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* 삭제하기 팝업  */}
+            {delModal && <Delete onClose={onClose}></Delete>}
+            {/* -- 삭제하기 팝업 */}
           </div>
-        </div>
-        {/* 삭제하기 팝업  */}
-        {delModal && <Delete onClose={onClose}></Delete>}
-        {/* -- 삭제하기 팝업 */}
-      </div>
+        </>
+      ))}
     </>
   );
 }

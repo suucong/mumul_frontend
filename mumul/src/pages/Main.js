@@ -64,7 +64,7 @@ function Main({isLogin,setIsLogin}) {
         {currentUserInfo.userId === info.userId ? (
             <MyProfile userId={currentUserInfo.userId} name={currentUserInfo.name} picture={currentUserInfo.picture} introduce={currentUserInfo.introduce} instaId={currentUserInfo.instaId} link={currentUserInfo.link} ></MyProfile>
           ) : (
-            <QuestionerProfile spaceId={info.userId} currentUserId={currentUserInfo.userId}name={info.name} picture={info.picture} currentUserInfo={currentUserInfo}></QuestionerProfile>
+            <QuestionerProfile info={info} spaceId={info.userId} currentUserId={currentUserInfo.userId}name={info.name} picture={info.picture} currentUserInfo={currentUserInfo}></QuestionerProfile>
         )}
         <ul className="tabMenu">
           {tabContArr.map((item) => (

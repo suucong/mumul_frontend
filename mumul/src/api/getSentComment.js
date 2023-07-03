@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const getReceivedComment = async (spaceId) => {
-    const path = '/spaces/' + spaceId+'/sent/get';
+export const getSentComment = async (spaceId) => {
+    const path = `/spaces/${spaceId}/sent/get`;
 
     try {
         const response = await axios.get(path,{
@@ -10,10 +10,10 @@ export const getReceivedComment = async (spaceId) => {
                 Accept: 'application/json'
               }
         });
-        console.log("getReceivedComment: "+response.data);
+        console.log("getSentComment response: ", response.data);
         return response.data;
     } catch(e) {
-        console.error('getReceivedComment Error: ', e.message);
+        console.error('Error retrieving sent comments:', e.message);
         return false;
     }
 };

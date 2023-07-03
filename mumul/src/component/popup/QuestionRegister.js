@@ -7,7 +7,7 @@ import { getSpaceInfo } from "../../api/getSpaceInfo";
 import { createQuestion } from "../../api/createQuestion";
 import { Comment } from "../Comment";
 
-function QuestionRegister({ currentUserInfo, onClose }) {
+function QuestionRegister({info, currentUserInfo, onClose }) {
   const { id } = useParams();
   let [inputCount, setInputCount] = useState(0);
   const [btn, setBtn] = useState(true);
@@ -25,8 +25,9 @@ function QuestionRegister({ currentUserInfo, onClose }) {
   // 질문 등록하는 API
   const registerQuestion = async () => {
     try {
-      await createQuestion(id, currentUserInfo, questionText, btn);
+      await createQuestion(info, id, currentUserInfo, questionText, btn);
       onClose(); // 질문 등록 후 팝업을 닫습니다.
+      window.location.reload();
     } catch (error) {
       if (error.response && error.response.status === 401) {
         console.error("로그인이 필요합니다.");

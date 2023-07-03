@@ -2,13 +2,15 @@ import axios from "axios";
 import {Comment} from "../component/Comment"
 
 
-export const createQuestion = async (id, currentUserInfo, questionText, btn) => {
+export const createQuestion = async (info, id, currentUserInfo, questionText, btn) => {
   console.log("익명여부: "+btn)
   try {
     const response = await axios.post(
       `/spaces/${id}/question/create`,
       {
         sentUserPic: currentUserInfo.picture,
+        receivedUserPic: info.picture,
+        receivedUserName: info.name,
         questionText: questionText,
         createdTime: new Date(),
         answers: null,

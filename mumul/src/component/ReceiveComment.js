@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-
-import Profile1 from "./../img/Ellipse 103.png";
-import Profile2 from "./../img/Ellipse 104.png";
 import Heart from "./../img/icHeaderBlack.png";
 import LineHeart from "./../img/icHeartWhite.png";
 import More from "./../img/icon/icMore.png";
@@ -14,7 +11,6 @@ import Bin from "./../img/icon/icBin.png";
 import Comment from "./../img/icon/icChat.png";
 import AnonymousAnswer from "./AnonymousAnswer";
 import Delete from "./popup/Delete";
-import AnswerRegister from "./popup/AnswerRegister";
 import { getReceivedComment } from "../api/getReceivedComment";
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import UntilAnswering from "./UntilAnswering";
@@ -23,29 +19,6 @@ import { ZoneId, ZoneRulesProvider } from "js-joda-timezone";
 
 
 function ReceiveComment({ spaceId }) {
-
- 
-
-  /* questionDTO
-    private Long id;
-    private String sentUserPic;
-    private String questionText;
-    private LocalDateTime createdTime;
-    private List<AnswerDTO> answers;
-    private String userId; // 질문자 닉네임 또는 "익명"
-    private Boolean isAnonymous; // "익명"으로 질문했는지 여부
-    */
-  // console.log("received spaceId: "+ spaceId);
-
-  // const [received, setReceived] = useState({
-  //   id: '',
-  //   sentUserPic: '',
-  //   questionText: '',
-  //   createdTime:'',
-  //   answers:'',
-  //   userId: '',
-  //   isAnonymous:''
-  // });
 
   const [receivedComments, setReceivedComments] = useState([]);
 
@@ -185,16 +158,12 @@ function ReceiveComment({ spaceId }) {
     alert("링크가 복사 되었습니다");
   };
 
-  // Check if receivedComments is an array
-  if (!Array.isArray(receivedComments)) {
-    return <p>No received comments</p>;
-  }
 
-  //   const timeDifference = getTimeDifference(questionTime);
-  // console.log(timeDifference); // 예: "5분 전"
 
   return (
+
     <>
+     {receivedComments.length === 0 && <p>첫 질문을 남겨 보세요👻</p>}
       {receivedComments.map((received, index) => (
         <>
           <div key={index} className="commentWrap questionWrap">
@@ -246,6 +215,8 @@ function ReceiveComment({ spaceId }) {
               </div>
             </div>
           </div>
+
+
           <div className="commentWrap answerWrap">
             <div className="profileArea">
               <img
