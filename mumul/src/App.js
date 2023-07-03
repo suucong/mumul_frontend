@@ -20,8 +20,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Intro />} />
-        <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />} />
-        <Route path="/space/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin} />} />
+        <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} />
+        <Route path="/space/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin}/>} />
         <Route path="/main2" element={<Main2 />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/setting" element={<Setting />} />

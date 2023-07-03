@@ -2,21 +2,19 @@ import axios from 'axios';
 
 export const logoutUserToken = async () => {
     const path = '/v1/oauth/logout';
+    const token = localStorage.getItem('token');
 
     try {
         const response = await axios.post(`${path}`, {
-            // 요청 헤를 설정합니다.
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            withCredentials: true,
-        });
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              Authorization: 'Bearer ' + token
+            }
+          });
 
         console.log("로그아웃 api 응답: "+response);
         localStorage.setItem('token', null);
-        window.localStorage.removeItem("token")
-
 
         // 응답이 성공적인지 확인
         if (response.status !== 200) {

@@ -1,30 +1,32 @@
-// Login.js
-
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postLoginToken } from "../api/postLoginToken";
 import GoogleLogin from "../component/GoogleLogin";
 import Rabbit from "./../img/Group 12.png";
 import { getUserInfo } from "../api/getUserInfo";
 
-const Login = ({isLogin, setIsLogin}) => {
+const Login = ({ isLogin, setIsLogin }) => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const userInfo = getUserInfo();
 
   const onGoogleSignIn = async (res) => {
     const { credential } = res;
-    const result = await postLoginToken(credential, setIsLogin);
-    setIsLogin(result);
+    const result = await postLoginToken(credential);
+    if (result) {
+      setIsLogin(true); // 로그인 성공 시에만 isLogin을 true로 설정
+    }
   };
 
   useEffect(() => {
+    console.log(isLogin);
     const initLogin = async () => {
+      if (!isLogin) {
+        return;
+      }
       const userInfo = await getUserInfo();
-      //isLogin이 false면 로그인 페이지 반환
-      if (!isLogin) return;
-      //isLogin이 true면 스페이스 매핑시켜서 navigate
       navigate(`/space/${userInfo.userId}`);
     };
-
     if (isLogin) {
       initLogin();
     }
@@ -41,7 +43,8 @@ const Login = ({isLogin, setIsLogin}) => {
           <div>
             <div className="text">
               <p className="loginTitle">
-                바쁘다 바빠 현대 사회!<br />
+                바쁘다 바빠 현대 사회!
+                <br />
                 반가워 난 토끼야🐰
               </p>
               <p className="loginDecs">
@@ -49,9 +52,7 @@ const Login = ({isLogin, setIsLogin}) => {
               </p>
             </div>
             <div className="buttonWrap">
-              {/* <GoogleLoginButton /> */}
               <GoogleLogin onGoogleSignIn={onGoogleSignIn} text="로그인" />
-              
             </div>
           </div>
         </div>

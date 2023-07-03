@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Profile from "./../img/Ellipse 102.png";
+import { logoutUserToken } from "../api/logoutUserToken";
 
-import {logoutUserToken} from "../api/logoutUserToken";
-
-function Header({isLogin, setIsLogin}) {
+function Header({ isLogin, setIsLogin }) {
   const [modal, setModal] = useState(false);
 
   return (
@@ -13,25 +12,30 @@ function Header({isLogin, setIsLogin}) {
       <div className="profile" onClick={() => setModal(!modal)}>
         <img src={Profile} alt="profile" />
       </div>
-      {modal && <HeaderPopup isLogin={isLogin} setIsLogin={setIsLogin}></HeaderPopup>}
+      {modal && (
+        <HeaderPopup isLogin={isLogin} setIsLogin={setIsLogin} />
+      )}
     </header>
   );
 }
 
-function HeaderPopup({isLogin, setIsLogin}) {
+function HeaderPopup({ isLogin, setIsLogin }) {
+  const token = localStorage.getItem("token");
+
   const handleLogout = async () => {
     try {
       const result = await logoutUserToken();
-      if(result) {
+      if (result) {
         // 로그아웃 성공
-        console.log('로그아웃 성공');
+        console.log("로그아웃 성공");
         setIsLogin(false);
         console.log(isLogin);
+        window.location.reload();
       } else {
-        console.log('로그아웃 실패')
+        console.log("로그아웃 실패");
       }
     } catch (error) {
-      console.error('로그아웃 오류: ', error.message);
+      console.error("로그아웃 오류: ", error.message);
     }
   };
 
@@ -44,7 +48,7 @@ function HeaderPopup({isLogin, setIsLogin}) {
       </li>
       <li className="list" onClick={handleLogout}>
         <Link to="/login">
-          <p>로그아웃</p>
+          <p>{!token || token === "null" ? "로그인" : "로그아웃"}</p>
         </Link>
       </li>
       <li className="list">
