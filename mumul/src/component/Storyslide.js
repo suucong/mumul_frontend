@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
@@ -13,9 +14,24 @@ import Profile7 from "../img/Ellipse 108.png";
 import Profile8 from "../img/Ellipse 109.png";
 import Profile9 from "../img/Ellipse 110.png";
 import Profile10 from "../img/Ellipse 111.png";
+import { getFollowingList } from "../api/getFollowingList";
 
-function Storyslide() {
+function Storyslide({spaceId}) {
   const [swiperRef, setSwiperRef] = useState(null);
+  const [followingList, setFollowingList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getFollowingList(spaceId);
+        setFollowingList(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [spaceId]);
 
   const prevHandler = () => {
     swiperRef.slidePrev();
@@ -24,6 +40,7 @@ function Storyslide() {
   const nextHandler = () => {
     swiperRef.slideNext();
   };
+
   return (
     <div className="slideWrap">
       <button onClick={prevHandler} className="swiper-button-prev">
@@ -62,42 +79,14 @@ function Storyslide() {
           <img src={Profile1} alt="" className="storyImg MyImg" />
           <p className="stroryId Me">Me</p>
         </SwiperSlide>
-        <SwiperSlide>
-          <img src={Profile2} alt="" className="storyImg " />
-          <p className="stroryId ">등산토끼</p>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={Profile3} alt="" className="storyImg " />
-          <p className="stroryId ">바이크토끼</p>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={Profile4} alt="" className="storyImg " />
-          <p className="stroryId ">야구르트토끼</p>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={Profile5} alt="" className="storyImg " />
-          <p className="stroryId ">퇴근토끼</p>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={Profile6} alt="" className="storyImg " />
-          <p className="stroryId ">토토토토끼</p>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={Profile7} alt="" className="storyImg " />
-          <p className="stroryId ">토롱이</p>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={Profile8} alt="" className="storyImg " />
-          <p className="stroryId ">토토토토끼</p>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={Profile9} alt="" className="storyImg " />
-          <p className="stroryId ">지락실지락실</p>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={Profile10} alt="" className="storyImg " />
-          <p className="stroryId ">지라ㄱ실2</p>
-        </SwiperSlide>
+        {followingList.map((item) => (
+            <SwiperSlide key={item.userId}>
+              <img src={item.picture} alt="" className="storyImg MyImg" />
+              <Link to={`/space/${item.userId}`} className="stroryId Me">
+                {item.name}
+              </Link>
+            </SwiperSlide>
+          ))}
       </Swiper>
     </div>
   );

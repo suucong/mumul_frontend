@@ -1,9 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import QuestionRegister from "./popup/QuestionRegister";
 import InstaLogo from "../img/icon/instaLogo.jpeg";
 
-function QuestionerProfile({ name, picture, currentUserInfo }) {
+import { postFollow } from "../api/postFollow";
+import { postUnFollow } from "../api/postUnFollow";
+import { getIsFollow } from "../api/getIsFollow";
+
+function QuestionerProfile({ spaceId, currentUserId, name, picture, currentUserInfo }) {
   const [queModal, setQueModal] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  useEffect(() => {
+    getIsFollow(spaceId, currentUserId)
+      .then((result) => {
+        setIsFollowing(result);
+        setIsFollowing(result);
+      })
+      .catch((error) => {
+        console.error('getIsFollow Error: ', error.message);
+      });
+  }, [spaceId, currentUserId]);
 
   const showQueModal = () => {
     setQueModal(true);
@@ -13,13 +29,32 @@ function QuestionerProfile({ name, picture, currentUserInfo }) {
     setQueModal(false);
   };
 
+  const toggleFollowing = () => {
+    if(isFollowing) {
+      // 언팔로우
+      postUnFollow(spaceId, currentUserId);
+    } else {
+      // 팔로우
+      postFollow(spaceId, currentUserId);
+    }
+    setIsFollowing(!isFollowing);
+  };
+
   return (
     <>
       <div className="myProfileWrap">
         <div className="profile">
           <img src={picture} alt="myprofile" />
           <div className="QueBtnWrap">
-            <button className="followingBtn">팔로우</button>
+          {isFollowing ? (
+              <button className="followingBtn" onClick={toggleFollowing}>
+                팔로잉
+              </button>
+            ) : (
+              <button className="followBtn" onClick={toggleFollowing}>
+                팔로우
+              </button>
+            )}
             <button className="QueBtn" onClick={showQueModal}>
               무물하기
             </button>

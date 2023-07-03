@@ -255,7 +255,9 @@ function ReceiveComment({ spaceId }) {
               />
             </div>
             <div className="cnt">
-              {received.answers == null ? (
+                <p className="Nicname">{spaceOwner.name}</p>
+              <p className="min">???</p>
+              {received.answers.length === 0  ? (
                 <UntilAnswering></UntilAnswering>
               ) : (
                 <AnonymousAnswer></AnonymousAnswer>
