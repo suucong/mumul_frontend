@@ -1,16 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Profile from "./../img/Ellipse 102.png";
 import { logoutUserToken } from "../api/logoutUserToken";
+import { getUserInfo } from "../api/getUserInfo";
 
 function Header({ isLogin, setIsLogin }) {
   const [modal, setModal] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    userId: '',
+    name: '',
+    picture: '',
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const currentUserInfo = await getUserInfo();
+        setUserInfo(currentUserInfo);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  
 
   return (
     <header className="header">
       <h1 className="title"> MUMUL</h1>
       <div className="profile" onClick={() => setModal(!modal)}>
-        <img src={Profile} alt="profile" />
+      <img
+          src={userInfo.userId !== undefined ? userInfo.picture : Profile}
+          alt="profile"
+        />
       </div>
       {modal && (
         <HeaderPopup isLogin={isLogin} setIsLogin={setIsLogin} />
@@ -21,6 +45,24 @@ function Header({ isLogin, setIsLogin }) {
 
 function HeaderPopup({ isLogin, setIsLogin }) {
   const token = localStorage.getItem("token");
+  const [userInfo, setUserInfo] = useState({
+    userId: '',
+    name: '',
+    picture: '',
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const currentUserInfo = await getUserInfo();
+        setUserInfo(currentUserInfo);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -39,10 +81,17 @@ function HeaderPopup({ isLogin, setIsLogin }) {
     }
   };
 
+  const handleClickMySpace = () => {
+    if (userInfo.userId === undefined) {
+      alert("로그인 하세요.");
+      return;
+    }
+  };
+
   return (
     <ul className="headerPopup">
-      <li className="list">
-        <Link to="/main">
+      <li className="list" onClick={handleClickMySpace}>
+        <Link to={userInfo.userId !== undefined ? '/space/' + userInfo.userId : '#'}>
           <p>내 스페이스</p>
         </Link>
       </li>
@@ -51,8 +100,8 @@ function HeaderPopup({ isLogin, setIsLogin }) {
           <p>{(!token || token === "null") ? "로그인" : "로그아웃"}</p>
         </Link>
       </li>
-      <li className="list">
-        <Link to="/setting">
+      <li className="list" onClick={handleClickMySpace}>
+        <Link to={userInfo.userId !== undefined ? '/setting' : '#'}>
           <p>설정</p>
         </Link>
       </li>

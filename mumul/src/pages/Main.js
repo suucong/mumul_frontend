@@ -35,7 +35,7 @@ function Main({isLogin, setIsLogin}) {
       setInfo(newInfo);
     };
     initUserInfo();
-  }, [id]);
+  }, [id, isLogin]);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
