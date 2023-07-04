@@ -7,8 +7,11 @@ import {createAnswer} from "../../api/createAnswer";
 
 function AnswerRegister({ CloseAnswerModal , currentUserInfo, questionId, sentUserId, sentUserPic, questionText}) {
 
-  console.log("questionId: "+ questionId);
+  console.log("questionId: ",  questionId);
+  console.log("currentUserInfo: ", currentUserInfo);
+  console.log("currentUserInfo.picture: ", currentUserInfo.picture);
 
+  
   const { id } = useParams();
   let [inputCount, setInputCount] = useState(0);
   const [btn, setBtn] = useState(true);

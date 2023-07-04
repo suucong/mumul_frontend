@@ -14,6 +14,8 @@ import Delete from "./popup/Delete";
 import { getSentComment } from "../api/getSentComment"; 
 import UntilAnswering from "./UntilAnswering";
 import AnonymousAnswer from "./AnonymousAnswer";
+import moment from "moment";
+import "moment/locale/ko"; // 한국어 
 
 function SendComment({ spaceId, info }) {
   const [sentComments, setSentComments] = useState([]);
@@ -149,7 +151,7 @@ function SendComment({ spaceId, info }) {
             </div>
             <div className="cnt">
               <p className="Nicname">{sent.userId}</p>
-              <p className="min">{sent.createdTime}</p>
+              <p className="min">{getTimeDifference(sent.createdTime)}</p>
               <p className="commentCnt"> {sent.questionText} </p>
               <div className="heart">
                 <img src={heart} alt="하트" onClick={clickHeart} />
@@ -194,7 +196,7 @@ function SendComment({ spaceId, info }) {
                 <UntilAnswering></UntilAnswering>
               ) : (
                 <>
-                <p className="min">{sent.answers[0].createdTime}</p>
+                <p className="min">{getTimeDifference(sent.answers[0].createdTime)}</p>
                 <AnonymousAnswer answers={sent.answers} />
               </>
               )}
@@ -239,3 +241,9 @@ function SendComment({ spaceId, info }) {
 }
 
 export default SendComment;
+
+
+// 질문 등록 시간과 현재 시간 사이의 차이를 계산하는 함수
+function getTimeDifference(createdTime) {
+  return moment(createdTime).locale("ko").fromNow();
+}

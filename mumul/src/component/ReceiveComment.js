@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import moment from "moment";
+import "moment/locale/ko";
 import Heart from "./../img/icHeaderBlack.png";
 import LineHeart from "./../img/icHeartWhite.png";
 import More from "./../img/icon/icMore.png";
@@ -17,10 +19,16 @@ import UntilAnswering from "./UntilAnswering";
 import { DateTimeFormatter, LocalDateTime, ChronoUnit } from "js-joda";
 import { ZoneId, ZoneRulesProvider } from "js-joda-timezone";
 import AnswerRegister from "./popup/AnswerRegister";
+import CantModal from "./popup/CantRegister";
+
 
 function ReceiveComment({ spaceId, currentUserInfo }) {
   const [receivedComments, setReceivedComments] = useState([]);
+  // 질문 삭제 상태값
+  const [deleteStates, setDeleteStates] = useState({});
 
+    // 질문데이터 배열 상태값
+    const [questionData, setQuestionData] = useState([]);
   const [spaceOwner, setSpaceOwner] = useState({
     userId: "",
     picture: "",
@@ -45,6 +53,7 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
          // deleteStates 배열을 모든 질문에 대해 초기화
     const initialDeleteStates = receivedArray.map(() => false);
     setDeleteStates(initialDeleteStates);
+      moment.locale("ko");
       } catch (error) {
         console.error("Error fetching received comments:", error);
       }
@@ -53,11 +62,9 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
     fetchReceivedComments();
   }, [spaceId]);
 
-  // 질문데이터 배열 상태값
-  const [questionData, setQuestionData] = useState([]);
 
-  // 질문 삭제 상태값
-const [deleteStates, setDeleteStates] = useState({});
+
+
 
   //하트 상태값
   const [heartState, setHeartState] = useState(false);
@@ -77,7 +84,8 @@ const [deleteStates, setDeleteStates] = useState({});
   const [shareModal, setShareModal] = useState(false);
   //삭제 모달 오픈 상태값
   const [delModal, setDelModal] = useState(false);
-
+  //등록불가 모달 오픈 상태값
+  const [cantModal, setCantModal] = useState(false);
   const [answerModal, setAnswerModal] = useState(false);
 
   // 선택한 질문의 고유 ID를 상태값에 저장
@@ -136,10 +144,16 @@ const [deleteStates, setDeleteStates] = useState({});
     setDelModal(true);
   };
 
+  // 두번째 답변 등록 시 모달 오픈
+  const showCantModal=()=>{
+    setCantModal(true);
+  }
+  
 
   // 삭제 팝업  닫기
   const onClose = (e) => {
     setDelModal(false);
+    setCantModal(false);
     setDelete(false);
   };
 
@@ -183,9 +197,10 @@ const [deleteStates, setDeleteStates] = useState({});
 
   return (
     <>
+    
       {receivedComments.length === 0 && <p>첫 질문을 남겨 보세요👻</p>}
-      {receivedComments.slice().reverse().map((received, index) => (
-        <>
+      {receivedComments.slice().reverse().map((received, index) => (       
+        <>     
           <div key={index} className="commentWrap questionWrap">
             <div className="profileArea">
               <img
@@ -196,10 +211,22 @@ const [deleteStates, setDeleteStates] = useState({});
             </div>
             <div className="cnt">
               <p className="Nicname">{received.userId}</p>
-              <p className="min">{received.createdTime}</p>
+             <p className="min">{getTimeDifference(received.createdTime)}</p>
               <p className="commentCnt">{received.questionText}</p>
               <div className="heart">
                 <img src={heart} alt="하트" onClick={clickHeart} />
+
+                {received.answers.length > 0 ? (  
+                  <>
+                  <img
+                    src={Comment}
+                    alt="comment"
+                    className="chat"
+                    onClick={showCantModal} 
+                  />
+                </>
+              ) : ( 
+                <>
                 <img
                   src={Comment}
                   alt="comment"
@@ -213,6 +240,9 @@ const [deleteStates, setDeleteStates] = useState({});
                     )
                   }
                 />
+              </>
+              )}
+
               </div>
               <div className="more">
                 <img src={More} alt="more" onClick={() => clickMore(index)}/>
@@ -258,7 +288,7 @@ const [deleteStates, setDeleteStates] = useState({});
                 <UntilAnswering></UntilAnswering>
               ) : ( 
                 <>
-                <p className="min">{received.answers[0].createdTime}</p>
+                <p className="min">{getTimeDifference(received.answers[0].createdTime)}</p>
                 <AnonymousAnswer answers={received.answers} />
               </>
               )}
@@ -295,7 +325,8 @@ const [deleteStates, setDeleteStates] = useState({});
             </div>
             {/* 삭제하기 팝업  */}
             {delModal && <Delete onClose={onClose}></Delete>}
-            {/* -- 삭제하기 팝업 */}
+            {/* -- 등록불가 팝업 */}
+            {cantModal && <CantModal onClose={onClose}></CantModal>}
           </div>
         </>
       ))}
@@ -315,41 +346,9 @@ const [deleteStates, setDeleteStates] = useState({});
 
 export default ReceiveComment;
 
+
 // 질문 등록 시간과 현재 시간 사이의 차이를 계산하는 함수
 function getTimeDifference(createdTime) {
-  ZoneRulesProvider.getRules("Asia/Seoul"); // "Asia/Seoul" 시간대 등록
-  const koreaSeoulZoneId = ZoneId.of("Asia/Seoul"); // "Asia/Seoul" 시간대 설정
-
-  const currentTime = LocalDateTime.now(koreaSeoulZoneId);
-  const parsedCreatedTime = LocalDateTime.parse(
-    createdTime,
-    DateTimeFormatter.ISO_DATE_TIME
-  );
-  const zonedCreatedTime = parsedCreatedTime.atZone(koreaSeoulZoneId);
-  const timeDiff = zonedCreatedTime.until(currentTime, ChronoUnit.MINUTES);
-
-  console.log("parsedCreatedTime: ", parsedCreatedTime);
-
-  console.log("timeDiff: ", timeDiff);
-
-  if (timeDiff < 1) {
-    return "방금 전";
-  } else if (timeDiff < 60) {
-    return `${timeDiff}분 전`;
-  } else if (timeDiff < 60 * 24) {
-    const hours = Math.floor(timeDiff / 60);
-    return `${hours}시간 전`;
-  } else if (timeDiff < 60 * 24 * 7) {
-    const days = Math.floor(timeDiff / (60 * 24));
-    return `${days}일 전`;
-  } else if (timeDiff < 60 * 24 * 30) {
-    const weeks = Math.floor(timeDiff / (60 * 24 * 7));
-    return `${weeks}주 전`;
-  } else if (timeDiff < 60 * 24 * 365) {
-    const months = Math.floor(timeDiff / (60 * 24 * 30));
-    return `${months}달 전`;
-  } else {
-    const years = Math.floor(timeDiff / (60 * 24 * 365));
-    return `${years}년 전`;
-  }
+  return moment(createdTime).locale("ko").fromNow();
 }
+

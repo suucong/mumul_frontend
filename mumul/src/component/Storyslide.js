@@ -5,11 +5,13 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import { getFollowingList } from "../api/getFollowingList";
 import { getSpaceInfo } from "../api/getSpaceInfo";
+import { getFollowerList } from "../api/getFollowerList";
 
 
-function Storyslide({spaceId}) {
+function Storyslide({spaceId, followSelected}) {
   const [swiperRef, setSwiperRef] = useState(null);
   const [followingList, setFollowingList] = useState([]);
+  const [followerList, setFollowerList] = useState([]);
   const [spaceInfo, setSpaceInfo] = useState({
     userId: '',
     picture: '',
@@ -20,10 +22,12 @@ function Storyslide({spaceId}) {
     const fetchData = async () => {
       try {
         const response = await getFollowingList(spaceId);
+        const followerlist = await getFollowerList(spaceId);
         const spaceUserInfo = await getSpaceInfo(spaceId);
 
         setSpaceInfo(spaceUserInfo);
         setFollowingList(response);
+        setFollowerList(followerlist);
       } catch (error) {
         console.error(error);
       }
@@ -78,12 +82,32 @@ function Storyslide({spaceId}) {
           <img src={spaceInfo.picture} alt="" className="storyImg MyImg" />
           <p className="stroryId Me">{spaceInfo.name}</p>
         </SwiperSlide>
-        {followingList.map((item) => (
-            <SwiperSlide key={item.userId}>
-              <img src={item.picture} alt="" className="storyImg MyImg"  onClick={() => window.location.href = `/space/${spaceId}`}/>
-              <p className="stroryId Me">{item.name}</p>
-            </SwiperSlide>
-          ))}
+        {
+  followSelected
+    ? followingList.map((item) => (
+        <SwiperSlide key={item.userId}>
+          <img
+            src={item.picture}
+            alt=""
+            className="storyImg followImg"
+            onClick={() => (window.location.href = `/space/${item.userId}`)}
+          />
+          <p className="stroryId Me">{item.name}</p>
+        </SwiperSlide>
+      ))
+    : followerList.map((item) => (
+        <SwiperSlide key={item.userId}>
+          <img
+            src={item.picture}
+            alt=""
+            className="storyImg followImg"
+            onClick={() => (window.location.href = `/space/${item.userId}`)}
+          />
+          <p className="stroryId Me">{item.name}</p>
+        </SwiperSlide>
+      ))
+}
+
       </Swiper>
     </div>
   );

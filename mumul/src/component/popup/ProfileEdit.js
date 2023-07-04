@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import Close from "../../img/icon/close.png";
-import MyprofileImg from "../../img/Ellipse 104.png";
 import { putUserProfileEdit } from "../../api/putUserProfileEdit";
 
 function ProfileEdit({ onClose, userId, name, picture, introduce, instaId, link }) {
@@ -53,6 +52,7 @@ function ProfileEdit({ onClose, userId, name, picture, introduce, instaId, link 
 
     const response = putUserProfileEdit(userId, formData);
     console.log(response.data);
+    window.location.reload();
   };
 
   return (
@@ -108,7 +108,9 @@ function ProfileEdit({ onClose, userId, name, picture, introduce, instaId, link 
                   <input type="text" id="link" ref={linkInput} defaultValue={link}/>
                 </div>
                 <div className="btn">
-                  <button className="editProfile active" type="submit" onClick={() => window.location.reload()}>
+                  <button className="editProfile active" type="submit" onClick={() => {
+                    window.location.reload();
+                    setTimeout(() => window.location.reload(), 1000);}}>
                     수정하기
                   </button>
                 </div>

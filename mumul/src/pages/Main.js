@@ -10,7 +10,7 @@ import { getSpaceInfo } from "../api/getSpaceInfo";
 import { getUserInfo } from "../api/getUserInfo";
 
 
-function Main({isLogin,setIsLogin}) {
+function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
   const {id} = useParams();
   const [info, setInfo] = useState({
     userId: '',
@@ -34,7 +34,7 @@ function Main({isLogin,setIsLogin}) {
       setInfo(newInfo);
     };
     initUserInfo();
-  }, [id]);
+  }, [id, isLogin, followSelected]);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -59,11 +59,13 @@ function Main({isLogin,setIsLogin}) {
     <div className="wrap">
       <Header isLogin={isLogin} setIsLogin={setIsLogin}></Header>
       <div className="contentWrap">
-        <Storyslide spaceId={id}></Storyslide>
+        <Storyslide spaceId={id} followSelected={followSelected}></Storyslide>
         {currentUserInfo.userId === info.userId ? (
-            <MyProfile userId={currentUserInfo.userId} name={currentUserInfo.name} picture={currentUserInfo.picture} introduce={currentUserInfo.introduce} instaId={currentUserInfo.instaId} link={currentUserInfo.link} ></MyProfile>
+            <MyProfile userId={currentUserInfo.userId} name={currentUserInfo.name} picture={currentUserInfo.picture} introduce={currentUserInfo.introduce} instaId={currentUserInfo.instaId} link={currentUserInfo.link} 
+            followSelected={followSelected} setFollowSelected={setFollowSelected}></MyProfile>
           ) : (
-            <QuestionerProfile info={info} spaceId={info.userId} currentUserId={currentUserInfo.userId}name={info.name} picture={info.picture} currentUserInfo={currentUserInfo}></QuestionerProfile>
+            <QuestionerProfile info={info} spaceId={info.userId} currentUserId={currentUserInfo.userId}name={info.name} picture={info.picture} currentUserInfo={currentUserInfo}
+            followSelected={followSelected} setFollowSelected={setFollowSelected}></QuestionerProfile>
         )}
         <ul className="tabMenu">
           {tabContArr.map((item) => (

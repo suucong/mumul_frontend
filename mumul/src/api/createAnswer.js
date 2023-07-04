@@ -1,5 +1,5 @@
 import axios from "axios";
-import {Comment} from "../component/Comment"
+import { LocalDateTime } from "js-joda";
 
 
 export const createAnswer = async (id, currentUserInfo, answerText, btn, questionId) => {
@@ -14,7 +14,7 @@ export const createAnswer = async (id, currentUserInfo, answerText, btn, questio
         userName: currentUserInfo.name,
         answerText: answerText,
         alternativeAnswerText:"",
-        createdTime: new Date(),
+        createdTime: LocalDateTime.now(),
         questionId: questionId
       },
       {

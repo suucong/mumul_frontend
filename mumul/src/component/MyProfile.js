@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileEdit from "../component/popup/ProfileEdit";
 import MyprofileImg from "../img/Ellipse 104.png";
 import InstaLogo from "../img/icon/instaLogo.jpeg";
 import CloseIcon from "../img/icon/close.png"; 
+import { getFollowingNumber } from "../api/getFollowingNumber";
+import { getFollwerNumber } from "../api/getFollowerNumber";
 
-function MyProfile({ userId, name, picture, introduce, instaId, link }) {
+
+function MyProfile({ userId, name, picture, introduce, instaId, link, followSelected, setFollowSelected }) {
   const [modal, setModal] = useState(false);
+  const [followingNumber, setFollowingNumber] = useState(null);
+  const [followerNumber, setFollowerNumber] = useState(null);
 
   const onClickEdit = () => {
     setModal(true);
@@ -14,6 +19,33 @@ function MyProfile({ userId, name, picture, introduce, instaId, link }) {
   const onClose = () => {
     setModal(false);
   };
+
+  const onClickFollowing = () => {
+    setFollowSelected(true);
+    console.log(followSelected);
+  }
+
+  const onClickFollower = () => {
+    setFollowSelected(false);
+    console.log(followSelected);
+  }
+
+  useEffect(() => {
+    getFollowingNumber(userId)
+      .then((result) => {
+        setFollowingNumber(result);
+      })
+      .catch((error) => {
+        console.error('getFollowingNumber Error: ', error.message);
+      });
+    getFollwerNumber(userId)
+      .then((result) => {
+        setFollowerNumber(result);
+      })
+      .catch((error) => {
+        console.error('getFollowerNumber Error: ', error.message)
+      })
+  }, [userId]);
 
   return (
     <div className="myProfileWrap">
@@ -45,11 +77,11 @@ function MyProfile({ userId, name, picture, introduce, instaId, link }) {
           </a>
         </p>
         <div className="follow">
-          <p className="follower">
-            팔로워 <span className="num">15</span>
+          <p className={`follower ${followSelected ? 'followerGray' : ''}`} onClick={onClickFollower}>
+            팔로워 <span className="num">{followerNumber}</span>
           </p>
-          <p className="following">
-            팔로잉 <span className="num">15</span>
+          <p className={`following ${followSelected ? '' : 'followingGray'}`} onClick={onClickFollowing}>
+            팔로잉 <span className="num">{followingNumber}</span>
           </p>
         </div>
       </div>

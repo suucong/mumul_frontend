@@ -3,13 +3,19 @@ import React, { useState, useEffect } from "react";
 import Header from "../component/Header";
 import Comment from "../component/Comment";
 import { getUserInfo } from "../api/getUserInfo";
+import { LocalDateTime } from "js-joda";
+
 
 const Intro = ({isLogin}) => {
+  console.log("new Date: ", new Date());
+  const currentDateTime = LocalDateTime.now();
+  console.log("Current LocalDateTime: ", currentDateTime);
+  
+
   const [userInfo, setUserInfo] = useState({
     userId: '',
   });
   console.log(userInfo.userId);
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchUserInfo = async () => {
