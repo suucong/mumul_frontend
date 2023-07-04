@@ -10,8 +10,7 @@ import { getSpaceInfo } from "../api/getSpaceInfo";
 import { getUserInfo } from "../api/getUserInfo";
 
 
-function Main({isLogin, setIsLogin}) {
-
+function Main({isLogin,setIsLogin}) {
   const {id} = useParams();
   const [info, setInfo] = useState({
     userId: '',
@@ -35,7 +34,7 @@ function Main({isLogin, setIsLogin}) {
       setInfo(newInfo);
     };
     initUserInfo();
-  }, [id, isLogin]);
+  }, [id]);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -43,7 +42,7 @@ function Main({isLogin, setIsLogin}) {
     {
       id: 0,
       tabTitle: "받은 질문",
-      tabCont: <ReceiveComment spaceId={id}></ReceiveComment>,
+      tabCont: <ReceiveComment spaceId={id} currentUserInfo={currentUserInfo}></ReceiveComment>,
     },
     {
       id: 1,

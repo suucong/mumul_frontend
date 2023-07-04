@@ -18,7 +18,7 @@ import { DateTimeFormatter, LocalDateTime, ChronoUnit } from "js-joda";
 import { ZoneId, ZoneRulesProvider } from "js-joda-timezone";
 import AnswerRegister from "./popup/AnswerRegister";
 
-function ReceiveComment({ spaceId }) {
+function ReceiveComment({ spaceId , currentUserInfo}) {
 
   const [receivedComments, setReceivedComments] = useState([]);
 
@@ -73,6 +73,10 @@ function ReceiveComment({ spaceId }) {
   const [delModal, setDelModal] = useState(false);
 
   const [answerModal, setAnswerModal] = useState(false);
+
+  // 선택한 질문의 고유 ID를 상태값에 저장
+  const [selectedQuestionId, setSelectedQuestionId] = useState([]);
+
 
   //하트 상태값에 따른 이미지 변경 함수
   const clickHeart = () => {
@@ -145,8 +149,9 @@ function ReceiveComment({ spaceId }) {
       setShare_1(true);
     }
   };
-  const showAnswerModal = () => {
+  const showAnswerModal = (questionId) => {
     setAnswerModal(true);
+    setSelectedQuestionId(questionId); // 선택한 질문의 ID를 상태값에 저장
   };
 
   const closeAnswerModal = () => {
@@ -184,7 +189,7 @@ function ReceiveComment({ spaceId }) {
                   src={Comment}
                   alt="comment"
                   className="chat"
-                  onClick={showAnswerModal}
+                  onClick={showAnswerModal(received.id)}
                 />
               </div>
               <div className="more">
@@ -228,6 +233,7 @@ function ReceiveComment({ spaceId }) {
             <div className="cnt">
                 <p className="Nicname">{spaceOwner.name}</p>
               <p className="min">???</p>
+
               {received.answers.length === 0  ? (
                 <UntilAnswering></UntilAnswering>
               ) : (
@@ -270,7 +276,7 @@ function ReceiveComment({ spaceId }) {
           </div>
         </>
       ))}
-       {answerModal && <AnswerRegister CloseAnswerModal={closeAnswerModal}></AnswerRegister> }
+       {answerModal && <AnswerRegister CloseAnswerModal={closeAnswerModal} currentUserInfo={currentUserInfo} questionId={selectedQuestionId}></AnswerRegister> }
     </>
   );
 }

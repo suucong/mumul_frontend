@@ -25,7 +25,7 @@ const Intro = ({isLogin}) => {
       <div className="contentWrap">
         <p className="introTitle">🐇토끼🐇로 무물에 녹아 들자</p>
         <Comment></Comment>
-        {(!token || token === "null") ? (
+        {(userInfo.userId === undefined) ? (
             <Link to="/login" className="goSpace">
               <button className="space">스페이스 입장</button>
             </Link>

@@ -4,6 +4,7 @@ import {Comment} from "../component/Comment"
 
 export const createQuestion = async (info, id, currentUserInfo, questionText, btn) => {
   console.log("익명여부: "+btn)
+  const token = localStorage.getItem('token');
   try {
     const response = await axios.post(
       `/spaces/${id}/question/create`,
@@ -19,7 +20,9 @@ export const createQuestion = async (info, id, currentUserInfo, questionText, bt
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + token
         },
       }
     );

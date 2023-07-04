@@ -6,7 +6,7 @@ import { postFollow } from "../api/postFollow";
 import { postUnFollow } from "../api/postUnFollow";
 import { getIsFollow } from "../api/getIsFollow";
 
-function QuestionerProfile({info, spaceId, currentUserId, name, picture, currentUserInfo }) {
+function QuestionerProfile({info, spaceId, currentUserId, name, picture, currentUserInfo, token }) {
   const [queModal, setQueModal] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
 
@@ -81,7 +81,7 @@ function QuestionerProfile({info, spaceId, currentUserId, name, picture, current
           </div>
         </div>
       </div>
-      {queModal && <QuestionRegister info={info} currentUserInfo={currentUserInfo} onClose={onClose}></QuestionRegister>}
+      {queModal && <QuestionRegister info={info} currentUserInfo={currentUserInfo} onClose={onClose} token={token}></QuestionRegister>}
     </>
   );
 }
