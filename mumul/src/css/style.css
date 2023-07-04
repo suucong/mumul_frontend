@@ -356,6 +356,21 @@ button.space {
 .follow p.follower {
   padding-right: 16px;
 }
+
+.follow p.followerGray {
+  padding-right: 16px;
+  color: gray;
+}
+
+.follow p.following {
+  padding-right: 16px;
+}
+
+.follow p.followingGray {
+  padding-right: 16px;
+  color: gray;
+}
+
 .follow p span {
   font-weight: 400;
 }
@@ -668,6 +683,13 @@ button.space {
   border: 2px solid #496bbd;
   border-radius: 100%;
 }
+
+.storyImg.followImg {
+  width: 55px;
+  height: 55px;
+  border-radius: 100%;
+}
+
 .stroryId {
   font-size: 12px;
   text-align: center;

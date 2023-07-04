@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 
-export const getFollowingList = async (spaceId) => {
-    const path = `/spaces/following/${spaceId}`;
+export const getFollowingNumber = async (spaceId) => {
+    const path = `/spaces/followingNumber/${spaceId}`;
     const token = localStorage.getItem('token');
 
     try {
@@ -13,8 +13,9 @@ export const getFollowingList = async (spaceId) => {
             }
           });
 
-        return response.data.data;
+        return response.data;
     } catch (e) {
-        console.error('getFollowingList Error: ', e.message);
+        console.error('getFollowingNumber Error: ', e.message);
+        return false;
     }
 };

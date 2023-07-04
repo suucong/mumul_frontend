@@ -13,13 +13,15 @@ import "./css/style.css";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
+  const [followSelected, setFollowSelected] = useState(true);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Intro/>} />
         <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} />
-        <Route path="/space/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin}/>} />
+        <Route path="/space/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin} 
+        followSelected={followSelected} setFollowSelected={setFollowSelected}/>} />
         <Route path="/main2" element={<Main2 />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/setting" element={<Setting isLogin={isLogin} setIsLogin={setIsLogin}/>} />

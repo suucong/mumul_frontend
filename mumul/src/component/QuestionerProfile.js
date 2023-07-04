@@ -5,23 +5,65 @@ import InstaLogo from "../img/icon/instaLogo.jpeg";
 import { postFollow } from "../api/postFollow";
 import { postUnFollow } from "../api/postUnFollow";
 import { getIsFollow } from "../api/getIsFollow";
+import { getUserInfo } from "../api/getUserInfo";
+import { getFollowingNumber } from "../api/getFollowingNumber";
+import { getFollwerNumber } from "../api/getFollowerNumber";
 
-function QuestionerProfile({info, spaceId, currentUserId, name, picture, currentUserInfo }) {
+function QuestionerProfile({info, spaceId, currentUserId, name, picture, currentUserInfo, followSelected, setFollowSelected }) {
   const [queModal, setQueModal] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [followingNumber, setFollowingNumber] = useState(null);
+  const [followerNumber, setFollowerNumber] = useState(null);
+  const [userInfo, setUserInfo] = useState({
+    userId: '',
+  });
+
+  const onClickFollowing = () => {
+    setFollowSelected(true);
+    console.log(followSelected);
+  }
+
+  const onClickFollower = () => {
+    setFollowSelected(false);
+    console.log(followSelected);
+  }
 
   useEffect(() => {
+    const initUserInfo = async () => {
+      const currentUserInfo = await getUserInfo();
+      setUserInfo(currentUserInfo);
+    };
+    initUserInfo();
     getIsFollow(spaceId, currentUserId)
       .then((result) => {
-        setIsFollowing(result);
         setIsFollowing(result);
       })
       .catch((error) => {
         console.error('getIsFollow Error: ', error.message);
       });
-  }, [spaceId, currentUserId]);
+
+    getFollowingNumber(spaceId)
+      .then((result) => {
+        setFollowingNumber(result);
+      })
+      .catch((error) => {
+        console.error('getFollowingNuber Error: ', error.message);
+      });
+
+    getFollwerNumber(spaceId)
+      .then((result) => {
+        setFollowerNumber(result);
+      })
+      .catch((error) => {
+        console.error('getFollowerNumber Error: ', error.message);
+      }) 
+  }, [spaceId, currentUserId, followSelected]);
 
   const showQueModal = () => {
+    if (userInfo.userId === undefined) {
+      alert('로그인 하세요.');
+      return;
+    }
     setQueModal(true);
   };
 
@@ -29,12 +71,16 @@ function QuestionerProfile({info, spaceId, currentUserId, name, picture, current
     setQueModal(false);
   };
 
+
   const toggleFollowing = () => {
+    if (userInfo.userId === undefined) {
+      alert('로그인 하세요.');
+      return;
+    }
     if(isFollowing) {
       // 언팔로우
       postUnFollow(spaceId, currentUserId);
     } else {
-      // 팔로우
       postFollow(spaceId, currentUserId);
     }
     setIsFollowing(!isFollowing);
@@ -72,13 +118,13 @@ function QuestionerProfile({info, spaceId, currentUserId, name, picture, current
             </a>
           </p>
           <div className="follow">
-            <p className="follower">
-              팔로우 <span className="num">15</span>
-            </p>
-            <p className="following">
-              팔로잉 <span className="num">15</span>
-            </p>
-          </div>
+          <p className={`follower ${followSelected ? 'followerGray' : ''}`} onClick={onClickFollower}>
+            팔로워 <span className="num">{followerNumber}</span>
+          </p>
+          <p className={`following ${followSelected ? '' : 'followingGray'}`} onClick={onClickFollowing}>
+            팔로잉 <span className="num">{followingNumber}</span>
+          </p>
+        </div>
         </div>
       </div>
       {queModal && <QuestionRegister info={info} currentUserInfo={currentUserInfo} onClose={onClose}></QuestionRegister>}
