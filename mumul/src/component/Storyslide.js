@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
-import Profile1 from "../img/Ellipse 102.png";
-import Profile2 from "../img/Ellipse 103.png";
-import Profile3 from "../img/Ellipse 104.png";
-import Profile4 from "../img/Ellipse 105.png";
-import Profile5 from "../img/Ellipse 106.png";
-import Profile6 from "../img/Ellipse 107.png";
-import Profile7 from "../img/Ellipse 108.png";
-import Profile8 from "../img/Ellipse 109.png";
-import Profile9 from "../img/Ellipse 110.png";
-import Profile10 from "../img/Ellipse 111.png";
 import { getFollowingList } from "../api/getFollowingList";
+import { getSpaceInfo } from "../api/getSpaceInfo";
+
 
 function Storyslide({spaceId}) {
   const [swiperRef, setSwiperRef] = useState(null);
   const [followingList, setFollowingList] = useState([]);
+  const [spaceInfo, setSpaceInfo] = useState({
+    userId: '',
+    picture: '',
+    name: '',
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getFollowingList(spaceId);
+        const spaceUserInfo = await getSpaceInfo(spaceId);
+
+        setSpaceInfo(spaceUserInfo);
         setFollowingList(response);
       } catch (error) {
         console.error(error);
@@ -76,15 +75,13 @@ function Storyslide({spaceId}) {
         onSwiper={(SwiperSlide) => setSwiperRef(SwiperSlide)}
       >
         <SwiperSlide>
-          <img src={Profile1} alt="" className="storyImg MyImg" />
-          <p className="stroryId Me">Me</p>
+          <img src={spaceInfo.picture} alt="" className="storyImg MyImg" />
+          <p className="stroryId Me">{spaceInfo.name}</p>
         </SwiperSlide>
         {followingList.map((item) => (
             <SwiperSlide key={item.userId}>
-              <img src={item.picture} alt="" className="storyImg MyImg" />
-              <Link to={`/space/${item.userId}`} className="stroryId Me">
-                {item.name}
-              </Link>
+              <img src={item.picture} alt="" className="storyImg MyImg"  onClick={() => window.location.href = `/space/${spaceId}`}/>
+              <p className="stroryId Me">{item.name}</p>
             </SwiperSlide>
           ))}
       </Swiper>

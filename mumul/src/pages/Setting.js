@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../component/Header";
 import NoneMember from "../component/popup/NoneMember";
 
-function Setting() {
+function Setting({isLogin, setIsLogin}) {
   const [settingModal, setSettingModal] = useState(false);
 
   const onOpenModal = () => {
@@ -14,7 +14,7 @@ function Setting() {
   };
   return (
     <div className="wrap">
-      <Header></Header>
+      <Header isLogin={isLogin} setIsLogin={setIsLogin}></Header>
       <div className="contentWrap setting">
         <div className="switchWrap">
           <div>

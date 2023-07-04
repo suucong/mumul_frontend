@@ -2,18 +2,17 @@ import axios from 'axios';
 
 export const getUserInfo = async () => {
   const path = '/v1/oauth/user/info';
-  const token = localStorage.getItem('token');
 
   try {
     const response = await axios.get(path, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: 'Bearer ' + token
-      }
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      },
+      cache: 'no-cache' // 캐시를 비우는 옵션 추가
     });
-
-    console.log("token: "+token);
+    
     console.log("getUserInfo: "+response.data);
 
     if (response.status !== 200) {

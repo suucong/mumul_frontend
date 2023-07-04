@@ -10,7 +10,7 @@ import { getSpaceInfo } from "../api/getSpaceInfo";
 import { getUserInfo } from "../api/getUserInfo";
 
 
-function Main({isLogin,setIsLogin}) {
+function Main({isLogin, setIsLogin}) {
 
   const {id} = useParams();
   const [info, setInfo] = useState({
@@ -35,7 +35,7 @@ function Main({isLogin,setIsLogin}) {
       setInfo(newInfo);
     };
     initUserInfo();
-  }, [id]);
+  }, [id, isLogin]);
 
   const [activeIndex, setActiveIndex] = useState(0);
 

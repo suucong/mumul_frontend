@@ -1,7 +1,7 @@
 // App.js
 
-import React, { useEffect, useState} from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Intro from "./pages/Intro";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
@@ -10,8 +10,6 @@ import Policy from "./pages/Policy";
 import Setting from "./pages/Setting";
 import "./css/reset.css";
 import "./css/style.css";
-import { GoogleLogin } from "react-google-login";
-import { getUserInfo } from "./api/getUserInfo";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -19,12 +17,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Intro />} />
-        <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />} />
-        <Route path="/space/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin} />} />
+        <Route path="/" element={<Intro/>} />
+        <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} />
+        <Route path="/space/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin}/>} />
         <Route path="/main2" element={<Main2 />} />
         <Route path="/policy" element={<Policy />} />
-        <Route path="/setting" element={<Setting />} />
+        <Route path="/setting" element={<Setting isLogin={isLogin} setIsLogin={setIsLogin}/>} />
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </BrowserRouter>
