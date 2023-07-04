@@ -8,15 +8,17 @@ const Intro = ({isLogin}) => {
   const [userInfo, setUserInfo] = useState({
     userId: '',
   });
-  console.log(userInfo.userId);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const data = await getUserInfo();
-      setUserInfo(data);
+      if (!isLogin) {
+        return;
+      }
+      const currenUuserInfo = await getUserInfo();
+      setUserInfo(currenUuserInfo);
     };
     fetchUserInfo();
-  }, []);
+  }, [isLogin]);
 
   return (
     <div className="wrap intro">
@@ -24,7 +26,7 @@ const Intro = ({isLogin}) => {
       <div className="contentWrap">
         <p className="introTitle">🐇토끼🐇로 무물에 녹아 들자</p>
         <Comment></Comment>
-        {(userInfo.userId === undefined) ? (
+        {(!isLogin) ? (
             <Link to="/login" className="goSpace">
               <button className="space">스페이스 입장</button>
             </Link>

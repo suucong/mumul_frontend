@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { postLoginToken } from "../api/postLoginToken";
 import GoogleLogin from "../component/GoogleLogin";
@@ -7,9 +7,7 @@ import { getUserInfo } from "../api/getUserInfo";
 
 const Login = ({ isLogin, setIsLogin }) => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const userInfo = getUserInfo();
-
+  
   const onGoogleSignIn = async (res) => {
     const { credential } = res;
     const result = await postLoginToken(credential);
@@ -19,7 +17,6 @@ const Login = ({ isLogin, setIsLogin }) => {
   };
 
   useEffect(() => {
-    console.log(isLogin);
     const initLogin = async () => {
       if (!isLogin) {
         return;
