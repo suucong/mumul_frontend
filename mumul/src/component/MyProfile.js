@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ProfileEdit from "../component/popup/ProfileEdit";
-import MyprofileImg from "../img/Ellipse 104.png";
 import InstaLogo from "../img/icon/instaLogo.jpeg";
-import CloseIcon from "../img/icon/close.png"; 
-import { getFollowingNumber } from "../api/getFollowingNumber";
-import { getFollwerNumber } from "../api/getFollowerNumber";
+import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
+import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
 
 
 function MyProfile({ userId, name, picture, introduce, instaId, link, followSelected, setFollowSelected }) {
@@ -31,7 +29,9 @@ function MyProfile({ userId, name, picture, introduce, instaId, link, followSele
   }
 
   useEffect(() => {
-    getFollowingNumber(userId)
+    if(userId === '' || userId === undefined) {
+      return;
+    } else {getFollowingNumber(userId)
       .then((result) => {
         setFollowingNumber(result);
       })
@@ -44,7 +44,7 @@ function MyProfile({ userId, name, picture, introduce, instaId, link, followSele
       })
       .catch((error) => {
         console.error('getFollowerNumber Error: ', error.message)
-      })
+      })}
   }, [userId]);
 
   return (
@@ -63,7 +63,7 @@ function MyProfile({ userId, name, picture, introduce, instaId, link, followSele
         <p className="snsLink">
           <img src={InstaLogo} alt="instaLogo" />
 
-          <a href={'https://www.instagram.com/' + instaId} target="_blank">
+          <a href={'https://www.instagram.com/' + instaId} target="_blank" rel="noreferrer">
             <span>{instaId}</span>
           </a>
         </p>
@@ -72,6 +72,7 @@ function MyProfile({ userId, name, picture, introduce, instaId, link, followSele
           <a
             href={link}
             target="_blank"
+            rel="noreferrer"
           >
             {link}
           </a>

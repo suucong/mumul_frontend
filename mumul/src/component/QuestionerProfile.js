@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import QuestionRegister from "./popup/QuestionRegister";
 import InstaLogo from "../img/icon/instaLogo.jpeg";
 
-import { postFollow } from "../api/postFollow";
-import { postUnFollow } from "../api/postUnFollow";
-import { getIsFollow } from "../api/getIsFollow";
+import { postFollow } from "../api/Follow/postFollow";
+import { postUnFollow } from "../api/Follow/postUnFollow";
+import { getIsFollow } from "../api/Follow/getIsFollow";
 import { getUserInfo } from "../api/getUserInfo";
-import { getFollowingNumber } from "../api/getFollowingNumber";
-import { getFollwerNumber } from "../api/getFollowerNumber";
+import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
+import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
 
 function QuestionerProfile({info, spaceId, currentUserId, name, picture, currentUserInfo, followSelected, setFollowSelected }) {
   const [queModal, setQueModal] = useState(false);
@@ -80,8 +80,10 @@ function QuestionerProfile({info, spaceId, currentUserId, name, picture, current
     if(isFollowing) {
       // 언팔로우
       postUnFollow(spaceId, currentUserId);
+      window.location.reload();
     } else {
       postFollow(spaceId, currentUserId);
+      window.location.reload();
     }
     setIsFollowing(!isFollowing);
   };
@@ -113,7 +115,7 @@ function QuestionerProfile({info, spaceId, currentUserId, name, picture, current
           </p>
           <p className="snsLink">
             <img src={InstaLogo} alt="instaLogo" />
-            <a href="https://www.instagram.com/2ruka_/" target="_blank">
+            <a href="https://www.instagram.com/2ruka_/" target="_blank" rel="noreferrer">
               <span>https://www.instagram.com/2ruka_/</span>
             </a>
           </p>

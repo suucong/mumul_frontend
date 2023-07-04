@@ -5,6 +5,8 @@ export const postUnFollow = async (spaceId, currentUserId) => {
 
     try {
         const response = await axios.post(path, {spaceId, currentUserId});
+
+        return response.data;
     } catch (e) {
         console.error('postFollow Error: ', e.message);
     }

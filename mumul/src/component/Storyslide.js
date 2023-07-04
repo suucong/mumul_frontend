@@ -3,9 +3,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
-import { getFollowingList } from "../api/getFollowingList";
+import { getFollowingList } from "../api/Follow/getFollowingList";
 import { getSpaceInfo } from "../api/getSpaceInfo";
-import { getFollowerList } from "../api/getFollowerList";
+import { getFollowerList } from "../api/Follow/getFollowerList";
 
 
 function Storyslide({spaceId, followSelected}) {
