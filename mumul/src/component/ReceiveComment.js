@@ -16,7 +16,7 @@ import { getSpaceInfo } from "../api/getSpaceInfo";
 import UntilAnswering from "./UntilAnswering";
 import { DateTimeFormatter, LocalDateTime, ChronoUnit } from "js-joda";
 import { ZoneId, ZoneRulesProvider } from "js-joda-timezone";
-
+import AnswerRegister from "./popup/AnswerRegister";
 
 function ReceiveComment({ spaceId }) {
 
@@ -72,7 +72,7 @@ function ReceiveComment({ spaceId }) {
   //삭제 모달 오픈 상태값
   const [delModal, setDelModal] = useState(false);
 
-  const [answerModal, setAnswerMoal] = useState(false);
+  const [answerModal, setAnswerModal] = useState(false);
 
   //하트 상태값에 따른 이미지 변경 함수
   const clickHeart = () => {
@@ -146,11 +146,11 @@ function ReceiveComment({ spaceId }) {
     }
   };
   const showAnswerModal = () => {
-    setAnswerMoal(true);
+    setAnswerModal(true);
   };
 
-  const CloseAnswerModal = () => {
-    setAnswerMoal(false);
+  const closeAnswerModal = () => {
+    setAnswerModal(false);
   };
 
   const onClickcopy = () => {
@@ -270,6 +270,7 @@ function ReceiveComment({ spaceId }) {
           </div>
         </>
       ))}
+       {answerModal && <AnswerRegister CloseAnswerModal={closeAnswerModal}></AnswerRegister> }
     </>
   );
 }
