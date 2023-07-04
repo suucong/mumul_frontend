@@ -3,16 +3,17 @@ import {Comment} from "../component/Comment"
 
 
 export const createAnswer = async (id, currentUserInfo, answerText, btn, questionId) => {
-  console.log("익명여부: "+btn)
+  console.log("익명여부: ", btn)
   try {
     const response = await axios.post(
-      `/spaces/${id}/answer/create`,
+      `/spaces/${id}/${questionId}/answer/create`,
       {
         isPublic: btn,
         sentUserPic: currentUserInfo.picture,
         userId: currentUserInfo.userId,
         userName: currentUserInfo.name,
         answerText: answerText,
+        alternativeAnswerText:"",
         createdTime: new Date(),
         questionId: questionId
       },
@@ -26,8 +27,7 @@ export const createAnswer = async (id, currentUserInfo, answerText, btn, questio
     );
 
     console.log("질문 등록 성공:", response.data);
-    // 추가적인 로직을 처리하거나 성공 후 작업을 수행합니다.
-   // Call the Comment function with the necessary props
+    return response.data;
   } catch (error) {
     if (error.response && error.response.status === 401) {
       console.error("로그인이 필요합니다.");

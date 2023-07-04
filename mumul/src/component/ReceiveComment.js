@@ -18,8 +18,7 @@ import { DateTimeFormatter, LocalDateTime, ChronoUnit } from "js-joda";
 import { ZoneId, ZoneRulesProvider } from "js-joda-timezone";
 import AnswerRegister from "./popup/AnswerRegister";
 
-function ReceiveComment({ spaceId , currentUserInfo}) {
-
+function ReceiveComment({ spaceId, currentUserInfo }) {
   const [receivedComments, setReceivedComments] = useState([]);
 
   const [spaceOwner, setSpaceOwner] = useState({
@@ -42,6 +41,10 @@ function ReceiveComment({ spaceId , currentUserInfo}) {
         console.log("receivedArray:", receivedArray);
         setReceivedComments(receivedArray);
         setSpaceOwner(spaInfo);
+
+         // deleteStates 배열을 모든 질문에 대해 초기화
+    const initialDeleteStates = receivedArray.map(() => false);
+    setDeleteStates(initialDeleteStates);
       } catch (error) {
         console.error("Error fetching received comments:", error);
       }
@@ -52,6 +55,9 @@ function ReceiveComment({ spaceId , currentUserInfo}) {
 
   // 질문데이터 배열 상태값
   const [questionData, setQuestionData] = useState([]);
+
+  // 질문 삭제 상태값
+const [deleteStates, setDeleteStates] = useState({});
 
   //하트 상태값
   const [heartState, setHeartState] = useState(false);
@@ -76,8 +82,15 @@ function ReceiveComment({ spaceId , currentUserInfo}) {
 
   // 선택한 질문의 고유 ID를 상태값에 저장
   const [selectedQuestionId, setSelectedQuestionId] = useState([]);
+  const [selectedQuestionUserId, setSelectedQuestionUserId] = useState([]);
+  const [selectedQuestionUserPic, setSelectedQuestionPic] = useState([]);
+  const [selectedQuestionText, setSelectedQuestionText] = useState([]);
 
 
+  // 선택한 질문의 인덱스
+  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(null);
+
+  
   //하트 상태값에 따른 이미지 변경 함수
   const clickHeart = () => {
     if (heartState) {
@@ -100,13 +113,13 @@ function ReceiveComment({ spaceId , currentUserInfo}) {
     }
   };
 
-  //삭제 상태값에 따른 더보기 버튼
-  const clickMore = () => {
-    if (del) {
-      setDelete(false);
-    } else {
-      setDelete(true);
-    }
+ // 클릭한 질문에 대한 삭제 상태값 변경
+  const clickMore = (index) => {
+    setDeleteStates((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[index]=!newStates[index];
+      return newStates;
+  });
   };
 
   const clickMore_1 = () => {
@@ -116,11 +129,13 @@ function ReceiveComment({ spaceId , currentUserInfo}) {
       setDelete_1(true);
     }
   };
-  //삭제하기 클릭 시 모달 오픈
-  const showDelModal = () => {
+
+  // 삭제하기 클릭 시 모달 오픈
+  const showDelModal = (index) => {
+    setSelectedQuestionIndex(index); // 선택한 질문의 인덱스를 상태값에 저장
     setDelModal(true);
-    setDelete(false);
   };
+
 
   // 삭제 팝업  닫기
   const onClose = (e) => {
@@ -149,9 +164,12 @@ function ReceiveComment({ spaceId , currentUserInfo}) {
       setShare_1(true);
     }
   };
-  const showAnswerModal = (questionId) => {
+  const showAnswerModal = (questionId, sentUserId, sentUserPic, questionText) => {
     setAnswerModal(true);
     setSelectedQuestionId(questionId); // 선택한 질문의 ID를 상태값에 저장
+    setSelectedQuestionUserId(sentUserId); // 선택한 질문의 유저 아이디를 상태값에 저장
+    setSelectedQuestionPic(sentUserPic); // 선택한 질문의 유저 사진값을 상태값에 저장
+    setSelectedQuestionText(questionText); // 선택한 질문의 내용 상태값에 저장
   };
 
   const closeAnswerModal = () => {
@@ -163,13 +181,10 @@ function ReceiveComment({ spaceId , currentUserInfo}) {
     alert("링크가 복사 되었습니다");
   };
 
-
-
   return (
-
     <>
-     {receivedComments.length === 0 && <p>첫 질문을 남겨 보세요👻</p>}
-      {receivedComments.map((received, index) => (
+      {receivedComments.length === 0 && <p>첫 질문을 남겨 보세요👻</p>}
+      {receivedComments.slice().reverse().map((received, index) => (
         <>
           <div key={index} className="commentWrap questionWrap">
             <div className="profileArea">
@@ -189,20 +204,27 @@ function ReceiveComment({ spaceId , currentUserInfo}) {
                   src={Comment}
                   alt="comment"
                   className="chat"
-                  onClick={showAnswerModal(received.id)}
+                  onClick={() =>
+                    showAnswerModal(
+                      received.id,
+                      received.userId,
+                      received.sentUserPic,
+                      received.questionText
+                    )
+                  }
                 />
               </div>
               <div className="more">
-                <img src={More} alt="more" onClick={clickMore} />
-                {del && (
-                  <div className="del" onClick={showDelModal}>
-                    <p>
-                      <img src={Bin} alt="btin" />
-                      삭제하기
-                    </p>
+                <img src={More} alt="more" onClick={() => clickMore(index)}/>
+                {deleteStates[index] && (
+                   <div className="del" onClick={() => showDelModal(index)}>
+                     <p>
+                       <img src={Bin} alt="btin" />
+                       삭제하기
+                     </p>
                   </div>
-                )}
-              </div>
+                  )}
+                </div>
               <div className="share">
                 <img src={Share} alt="share" onClick={showShareModal} />
                 {share && (
@@ -221,7 +243,6 @@ function ReceiveComment({ spaceId , currentUserInfo}) {
             </div>
           </div>
 
-
           <div className="commentWrap answerWrap">
             <div className="profileArea">
               <img
@@ -231,13 +252,15 @@ function ReceiveComment({ spaceId , currentUserInfo}) {
               />
             </div>
             <div className="cnt">
-                <p className="Nicname">{spaceOwner.name}</p>
-              <p className="min">???</p>
-
-              {received.answers.length === 0  ? (
+              <p className="Nicname">{spaceOwner.name}</p>
+        
+            {received.answers.length === 0 ? (  
                 <UntilAnswering></UntilAnswering>
-              ) : (
-                <AnonymousAnswer></AnonymousAnswer>
+              ) : ( 
+                <>
+                <p className="min">{received.answers[0].createdTime}</p>
+                <AnonymousAnswer answers={received.answers} />
+              </>
               )}
 
               <div className="heart">
@@ -276,7 +299,16 @@ function ReceiveComment({ spaceId , currentUserInfo}) {
           </div>
         </>
       ))}
-       {answerModal && <AnswerRegister CloseAnswerModal={closeAnswerModal} currentUserInfo={currentUserInfo} questionId={selectedQuestionId}></AnswerRegister> }
+      {answerModal && (
+        <AnswerRegister
+          CloseAnswerModal={closeAnswerModal}
+          currentUserInfo={currentUserInfo}
+          questionId={selectedQuestionId}
+          sentUserId={selectedQuestionUserId}
+          sentUserPic={selectedQuestionUserPic}
+          questionText={selectedQuestionText}
+        ></AnswerRegister>
+      )}
     </>
   );
 }
@@ -285,16 +317,16 @@ export default ReceiveComment;
 
 // 질문 등록 시간과 현재 시간 사이의 차이를 계산하는 함수
 function getTimeDifference(createdTime) {
-
   ZoneRulesProvider.getRules("Asia/Seoul"); // "Asia/Seoul" 시간대 등록
-const koreaSeoulZoneId = ZoneId.of("Asia/Seoul"); // "Asia/Seoul" 시간대 설정
-
+  const koreaSeoulZoneId = ZoneId.of("Asia/Seoul"); // "Asia/Seoul" 시간대 설정
 
   const currentTime = LocalDateTime.now(koreaSeoulZoneId);
-  const parsedCreatedTime = LocalDateTime.parse(createdTime, DateTimeFormatter.ISO_DATE_TIME);
+  const parsedCreatedTime = LocalDateTime.parse(
+    createdTime,
+    DateTimeFormatter.ISO_DATE_TIME
+  );
   const zonedCreatedTime = parsedCreatedTime.atZone(koreaSeoulZoneId);
   const timeDiff = zonedCreatedTime.until(currentTime, ChronoUnit.MINUTES);
-  
 
   console.log("parsedCreatedTime: ", parsedCreatedTime);
 

@@ -5,13 +5,13 @@ import Profile2 from "../../img/Ellipse 103.png";
 import { useParams } from "react-router-dom";
 import {createAnswer} from "../../api/createAnswer";
 
-function AnswerRegister({ CloseAnswerModal , currentUserInfo, questionId}) {
+function AnswerRegister({ CloseAnswerModal , currentUserInfo, questionId, sentUserId, sentUserPic, questionText}) {
 
   console.log("questionId: "+ questionId);
 
   const { id } = useParams();
   let [inputCount, setInputCount] = useState(0);
-  const [btn, setBtn] = useState(false);
+  const [btn, setBtn] = useState(true);
   //답변 텍스트를 저장하기 위한 state 변수
   const [answerText, setAnswerText] = useState("");
 
@@ -51,29 +51,29 @@ function AnswerRegister({ CloseAnswerModal , currentUserInfo, questionId}) {
           <div className="popupContent">
             <div className="profile que">
               <div>
-                <img src={Profile2} alt="profile" className="questioner" />
+                <img src={sentUserPic} alt="profile" className="questioner" />
               </div>
               <div>
-                <p className="myId id">익명의 토끼</p>
+                <p className="myId id">{sentUserId}</p>
                 <p className="queCnt">
-                  초심자도 정상에 오를 만한 노원의 산 알려주세요!
+                  {questionText}
                 </p>
               </div>
             </div>
             <div className="profile">
               <div>
-                <img src={Profile1} alt="profile" className="respondent" />
+                <img src={currentUserInfo.picture} alt="profile" className="respondent" />
               </div>
               <div>
-                <p className="myId id">stack-0-slack</p>
+                <p className="myId id">{currentUserInfo.name}</p>
                 {btn ? (
                   <button className="openBtn" onClick={clickBtn}>
-                    📢공개 답변
-                  </button>
+                  🔒질문자에게만 보이는 답변
+                </button>
                 ) : (
                   <button className="openBtn" onClick={clickBtn}>
-                    🔒질문자에게만 보이는 답변
-                  </button>
+                  📢공개 답변
+                </button>
                 )}
               </div>
             </div>

@@ -141,7 +141,7 @@ function SendComment({ spaceId, info }) {
   return (
     <>
       {sentComments.length === 0 && <p>첫 질문을 보내 보세요👻</p>}
-      {sentComments.map((sent, index) => (
+      {sentComments.slice().reverse().map((sent, index) => (
         <>
           <div key={index} className="commentWrap questionWrap">
             <div className="profileArea">
@@ -189,11 +189,14 @@ function SendComment({ spaceId, info }) {
             </div>
             <div className="cnt">
               <p className="Nicname">{sent.receivedUserName}</p>
-              <p className="min">???</p>
+           
               {sent.answers.length === 0  ? (
                 <UntilAnswering></UntilAnswering>
               ) : (
-                <AnonymousAnswer></AnonymousAnswer>
+                <>
+                <p className="min">{sent.answers[0].createdTime}</p>
+                <AnonymousAnswer answers={sent.answers} />
+              </>
               )}
               <div className="heart">
                 <img src={good} alt="good" onClick={clickGood} />
