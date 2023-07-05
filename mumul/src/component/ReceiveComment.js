@@ -201,7 +201,7 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
         .slice()
         .reverse()
         .map((received, index) => (
-          <>
+          <React.Fragment key={index}>
             <div key={index} className="commentWrap questionWrap">
               <div className="profileArea">
                 <img
@@ -336,7 +336,7 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
               {/* -- 등록불가 팝업 */}
               {cantModal && <CantModal onClose={onClose}></CantModal>}
             </div>
-          </>
+          </React.Fragment>
         ))}
       {answerModal && (
         <AnswerRegister

@@ -167,11 +167,11 @@ a {
   max-height: 250px;
   height: 250px;
 } */
-.commentWrap.answerWrap::after {
+.commentWrap.answerWrap::before {
   display: block;
   content: "";
   width: 2px;
-  height: 100%;
+  height: 105%;
   background-color: #000;
   position: absolute;
   left: 55px;
@@ -700,6 +700,12 @@ button.space {
   color: #496bbd;
   font-weight: 700;
 }
+
+.stroryId.Others {
+  color: black;
+  font-weight: 700;
+}
+
 .swiper-button-next.swiper-button-disabled,
 .swiper-button-prev.swiper-button-disabled {
   opacity: 0;

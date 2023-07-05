@@ -103,7 +103,7 @@ function Storyslide({spaceId, followSelected}) {
             className="storyImg followImg"
             onClick={() => (window.location.href = `/space/${item.userId}`)}
           />
-          <p className="stroryId Me">{item.name}</p>
+          <p className="stroryId Others">{item.name}</p>
         </SwiperSlide>
       ))
 }

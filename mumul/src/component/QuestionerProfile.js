@@ -25,14 +25,15 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
   }
 
   useEffect(() => {
-    getIsFollow(spaceUserInfo.userId)
+    if (currentUserInfo.userId !== '') {
+      getIsFollow(spaceUserInfo.userId)
       .then((result) => {
         setIsFollowing(result);
       })
       .catch((error) => {
         console.error('getIsFollow Error: ', error.message);
       });
-
+    }
     getFollowingNumber(spaceUserInfo.userId)
       .then((result) => {
         setFollowingNumber(result);
@@ -48,10 +49,10 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
       .catch((error) => {
         console.error('getFollowerNumber Error: ', error.message);
       }) 
-  }, [spaceUserInfo.userId, followSelected]);
+  }, [currentUserInfo.userId, spaceUserInfo.userId, followSelected]);
 
   const showQueModal = () => {
-    if (currentUserInfo.userId === undefined) {
+    if (currentUserInfo.userId === '') {
       alert('로그인 하세요.');
       return;
     }
@@ -64,7 +65,7 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
 
 
   const toggleFollowing = () => {
-    if (currentUserInfo.userId === undefined) {
+    if (currentUserInfo.userId === '') {
       alert('로그인 하세요.');
       return;
     }
@@ -110,6 +111,16 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
               <span>{spaceUserInfo.instaId}</span>
             </a>
           </p>
+          <p className="mylink">
+          <span>🔗</span>
+          <a
+            href={currentUserInfo.link}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {currentUserInfo.link}
+          </a>
+        </p>
           <div className="follow">
           <p className={`follower ${followSelected ? 'followerGray' : ''}`} onClick={onClickFollower}>
             팔로워 <span className="num">{followerNumber}</span>

@@ -1,68 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Profile from "./../img/Ellipse 102.png";
 import { logoutUserToken } from "../api/logoutUserToken";
-import { getUserInfo } from "../api/getUserInfo";
 
-function Header({ isLogin, setIsLogin }) {
+function Header({ isLogin, setIsLogin, currentUserInfo }) {
   const [modal, setModal] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    userId: '',
-    name: '',
-    picture: '',
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const currentUserInfo = await getUserInfo();
-        setUserInfo(currentUserInfo);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  
 
   return (
     <header className="header">
       <h1 className="title"> MUMUL</h1>
       <div className="profile" onClick={() => setModal(!modal)}>
       <img
-          src={userInfo.userId !== undefined ? userInfo.picture : Profile}
+          src={currentUserInfo.userId !== '' ? currentUserInfo.picture : Profile}
           alt="profile"
         />
       </div>
       {modal && (
-        <HeaderPopup isLogin={isLogin} setIsLogin={setIsLogin} />
+        <HeaderPopup isLogin={isLogin} setIsLogin={setIsLogin} currentUserInfo={currentUserInfo}/>
       )}
     </header>
   );
 }
 
-function HeaderPopup({ isLogin, setIsLogin }) {
+function HeaderPopup({ isLogin, setIsLogin, currentUserInfo }) {
   const token = localStorage.getItem("token");
-  const [userInfo, setUserInfo] = useState({
-    userId: '',
-    name: '',
-    picture: '',
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const currentUserInfo = await getUserInfo();
-        setUserInfo(currentUserInfo);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const handleLogout = async () => {
     try {
@@ -82,7 +43,7 @@ function HeaderPopup({ isLogin, setIsLogin }) {
   };
 
   const handleClickMySpace = () => {
-    if (userInfo.userId === undefined) {
+    if (currentUserInfo.userId === '') {
       alert("로그인 하세요.");
       return;
     }
@@ -91,7 +52,7 @@ function HeaderPopup({ isLogin, setIsLogin }) {
   return (
     <ul className="headerPopup">
       <li className="list" onClick={handleClickMySpace}>
-        <Link to={userInfo.userId !== undefined ? '/space/' + userInfo.userId : '#'}>
+        <Link to={currentUserInfo.userId !== '' ? '/space/' + currentUserInfo.userId : '#'}>
           <p>내 스페이스</p>
         </Link>
       </li>
@@ -101,7 +62,7 @@ function HeaderPopup({ isLogin, setIsLogin }) {
         </Link>
       </li>
       <li className="list" onClick={handleClickMySpace}>
-        <Link to={userInfo.userId !== undefined ? '/setting' : '#'}>
+        <Link to={currentUserInfo.userId !== '' ? '/setting' : '#'}>
           <p>설정</p>
         </Link>
       </li>

@@ -29,7 +29,7 @@ const Intro = ({isLogin}) => {
 
   return (
     <div className="wrap intro">
-      <Header></Header>
+      <Header currentUserInfo={userInfo}></Header>
       <div className="contentWrap">
         <p className="introTitle">🐇토끼🐇로 무물에 녹아 들자</p>
         <Comment></Comment>

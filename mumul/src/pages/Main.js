@@ -32,12 +32,19 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
   useEffect(() => {
     const initUserInfo = async () => {
       const newInfo = await getSpaceInfo(id);
-      const userInfo = await getUserInfo();
-      setCurrentUserInfo(userInfo);
+      const token = localStorage.getItem('token');
+  
+      if (token !== null) {
+        const userInfo = await getUserInfo();
+        setCurrentUserInfo(userInfo);
+      }
+  
       setInfo(newInfo);
     };
+  
     initUserInfo();
   }, [id, isLogin, followSelected]);
+  
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -54,13 +61,10 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
     },
   ];
 
-  console.log('현재 스페이스주인: '+info.userId);
-  console.log('현재 로그인유저: '+currentUserInfo.userId);
-
   // 유저의 고유 아이디를 사용하여 매핑
   return (
     <div className="wrap">
-      <Header isLogin={isLogin} setIsLogin={setIsLogin}></Header>
+      <Header isLogin={isLogin} setIsLogin={setIsLogin} currentUserInfo={currentUserInfo}></Header>
       <div className="contentWrap">
         <Storyslide spaceId={id} followSelected={followSelected}></Storyslide>
         {currentUserInfo.userId === info.userId ? (
