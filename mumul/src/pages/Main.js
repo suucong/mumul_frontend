@@ -47,7 +47,7 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
     {
       id: 1,
       tabTitle: "보낸 질문",
-      tabCont: <SendComment spaceId={id}></SendComment>,
+      tabCont: <SendComment spaceId={id} currentUserInfo={currentUserInfo}></SendComment>,
     },
   ];
 

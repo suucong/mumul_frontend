@@ -52,7 +52,7 @@ function ProfileEdit({ onClose, userId, name, picture, introduce, instaId, link 
 
     const response = putUserProfileEdit(userId, formData);
     console.log(response.data);
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (
@@ -105,12 +105,22 @@ function ProfileEdit({ onClose, userId, name, picture, introduce, instaId, link 
                     ref={snsInput}
                   />
                   <label htmlFor="link">링크</label>
-                  <input type="text" id="link" ref={linkInput} defaultValue={link}/>
+                  <input
+                    type="text"
+                    id="link"
+                    ref={linkInput}
+                    defaultValue={link}
+                  />
                 </div>
                 <div className="btn">
-                  <button className="editProfile active" type="submit" onClick={() => {
-                    window.location.reload();
-                    setTimeout(() => window.location.reload(), 1000);}}>
+                  <button
+                    className="editProfile active"
+                    type="submit"
+                    onClick={() => {
+                      window.location.reload();
+                      setTimeout(() => window.location.reload(), 1000);
+                    }}
+                  >
                     수정하기
                   </button>
                 </div>

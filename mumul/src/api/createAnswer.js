@@ -10,6 +10,7 @@ export const createAnswer = async (id, currentUserInfo, answerText, btn, questio
       {
         isPublic: btn,
         sentUserPic: currentUserInfo.picture,
+        receivedUserId: "",
         userId: currentUserInfo.userId,
         userName: currentUserInfo.name,
         answerText: answerText,

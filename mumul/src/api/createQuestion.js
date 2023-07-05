@@ -10,6 +10,8 @@ export const createQuestion = async (info, id, currentUserInfo, questionText, bt
       `/spaces/${id}/question/create`,
       {
         sentUserPic: currentUserInfo.picture,
+        sendingUserId: currentUserInfo.userId,
+        receivingUserId: info.userId,
         receivedUserPic: info.picture,
         receivedUserName: info.name,
         questionText: questionText,

@@ -17,7 +17,7 @@ import AnonymousAnswer from "./AnonymousAnswer";
 import moment from "moment";
 import "moment/locale/ko"; // 한국어 
 
-function SendComment({ spaceId, info }) {
+function SendComment({ spaceId, info, currentUserInfo }) {
   const [sentComments, setSentComments] = useState([]);
 
   const [spaceOwner, setSpaceOwner] = useState({
@@ -197,7 +197,7 @@ function SendComment({ spaceId, info }) {
               ) : (
                 <>
                 <p className="min">{getTimeDifference(sent.answers[0].createdTime)}</p>
-                <AnonymousAnswer answers={sent.answers} />
+                <AnonymousAnswer question={sent} answers={sent.answers} currentUserInfo={currentUserInfo} />
               </>
               )}
               <div className="heart">

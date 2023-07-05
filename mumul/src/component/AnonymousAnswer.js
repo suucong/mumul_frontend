@@ -1,6 +1,6 @@
 import React from "react";
 
-function AnonymousAnswer({ answers }) {
+function AnonymousAnswer({ question, answers, currentUserInfo }) {
   if (!answers) {
     return null; // or return an appropriate fallback component or message
   }
@@ -12,7 +12,11 @@ function AnonymousAnswer({ answers }) {
           {answer.alternativeAnswerText === null || answer.alternativeAnswerText === "" ? (
             answer.answerText
           ) : (
-            <button className="answerBtn">🔒질문자만 볼 수 있는 답변입니다.</button>
+            question.sendingUserId === currentUserInfo.userId || question.receivingUserId === currentUserInfo.userId ? (
+              answer.answerText
+            ) : (
+              <button className="answerBtn">🔒질문자만 볼 수 있는 답변입니다.</button>
+            )
           )}
         </div>
       ))}
