@@ -2,9 +2,9 @@ import React, { useRef, useState, useEffect } from "react";
 import Close from "../../img/icon/close.png";
 import { putUserProfileEdit } from "../../api/putUserProfileEdit";
 
-function ProfileEdit({ onClose, userId, name, picture, introduce, instaId, link }) {
+function ProfileEdit({ onClose, currentUserInfo }) {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(picture);
+  const [previewUrl, setPreviewUrl] = useState(currentUserInfo.picture);
   const nicknameInput = useRef();
   const introduceInput = useRef();
   const snsInput = useRef();
@@ -37,7 +37,7 @@ function ProfileEdit({ onClose, userId, name, picture, introduce, instaId, link 
 
     const data = {
       info: {
-        id: userId,
+        id: currentUserInfo.userId,
         name: nicknameInput.current.value,
         introduce: introduceInput.current.value,
         instaId: snsInput.current.value,
@@ -50,7 +50,7 @@ function ProfileEdit({ onClose, userId, name, picture, introduce, instaId, link 
       new Blob([JSON.stringify(data.info)], { type: "application/json" })
     );
 
-    const response = putUserProfileEdit(userId, formData);
+    const response = putUserProfileEdit(currentUserInfo.userId, formData);
     console.log(response.data);
     // window.location.reload();
   };
@@ -68,7 +68,7 @@ function ProfileEdit({ onClose, userId, name, picture, introduce, instaId, link 
                 {previewUrl ? (
                   <img src={previewUrl} alt="myprofile" />
                 ) : (
-                  <img src={picture} alt="myprofile" />
+                  <img src={currentUserInfo.picture} alt="myprofile" />
                 )}
                 <span className="editTxt" onClick={onClickInput}>
                   Edit
@@ -86,21 +86,21 @@ function ProfileEdit({ onClose, userId, name, picture, introduce, instaId, link 
                   <label htmlFor="Nickname">닉네임</label>
                   <input
                     type="text"
-                    defaultValue={name}
+                    defaultValue={currentUserInfo.name}
                     id="Nickname"
                     ref={nicknameInput}
                   />
                   <label htmlFor="introduce">소개</label>
                   <input
                     type="text"
-                    defaultValue={introduce}
+                    defaultValue={currentUserInfo.introduce}
                     id="introduce"
                     ref={introduceInput}
                   />
                   <label htmlFor="sns">SNS 링크</label>
                   <input
                     type="text"
-                    defaultValue={instaId}
+                    defaultValue={currentUserInfo.instaId}
                     id="sns"
                     ref={snsInput}
                   />
@@ -109,7 +109,7 @@ function ProfileEdit({ onClose, userId, name, picture, introduce, instaId, link 
                     type="text"
                     id="link"
                     ref={linkInput}
-                    defaultValue={link}
+                    defaultValue={currentUserInfo.link}
                   />
                 </div>
                 <div className="btn">

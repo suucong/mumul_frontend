@@ -1,10 +1,17 @@
 import axios from 'axios';
 
-export const getIsFollow = async (spaceId, currentUserId) => {
-    const path = `/spaces/isFollow/${spaceId}?currentUserId=${currentUserId}`;
+export const getIsFollow = async (spaceId) => {
+    const path = `/spaces/isFollow/${spaceId}`;
+    const token = localStorage.getItem('token');
 
     try {
-        const response = await axios.get(path, {spaceId, currentUserId});
+        const response = await axios.get(path, {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        });
 
         return response.data;
     } catch (e) {

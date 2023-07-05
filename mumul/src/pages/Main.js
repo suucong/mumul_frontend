@@ -16,6 +16,9 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
     userId: '',
     picture: '',
     name: '',
+    introduce: '',
+    instaId: '',
+    link: '',
   });
   const [currentUserInfo, setCurrentUserInfo] = useState({
     userId: '',
@@ -61,10 +64,10 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
       <div className="contentWrap">
         <Storyslide spaceId={id} followSelected={followSelected}></Storyslide>
         {currentUserInfo.userId === info.userId ? (
-            <MyProfile userId={currentUserInfo.userId} name={currentUserInfo.name} picture={currentUserInfo.picture} introduce={currentUserInfo.introduce} instaId={currentUserInfo.instaId} link={currentUserInfo.link} 
+            <MyProfile currentUserInfo={currentUserInfo}
             followSelected={followSelected} setFollowSelected={setFollowSelected}></MyProfile>
           ) : (
-            <QuestionerProfile info={info} spaceId={info.userId} currentUserId={currentUserInfo.userId}name={info.name} picture={info.picture} currentUserInfo={currentUserInfo}
+            <QuestionerProfile spaceUserInfo={info} currentUserInfo={currentUserInfo} 
             followSelected={followSelected} setFollowSelected={setFollowSelected}></QuestionerProfile>
         )}
         <ul className="tabMenu">

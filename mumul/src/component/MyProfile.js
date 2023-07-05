@@ -5,7 +5,7 @@ import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
 import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
 
 
-function MyProfile({ userId, name, picture, introduce, instaId, link, followSelected, setFollowSelected }) {
+function MyProfile({ currentUserInfo, followSelected, setFollowSelected }) {
   const [modal, setModal] = useState(false);
   const [followingNumber, setFollowingNumber] = useState(null);
   const [followerNumber, setFollowerNumber] = useState(null);
@@ -29,52 +29,52 @@ function MyProfile({ userId, name, picture, introduce, instaId, link, followSele
   }
 
   useEffect(() => {
-    if(userId === '' || userId === undefined) {
+    if(currentUserInfo.userId === '' || currentUserInfo.userId === undefined) {
       return;
-    } else {getFollowingNumber(userId)
+    } else {getFollowingNumber(currentUserInfo.userId)
       .then((result) => {
         setFollowingNumber(result);
       })
       .catch((error) => {
         console.error('getFollowingNumber Error: ', error.message);
       });
-    getFollwerNumber(userId)
+    getFollwerNumber(currentUserInfo.userId)
       .then((result) => {
         setFollowerNumber(result);
       })
       .catch((error) => {
         console.error('getFollowerNumber Error: ', error.message)
       })}
-  }, [userId]);
+  }, [currentUserInfo.userId]);
 
   return (
     <div className="myProfileWrap">
       <div className="profile">
-        <img src={picture} alt="myprofile" />
+        <img src={currentUserInfo.picture} alt="myprofile" />
         <button className="editProfile" onClick={onClickEdit}>
           프로필수정
         </button>
       </div>
       <div className="myInfo">
         <p className="id">
-          {name}
-          <span className="intro">{introduce}</span>
+          {currentUserInfo.name}
+          <span className="intro">{currentUserInfo.introduce}</span>
         </p>
         <p className="snsLink">
           <img src={InstaLogo} alt="instaLogo" />
 
-          <a href={'https://www.instagram.com/' + instaId} target="_blank" rel="noreferrer">
-            <span>{instaId}</span>
+          <a href={'https://www.instagram.com/' + currentUserInfo.instaId} target="_blank" rel="noreferrer">
+            <span>{currentUserInfo.instaId}</span>
           </a>
         </p>
         <p className="mylink">
           <span>🔗</span>
           <a
-            href={link}
+            href={currentUserInfo.link}
             target="_blank"
             rel="noreferrer"
           >
-            {link}
+            {currentUserInfo.link}
           </a>
         </p>
         <div className="follow">
@@ -86,7 +86,7 @@ function MyProfile({ userId, name, picture, introduce, instaId, link, followSele
           </p>
         </div>
       </div>
-      {modal && <ProfileEdit onClose={onClose} name={name} picture={picture} instaId={instaId} introduce={introduce} userId={userId} link={link}></ProfileEdit>}
+      {modal && <ProfileEdit onClose={onClose} currentUserInfo={currentUserInfo} ></ProfileEdit>}
     </div>
   );
 }

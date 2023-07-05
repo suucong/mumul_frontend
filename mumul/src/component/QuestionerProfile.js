@@ -5,18 +5,14 @@ import InstaLogo from "../img/icon/instaLogo.jpeg";
 import { postFollow } from "../api/Follow/postFollow";
 import { postUnFollow } from "../api/Follow/postUnFollow";
 import { getIsFollow } from "../api/Follow/getIsFollow";
-import { getUserInfo } from "../api/getUserInfo";
 import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
 import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
 
-function QuestionerProfile({info, spaceId, currentUserId, name, picture, currentUserInfo, followSelected, setFollowSelected }) {
+function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, setFollowSelected }) {
   const [queModal, setQueModal] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followingNumber, setFollowingNumber] = useState(null);
   const [followerNumber, setFollowerNumber] = useState(null);
-  const [userInfo, setUserInfo] = useState({
-    userId: '',
-  });
 
   const onClickFollowing = () => {
     setFollowSelected(true);
@@ -29,12 +25,7 @@ function QuestionerProfile({info, spaceId, currentUserId, name, picture, current
   }
 
   useEffect(() => {
-    const initUserInfo = async () => {
-      const currentUserInfo = await getUserInfo();
-      setUserInfo(currentUserInfo);
-    };
-    initUserInfo();
-    getIsFollow(spaceId, currentUserId)
+    getIsFollow(spaceUserInfo.userId)
       .then((result) => {
         setIsFollowing(result);
       })
@@ -42,7 +33,7 @@ function QuestionerProfile({info, spaceId, currentUserId, name, picture, current
         console.error('getIsFollow Error: ', error.message);
       });
 
-    getFollowingNumber(spaceId)
+    getFollowingNumber(spaceUserInfo.userId)
       .then((result) => {
         setFollowingNumber(result);
       })
@@ -50,17 +41,17 @@ function QuestionerProfile({info, spaceId, currentUserId, name, picture, current
         console.error('getFollowingNuber Error: ', error.message);
       });
 
-    getFollwerNumber(spaceId)
+    getFollwerNumber(spaceUserInfo.userId)
       .then((result) => {
         setFollowerNumber(result);
       })
       .catch((error) => {
         console.error('getFollowerNumber Error: ', error.message);
       }) 
-  }, [spaceId, currentUserId, followSelected]);
+  }, [spaceUserInfo.userId, followSelected]);
 
   const showQueModal = () => {
-    if (userInfo.userId === undefined) {
+    if (currentUserInfo.userId === undefined) {
       alert('로그인 하세요.');
       return;
     }
@@ -73,16 +64,16 @@ function QuestionerProfile({info, spaceId, currentUserId, name, picture, current
 
 
   const toggleFollowing = () => {
-    if (userInfo.userId === undefined) {
+    if (currentUserInfo.userId === undefined) {
       alert('로그인 하세요.');
       return;
     }
     if(isFollowing) {
       // 언팔로우
-      postUnFollow(spaceId, currentUserId);
+      postUnFollow(spaceUserInfo.userId);
       window.location.reload();
     } else {
-      postFollow(spaceId, currentUserId);
+      postFollow(spaceUserInfo.userId);
       window.location.reload();
     }
     setIsFollowing(!isFollowing);
@@ -92,7 +83,7 @@ function QuestionerProfile({info, spaceId, currentUserId, name, picture, current
     <>
       <div className="myProfileWrap">
         <div className="profile">
-          <img src={picture} alt="myprofile" />
+          <img src={spaceUserInfo.picture} alt="myprofile" />
           <div className="QueBtnWrap">
           {isFollowing ? (
               <button className="followingBtn" onClick={toggleFollowing}>
@@ -110,13 +101,13 @@ function QuestionerProfile({info, spaceId, currentUserId, name, picture, current
         </div>
         <div className="myInfo">
           <p className="id">
-            {name}
-            <span className="intro">맑은 공기 맑은 정신</span>
+            {spaceUserInfo.name}
+            <span className="intro">{spaceUserInfo.introduce}</span>
           </p>
           <p className="snsLink">
             <img src={InstaLogo} alt="instaLogo" />
-            <a href="https://www.instagram.com/2ruka_/" target="_blank" rel="noreferrer">
-              <span>https://www.instagram.com/2ruka_/</span>
+            <a href={'https://www.instagram.com/' + spaceUserInfo.instaId} target="_blank" rel="noreferrer">
+              <span>{spaceUserInfo.instaId}</span>
             </a>
           </p>
           <div className="follow">
@@ -129,7 +120,7 @@ function QuestionerProfile({info, spaceId, currentUserId, name, picture, current
         </div>
         </div>
       </div>
-      {queModal && <QuestionRegister info={info} currentUserInfo={currentUserInfo} onClose={onClose}></QuestionRegister>}
+      {queModal && <QuestionRegister info={spaceUserInfo} currentUserInfo={currentUserInfo} onClose={onClose}></QuestionRegister>}
     </>
   );
 }
