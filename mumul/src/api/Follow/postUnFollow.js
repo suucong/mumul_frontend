@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const postUnFollow = async (spaceId) => {
-    const path = '/spaces/' + spaceId + '/unFollow';
+    const path = '/unFollow/' + spaceId;
     const token = localStorage.getItem('token');
 
     try {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getFollwerNumber = async (spaceId) => {
-    const path = `/spaces/followerNumber/${spaceId}`;
+    const path = `/getFollow/followerNumber/${spaceId}`;
     const token = localStorage.getItem('token');
 
     try {

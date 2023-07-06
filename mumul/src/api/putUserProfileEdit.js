@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const putUserProfileEdit = async (currentUserId, formData) => {
-    const path = '/spaces/user/update/' + currentUserId;
+    const path = '/v1/oauth/user/update/' + currentUserId;
 
     try {
         console.log("프로필 업데이트");
