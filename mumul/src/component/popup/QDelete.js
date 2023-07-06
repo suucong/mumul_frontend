@@ -4,7 +4,7 @@ import { deleteQuestion } from "../../api/Q&A/deleteQuestion";
 
 function QDelete({ questionId,  onClose , spaceId, userId}) {
 
-    // 질문 삭제하는 API
+  
     const delete_ = async () => {
       try {
         await deleteQuestion(spaceId, questionId, userId);
