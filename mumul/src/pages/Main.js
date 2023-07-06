@@ -10,7 +10,7 @@ import { getSpaceInfo } from "../api/getSpaceInfo";
 import { getUserInfo } from "../api/getUserInfo";
 
 
-function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
+function Main({isLogin, setIsLogin, followSelected, setFollowSelected, setCUserInfo}) {
   const {id} = useParams();
   const [info, setInfo] = useState({
     userId: '',
@@ -19,6 +19,7 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
     introduce: '',
     instaId: '',
     link: '',
+    spaceStop: '',
   });
   const [currentUserInfo, setCurrentUserInfo] = useState({
     userId: '',
@@ -27,6 +28,7 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
     introduce: '',
     instaId: '',
     link: '',
+    spaceStop: '',
   });
 
   useEffect(() => {
@@ -38,7 +40,6 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
         const userInfo = await getUserInfo();
         setCurrentUserInfo(userInfo);
       }
-  
       setInfo(newInfo);
     };
   

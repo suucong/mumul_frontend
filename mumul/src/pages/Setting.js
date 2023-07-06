@@ -1,9 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../component/Header";
 import NoneMember from "../component/popup/NoneMember";
+import { getUserInfo } from "../api/getUserInfo";
+import { putStopSpace } from "../api/User/putStopSpace";
 
 function Setting({isLogin, setIsLogin}) {
   const [settingModal, setSettingModal] = useState(false);
+  const [currentUserInfo, setCurrentUserInfo] = useState({
+    userId: '',
+    picture: '',
+    name: '',
+    introduce: '',
+    instaId: '',
+    link: '',
+    stopSpace: false,
+  });
+
+  useEffect(() => {
+    const getCurrentUserInfo = async () => {
+      const token = localStorage.getItem('token');
+      
+      if(token !== null) {
+        const userInfo = await getUserInfo();
+        setCurrentUserInfo(userInfo);
+      }
+    };
+    getCurrentUserInfo();
+  }, []);
 
   const onOpenModal = () => {
     setSettingModal(true);
@@ -12,9 +35,23 @@ function Setting({isLogin, setIsLogin}) {
   const onClose = () => {
     setSettingModal(false);
   };
+
+  const handleSwitchToggle = async () => {
+    try {
+      await putStopSpace(currentUserInfo.userId, !currentUserInfo.stopSpace);
+      setCurrentUserInfo(prevState => ({
+        ...prevState,
+        stopSpace: !prevState.stopSpace
+      }));
+    } catch (error) {
+      console.error("Error toggling stopSpace:", error);
+    }
+  };
+  
+
   return (
     <div className="wrap">
-      <Header isLogin={isLogin} setIsLogin={setIsLogin}></Header>
+      <Header isLogin={isLogin} setIsLogin={setIsLogin} currentUserInfo={currentUserInfo} onChange={handleSwitchToggle}></Header>
       <div className="contentWrap setting">
         <div className="switchWrap">
           <div>
@@ -36,7 +73,7 @@ function Setting({isLogin, setIsLogin}) {
           </div>
           <div className="switch">
             <label className="switch">
-              <input type="checkbox" />
+              <input type="checkbox" checked={currentUserInfo.stopSpace} onChange={handleSwitchToggle}/>
               <span className="slider round"></span>
             </label>
           </div>
