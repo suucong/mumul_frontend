@@ -95,9 +95,11 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
                 팔로우
               </button>
             )}
-            <button className="QueBtn" onClick={showQueModal}>
-              무물하기
-            </button>
+            {!spaceUserInfo.stopSpace && (
+                  <button className="QueBtn" onClick={showQueModal}>
+                    무물하기
+                  </button>
+                )}
           </div>
         </div>
         <div className="myInfo">

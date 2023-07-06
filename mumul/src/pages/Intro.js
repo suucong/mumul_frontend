@@ -14,11 +14,17 @@ const Intro = ({isLogin}) => {
 
   const [userInfo, setUserInfo] = useState({
     userId: '',
+    picture: '',
+    name: '',
+    introduce: '',
+    instaId: '',
+    link: '',
+    spaceStop: '',
   });
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      if (!isLogin) {
+      if (localStorage.getItem('token') === null) {
         return;
       }
       const currenUuserInfo = await getUserInfo();
@@ -33,7 +39,7 @@ const Intro = ({isLogin}) => {
       <div className="contentWrap">
         <p className="introTitle">🐇토끼🐇로 무물에 녹아 들자</p>
         <Comment></Comment>
-        {(!isLogin) ? (
+        {(localStorage.getItem('token') === null) ? (
             <Link to="/login" className="goSpace">
               <button className="space">스페이스 입장</button>
             </Link>
