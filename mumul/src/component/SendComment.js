@@ -10,8 +10,8 @@ import InstaLogo from "./../img/icon/instaLogo.jpeg";
 import CopyLink from "./../img/icon/CopyLink.png";
 import Bin from "./../img/icon/icBin.png";
 import { getSpaceInfo } from "../api/getSpaceInfo";
-import Delete from "./popup/Delete";
-import { getSentComment } from "../api/getSentComment"; 
+import Delete from "./popup/QDelete";
+import { getSentComment } from "../api/Q&A/getSentComment"; 
 import UntilAnswering from "./UntilAnswering";
 import AnonymousAnswer from "./AnonymousAnswer";
 import moment from "moment";
@@ -38,6 +38,9 @@ function SendComment({ spaceId, info, currentUserInfo }) {
         console.log("sentArray:", sentArray);
         setSentComments(sentArray);
         setSpaceOwner(spaInfo);
+          // deleteStates 배열을 모든 질문에 대해 초기화
+          const initialDeleteStates = sentArray.map(() => false);
+          setDeleteStates(initialDeleteStates);
       } catch (error) {
         console.error("Error fetching sent comments:", error);
       }
@@ -65,6 +68,16 @@ function SendComment({ spaceId, info, currentUserInfo }) {
   //삭제 모달 오픈 상태값
   const [delModal, setDelModal] = useState(false);
   //하트 상태값에 따른 이미지 변경 함수
+
+  // 선택한 질문의 고유 ID를 상태값에 저장
+  const [selectedQuestionId, setSelectedQuestionId] = useState([]);
+  const [selectedSpaceId, setSelectedSpaceId] =  useState([]);
+  const [selectedUserId, setSelectedUserId] =  useState([]);
+// 질문 삭제 상태값
+  const [deleteStates, setDeleteStates] = useState({});
+
+
+
   const clickHeart = () => {
     if (heartState) {
       setHeartState(false);
@@ -86,14 +99,15 @@ function SendComment({ spaceId, info, currentUserInfo }) {
     }
   };
 
-  //삭제 상태값에 따른 더보기 버튼
-  const clickMore = () => {
-    if (del) {
-      setDelete(false);
-    } else {
-      setDelete(true);
-    }
+  // 클릭한 질문에 대한 삭제 상태값 변경
+  const clickMore = (index) => {
+    setDeleteStates((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[index] = !newStates[index];
+      return newStates;
+    });
   };
+
 
   const clickMore_1 = () => {
     if (del_1) {
@@ -102,11 +116,12 @@ function SendComment({ spaceId, info, currentUserInfo }) {
       setDelete_1(true);
     }
   };
-  //삭제하기 클릭 시 모달 오픈
-  const showDelModal = () => {
+  // 삭제하기 클릭 시 모달 오픈
+  const showDelModal = (questionId, spaceId, userId) => {
+    setSelectedQuestionId(questionId); // 선택한 질문의 ID를 상태값에 저장
+    setSelectedSpaceId(spaceId); // 선택한 질문의 스페이스 ID를 상태값에 저장
+    setSelectedUserId(userId); // 선택한 질문의 유저 ID를 상태값에 저장
     setDelModal(true);
-    setDelete(false);
-    setDelete_1(false);
   };
 
   // 삭제 팝업  닫기
@@ -149,6 +164,7 @@ function SendComment({ spaceId, info, currentUserInfo }) {
             <div className="profileArea">
               <img src={sent.sentUserPic} alt="profile1" className="questioner" />
             </div>
+
             <div className="cnt">
               <p className="Nicname">{sent.userId}</p>
               <p className="min">{getTimeDifference(sent.createdTime)}</p>
@@ -156,17 +172,24 @@ function SendComment({ spaceId, info, currentUserInfo }) {
               <div className="heart">
                 <img src={heart} alt="하트" onClick={clickHeart} />
               </div>
+
+
               <div className="more">
-                <img src={More} alt="more" onClick={clickMore} />
-                {del && (
-                  <div className="del" onClick={showDelModal}>
-                    <p>
-                      <img src={Bin} alt="btin" />
+                  <img src={More} alt="more" onClick={() => clickMore(index)}  />
+                  {deleteStates[index] && (
+                    <div className="del" onClick={() => showDelModal(sent.id, spaceId, currentUserInfo.userId )}>
+                       <p>
+                       <img
+                        src={Bin}
+                        alt="btin"
+                      />
                       삭제하기
-                    </p>
-                  </div>
-                )}
-              </div>
+                       </p>
+                    </div>
+                  )}
+
+                </div>
+
               <div className="share">
                 <img src={Share} alt="share" onClick={showShareModal} />
                 {share && (
@@ -191,7 +214,7 @@ function SendComment({ spaceId, info, currentUserInfo }) {
             </div>
             <div className="cnt">
               <p className="Nicname">{sent.receivedUserName}</p>
-           
+      
               {sent.answers.length === 0  ? (
                 <UntilAnswering></UntilAnswering>
               ) : (
@@ -230,9 +253,17 @@ function SendComment({ spaceId, info, currentUserInfo }) {
                 )}
               </div>
             </div>
+
             {/* 삭제하기 팝업  */}
-            {delModal && <Delete onClose={onClose}></Delete>}
-            {/* -- 삭제하기 팝업 */}
+            {delModal && (
+            <Delete
+              questionId={selectedQuestionId}
+              spaceId={selectedSpaceId} // 스페이스 ID 전달
+              userId={selectedUserId} // 유저 ID 전달
+              onClose={onClose}
+          ></Delete>
+          )}
+         
           </div>
         </>
       ))}

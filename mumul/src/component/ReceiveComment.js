@@ -12,8 +12,8 @@ import CopyLink from "./../img/icon/CopyLink.png";
 import Bin from "./../img/icon/icBin.png";
 import Comment from "./../img/icon/icChat.png";
 import AnonymousAnswer from "./AnonymousAnswer";
-import Delete from "./popup/Delete";
-import { getReceivedComment } from "../api/getReceivedComment";
+import Delete from "./popup/QDelete";
+import { getReceivedComment } from "../api/Q&A/getReceivedComment";
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import UntilAnswering from "./UntilAnswering";
 import { DateTimeFormatter, LocalDateTime, ChronoUnit } from "js-joda";
@@ -94,6 +94,10 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
   // 선택한 질문의 인덱스
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(null);
 
+  // 선택한 질문의 스페이스 ID와 유저 ID를 상태값에 저장
+const [selectedSpaceId, setSelectedSpaceId] =  useState([]);
+const [selectedUserId, setSelectedUserId] =  useState([]);
+
   //하트 상태값에 따른 이미지 변경 함수
   const clickHeart = () => {
     if (heartState) {
@@ -133,11 +137,16 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
     }
   };
 
-  // 삭제하기 클릭 시 모달 오픈
-  const showDelModal = (index) => {
-    setSelectedQuestionIndex(index); // 선택한 질문의 인덱스를 상태값에 저장
-    setDelModal(true);
-  };
+
+
+// 삭제하기 클릭 시 모달 오픈
+const showDelModal = (questionId, spaceId, userId) => {
+  setSelectedQuestionId(questionId); // 선택한 질문의 ID를 상태값에 저장
+  setSelectedSpaceId(spaceId); // 선택한 질문의 스페이스 ID를 상태값에 저장
+  setSelectedUserId(userId); // 선택한 질문의 유저 ID를 상태값에 저장
+  setDelModal(true);
+};
+
 
   // 두번째 답변 등록 시 모달 오픈
   const showCantModal = () => {
@@ -217,7 +226,6 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                 <div className="heart">
                   <img src={heart} alt="하트" onClick={clickHeart} />
 
-                  
                   {received.answers.length > 0 ? (
                     <>
                       <img
@@ -229,38 +237,44 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                     </>
                   ) : (
                     <>
-                    {currentUserInfo.userId !== spaceOwner.userId? (
-                      ""
-                    ): (
-                      <img
-                      src={Comment}
-                      alt="comment"
-                      className="chat"
-                      onClick={() =>
-                        showAnswerModal(
-                          received.id,
-                          received.userId,
-                          received.sentUserPic,
-                          received.questionText
-                        )
-                      }
-                    />
-                    )}
-
+                      {currentUserInfo.userId !== spaceOwner.userId ? (
+                        ""
+                      ) : (
+                        <img
+                          src={Comment}
+                          alt="comment"
+                          className="chat"
+                          onClick={() =>
+                            showAnswerModal(
+                              received.id,
+                              received.userId,
+                              received.sentUserPic,
+                              received.questionText
+                            )
+                          }
+                        />
+                      )}
                     </>
                   )}
                 </div>
+
                 <div className="more">
                   <img src={More} alt="more" onClick={() => clickMore(index)} />
                   {deleteStates[index] && (
-                    <div className="del" onClick={() => showDelModal(index)}>
-                      <p>
-                        <img src={Bin} alt="btin" />
-                        삭제하기
-                      </p>
+                    <div className="del" onClick={() => showDelModal(received.id, spaceId, currentUserInfo.userId )}>
+                       <p>
+                       <img
+                        src={Bin}
+                        alt="btin"
+                      />
+                      삭제하기
+                       </p>
                     </div>
                   )}
+
                 </div>
+
+
                 <div className="share">
                   <img src={Share} alt="share" onClick={showShareModal} />
                   {share && (
@@ -297,13 +311,20 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                     <p className="min">
                       {getTimeDifference(received.answers[0].createdTime)}
                     </p>
-                    <AnonymousAnswer question={received} answers={received.answers} currentUserInfo={currentUserInfo} />
+                    <AnonymousAnswer
+                      question={received}
+                      answers={received.answers}
+                      currentUserInfo={currentUserInfo}
+                    />
                   </>
                 )}
 
                 <div className="heart">
                   <img src={good} alt="good" onClick={clickGood} />
                 </div>
+
+
+
                 <div className="more">
                   <img src={More} alt="more" onClick={clickMore_1} />
                   {del_1 && (
@@ -315,6 +336,9 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                     </div>
                   )}
                 </div>
+
+
+                
                 <div className="share">
                   <img src={Share} alt="share" onClick={showShareModal_1} />
                   {share_1 && (
@@ -332,7 +356,14 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                 </div>
               </div>
               {/* 삭제하기 팝업  */}
-              {delModal && <Delete onClose={onClose}></Delete>}
+              {delModal && (
+            <Delete
+              questionId={selectedQuestionId}
+              spaceId={selectedSpaceId} // 스페이스 ID 전달
+              userId={selectedUserId} // 유저 ID 전달
+              onClose={onClose}
+          ></Delete>
+          )}
               {/* -- 등록불가 팝업 */}
               {cantModal && <CantModal onClose={onClose}></CantModal>}
             </div>

@@ -4,7 +4,7 @@ import Profile1 from "../../img/Ellipse 102.png";
 import axios from "axios"; // Import axios for making API requests
 import { useParams } from "react-router-dom";
 import { getSpaceInfo } from "../../api/getSpaceInfo";
-import { createQuestion } from "../../api/createQuestion";
+import { createQuestion } from "../../api/Q&A/createQuestion";
 import { Comment } from "../Comment";
 
 function QuestionRegister({info, currentUserInfo, onClose }) {

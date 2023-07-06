@@ -3,7 +3,7 @@ import Close from "../../img/icon/close.png";
 import Profile1 from "../../img/Ellipse 102.png";
 import Profile2 from "../../img/Ellipse 103.png";
 import { useParams } from "react-router-dom";
-import {createAnswer} from "../../api/createAnswer";
+import {createAnswer} from "../../api/Q&A/createAnswer";
 
 function AnswerRegister({ CloseAnswerModal , currentUserInfo, questionId, sentUserId, sentUserPic, questionText}) {
 

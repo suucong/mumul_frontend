@@ -21,8 +21,8 @@ const Intro = ({isLogin}) => {
       if (!isLogin) {
         return;
       }
-      const currenUuserInfo = await getUserInfo();
-      setUserInfo(currenUuserInfo);
+      const currentUserInfo = await getUserInfo();
+      setUserInfo(currentUserInfo);
     };
     fetchUserInfo();
   }, [isLogin]);
