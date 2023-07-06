@@ -11,6 +11,7 @@ import Setting from "./pages/Setting";
 import "./css/reset.css";
 import "./css/style.css";
 
+
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [followSelected, setFollowSelected] = useState(true);

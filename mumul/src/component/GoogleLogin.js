@@ -1,8 +1,9 @@
 import { useRef } from 'react';
 import useScript from '../hooks/useScript';
+import Goggle from "./../img/icon/icGoggle.png";
 
 // Google Login 컴포넌트 정의
-export default function GoogleLogin({
+export function GoogleLogin({
   onGoogleSignIn = () => {
   }, // onGoogleSignIn 콜백 함수를 기본으로 설정
   text = 'signin_with', // 버튼에 표시될 텍스트를 기본값으로 설정
@@ -20,9 +21,15 @@ export default function GoogleLogin({
     // Google 로그인 버튼 렌더링
     window.google.accounts.id.renderButton(
       googleSignInButton.current, // Google 로그인 버튼을 렌더링할 요소 참조
-      { theme: 'outline', size: 'large', text, width: '300' }, // 커스터마이즈 속성 설정
+      { theme: 'outline', size: 'large', text, width: '300px' }, // 커스터마이즈 속성 설정
     );
   });
 
-  return <div ref={googleSignInButton}></div>; // Google 로그인 버튼을 렌더링할 div 요소
-}
+  return (
+    <div 
+    aria-hidden="true"
+    style={{ display: 'none' }}
+    ref={googleSignInButton}
+    id="google-login-api" />
+    ); // Google 로그인 버튼을 렌더링할 div 요소
+};

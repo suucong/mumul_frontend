@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { postLoginToken } from "../api/postLoginToken";
-import GoogleLogin from "../component/GoogleLogin";
+import {GoogleLogin} from "../component/GoogleLogin";
 import Rabbit from "./../img/Group 12.png";
 import { getUserInfo } from "../api/getUserInfo";
+import Goggle from "./../img/icon/icGoggle.png";
 
 const Login = ({ isLogin, setIsLogin }) => {
   const navigate = useNavigate();
-  
+
   const onGoogleSignIn = async (res) => {
     const { credential } = res;
     const result = await postLoginToken(credential);
@@ -29,6 +30,10 @@ const Login = ({ isLogin, setIsLogin }) => {
     }
   }, [isLogin, navigate]);
 
+  function onClickGoogleLogin() {
+    document.querySelector('[aria-labelledby="button-label"]').click();
+  };
+
   return (
     <div className="wrap">
       <div className="content">
@@ -49,7 +54,11 @@ const Login = ({ isLogin, setIsLogin }) => {
               </p>
             </div>
             <div className="buttonWrap">
-              <GoogleLogin onGoogleSignIn={onGoogleSignIn} text="로그인" />
+              <button onClick={onClickGoogleLogin}>
+                <img src={Goggle} alt="" />
+                Google 계정으로 계속
+              </button>
+              <GoogleLogin onGoogleSignIn={onGoogleSignIn} />
             </div>
           </div>
         </div>
