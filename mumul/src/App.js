@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import Intro from "./pages/Intro";
 import Login from "./pages/Login";
 import Main from "./pages/Main";

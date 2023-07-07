@@ -10,7 +10,6 @@ const Intro = ({isLogin}) => {
   console.log("new Date: ", new Date());
   const currentDateTime = LocalDateTime.now();
   console.log("Current LocalDateTime: ", currentDateTime);
-  
 
   const [userInfo, setUserInfo] = useState({
     userId: '',

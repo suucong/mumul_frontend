@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import Close from "../../img/icon/close.png";
+import { deleteUser } from "../../api/User/deleteUser";
+import { useNavigate } from "react-router-dom";
 
-function NoneMember({ onClose }) {
+function NoneMember({ onClose, currentUserInfo }) {
+  const navigate = useNavigate();
   const [active, setActive] = useState(true);
 
   const onChange = (e) => {
@@ -11,6 +14,14 @@ function NoneMember({ onClose }) {
       setActive(true);
     }
   };
+
+  const handleWithdrawal = () => {
+    if (!active) {
+      deleteUser(currentUserInfo.userId);
+      navigate("/");
+    }
+  };
+
   return (
     <div className="popupWrap">
       <div className="popup">
@@ -28,7 +39,7 @@ function NoneMember({ onClose }) {
             </div>
           </div>
           <div className="popupFooter">
-            <button className={active ? "btnStorke" : "btnRed"}>
+            <button className={active ? "btnStorke" : "btnRed"} onClick={handleWithdrawal}>
               회원탈퇴
             </button>
             <button className="btnCancel" onClick={onClose}>

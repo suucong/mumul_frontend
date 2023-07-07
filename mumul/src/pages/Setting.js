@@ -85,7 +85,7 @@ function Setting({isLogin, setIsLogin}) {
           </button>
         </div>
       </div>
-      {settingModal && <NoneMember onClose={onClose}></NoneMember>}
+      {settingModal && <NoneMember currentUserInfo={currentUserInfo} onClose={onClose}></NoneMember>}
     </div>
   );
 }

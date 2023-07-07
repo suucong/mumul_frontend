@@ -167,7 +167,7 @@ a {
   max-height: 250px;
   height: 250px;
 } */
-.commentWrap.answerWrap::before {
+.commentWrap.answerWrap::after {
   display: block;
   content: "";
   width: 2px;
