@@ -19,6 +19,7 @@ const Intro = ({isLogin}) => {
     instaId: '',
     link: '',
     spaceStop: '',
+    alertSpace: '',
   });
 
   useEffect(() => {
