@@ -382,21 +382,6 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                   </>
                 )}
 
-                <div className="share">
-                  <img src={Share} alt="share" onClick={showShareModal_1} />
-                  {share_1 && (
-                    <div className="sharePopup">
-                      <p>
-                        <img src={InstaLogo} alt="insta" />
-                        스토리
-                      </p>
-                      <p onClick={onClickcopy}>
-                        <img src={CopyLink} alt="link" />
-                        링크 복사
-                      </p>
-                    </div>
-                  )}
-                </div>
               </div>
               {/* 질문 삭제하기 팝업  */}
               {delModal && (
