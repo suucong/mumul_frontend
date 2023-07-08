@@ -20,6 +20,7 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected, setCUserI
     instaId: '',
     link: '',
     spaceStop: '',
+    alertSpace: '',
   });
   const [currentUserInfo, setCurrentUserInfo] = useState({
     userId: '',

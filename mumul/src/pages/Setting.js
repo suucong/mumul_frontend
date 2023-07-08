@@ -3,6 +3,7 @@ import Header from "../component/Header";
 import NoneMember from "../component/popup/NoneMember";
 import { getUserInfo } from "../api/getUserInfo";
 import { putStopSpace } from "../api/User/putStopSpace";
+import { putAlertSpace } from "../api/User/putAlertSpace"; 
 
 function Setting({isLogin, setIsLogin}) {
   const [settingModal, setSettingModal] = useState(false);
@@ -14,6 +15,7 @@ function Setting({isLogin, setIsLogin}) {
     instaId: '',
     link: '',
     stopSpace: false,
+    alertSpace: false,
   });
 
   useEffect(() => {
@@ -47,6 +49,18 @@ function Setting({isLogin, setIsLogin}) {
       console.error("Error toggling stopSpace:", error);
     }
   };
+
+  const handleAlertSwitchToggle = async () => {
+    try {
+      await putAlertSpace(currentUserInfo.userId, !currentUserInfo.alertSpace);
+      setCurrentUserInfo(prevState => ({
+        ...prevState,
+        alertSpace: !prevState.alertSpace
+      }));
+    } catch (error) {
+      console.error("Error toggling stopSpace:", error);
+    }
+  };
   
 
   return (
@@ -61,7 +75,7 @@ function Setting({isLogin, setIsLogin}) {
           </div>
           <div className="switch">
             <label className="switch">
-              <input type="checkbox" />
+              <input type="checkbox" checked={currentUserInfo.alertSpace} onChange={handleAlertSwitchToggle}/>
               <span className="slider round"></span>
             </label>
           </div>
