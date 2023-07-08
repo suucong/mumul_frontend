@@ -1,8 +1,8 @@
-import { useRef } from 'react';
-import useScript from '../hooks/useScript';
+import { useRef } from "react";
+import useScript from "../hooks/useScript";
 
 // Google Login 컴포넌트 정의
-export default function GoogleLogin({
+ function GoogleLogin({
   onGoogleSignIn = () => {
   }, // onGoogleSignIn 콜백 함수를 기본으로 설정
   text = 'signin_with', // 버튼에 표시될 텍스트를 기본값으로 설정
@@ -26,3 +26,5 @@ export default function GoogleLogin({
 
   return <div ref={googleSignInButton}></div>; // Google 로그인 버튼을 렌더링할 div 요소
 }
+
+export default GoogleLogin;

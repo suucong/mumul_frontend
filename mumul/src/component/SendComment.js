@@ -180,7 +180,6 @@ const a_showDelModal = (answerId, spaceId, userId) => {
   return (
     <>
       {sentComments.length === 0 && <p>첫 질문을 보내 보세요👻</p>}
-<<<<<<< HEAD
       {sentComments
         .slice()
         .reverse()
@@ -193,15 +192,6 @@ const a_showDelModal = (answerId, spaceId, userId) => {
           return true;
         })
         .map((sent, index) => (
-=======
-      {sentComments.slice().reverse().map((sent, index) => (
-        <React.Fragment key={index}>
-        <>
-          <div key={index} className="commentWrap questionWrap">
-            <div className="profileArea">
-              <img src={sent.sentUserPic} alt="profile1" className="questioner" />
-            </div>
->>>>>>> 0ff9993d2d7bf4032b74255f827d424f463f5942
 
 
           <React.Fragment key={sent.id}>
@@ -335,7 +325,6 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                 </div>
               </div>
 
-<<<<<<< HEAD
               {/* 질문 삭제하기 팝업  */}
               {delModal && (
                 <Delete
@@ -358,22 +347,6 @@ const a_showDelModal = (answerId, spaceId, userId) => {
             </div>
           </React.Fragment>
         ))}
-=======
-            {/* 삭제하기 팝업  */}
-            {delModal && (
-            <Delete
-              questionId={selectedQuestionId}
-              spaceId={selectedSpaceId} // 스페이스 ID 전달
-              userId={selectedUserId} // 유저 ID 전달
-              onClose={onClose}
-          ></Delete>
-          )}
-         
-          </div>
-        </>
-        </React.Fragment>
-      ))}
->>>>>>> 0ff9993d2d7bf4032b74255f827d424f463f5942
     </>
   );
 }
