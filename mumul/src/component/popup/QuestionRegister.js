@@ -24,7 +24,7 @@ function QuestionRegister({ info, currentUserInfo, onClose }) {
 
   useEffect(() => {
     randomizeImage();
-  });
+  }, [btn]);
 
   const clickOpenBtn = () => {
     setBtn(!btn);
