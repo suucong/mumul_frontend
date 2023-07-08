@@ -86,7 +86,8 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
         <div className="profile">
           <img src={spaceUserInfo.picture} alt="myprofile" />
           <div className="QueBtnWrap">
-          {isFollowing ? (
+          {spaceUserInfo.stopSpace ? null : (
+            isFollowing ? (
               <button className="followingBtn" onClick={toggleFollowing}>
                 팔로잉
               </button>
@@ -94,7 +95,8 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
               <button className="followBtn" onClick={toggleFollowing}>
                 팔로우
               </button>
-            )}
+            )
+          )}
             {!spaceUserInfo.stopSpace && (
                   <button className="QueBtn" onClick={showQueModal}>
                     무물하기

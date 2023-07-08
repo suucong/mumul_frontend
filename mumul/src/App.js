@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import Intro from "./pages/Intro";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
@@ -10,6 +11,7 @@ import Policy from "./pages/Policy";
 import Setting from "./pages/Setting";
 import "./css/reset.css";
 import "./css/style.css";
+
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);

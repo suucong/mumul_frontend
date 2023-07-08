@@ -20,7 +20,7 @@ export default function GoogleLogin({
     // Google 로그인 버튼 렌더링
     window.google.accounts.id.renderButton(
       googleSignInButton.current, // Google 로그인 버튼을 렌더링할 요소 참조
-      { theme: 'outline', size: 'large', text, width: '300' }, // 커스터마이즈 속성 설정
+      { theme: 'outline', size: 'large', text, width: '300px' }, // 커스터마이즈 속성 설정
     );
   });
 

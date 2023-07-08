@@ -10,7 +10,6 @@ const Intro = ({isLogin}) => {
   console.log("new Date: ", new Date());
   const currentDateTime = LocalDateTime.now();
   console.log("Current LocalDateTime: ", currentDateTime);
-  
 
   const [userInfo, setUserInfo] = useState({
     userId: '',
@@ -39,7 +38,7 @@ const Intro = ({isLogin}) => {
       <div className="contentWrap">
         <p className="introTitle">🐇토끼🐇로 무물에 녹아 들자</p>
         <Comment></Comment>
-        {(localStorage.getItem('token') === null) ? (
+        {(localStorage.getItem('token') || userInfo.userId === undefined) ? (
             <Link to="/login" className="goSpace">
               <button className="space">스페이스 입장</button>
             </Link>
