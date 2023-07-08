@@ -2,14 +2,14 @@ import axios from "axios";
 import { LocalDateTime } from "js-joda";
 
 
-export const createQuestion = async (info, id, currentUserInfo, questionText, btn) => {
+export const createQuestion = async (info, id, currentUserInfo, questionText, btn, randomImage) => {
   console.log("익명여부: "+btn)
   const token = localStorage.getItem('token');
   try {
     const response = await axios.post(
       `/spaces/${id}/question/create`,
       {
-        sentUserPic: currentUserInfo.picture,
+        sentUserPic: randomImage,
         sendingUserId: currentUserInfo.userId,
         receivingUserId: info.userId,
         receivedUserPic: info.picture,

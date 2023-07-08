@@ -82,9 +82,10 @@ a {
 }
 
 .header .profile img {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
+  margin-bottom: 32px;
 }
 
 .headerPopup {
@@ -205,8 +206,8 @@ a {
 }
 
 .profileArea img {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
 }
 
@@ -284,8 +285,8 @@ button.space {
 }
 
 .myProfileWrap .profile img {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   display: inline-block;
   margin-bottom: 20px;
   border-radius: 50%;
