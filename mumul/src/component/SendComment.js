@@ -159,6 +159,7 @@ function SendComment({ spaceId, info, currentUserInfo }) {
     <>
       {sentComments.length === 0 && <p>첫 질문을 보내 보세요👻</p>}
       {sentComments.slice().reverse().map((sent, index) => (
+        <React.Fragment key={index}>
         <>
           <div key={index} className="commentWrap questionWrap">
             <div className="profileArea">
@@ -266,6 +267,7 @@ function SendComment({ spaceId, info, currentUserInfo }) {
          
           </div>
         </>
+        </React.Fragment>
       ))}
     </>
   );

@@ -167,7 +167,19 @@ a {
   max-height: 250px;
   height: 250px;
 } */
-.commentWrap.answerWrap::after {
+
+.commentWrap.questionWrap::after {
+  display: block;
+  content: "";
+  width: 2px;
+  height: 105%;
+  background-color: #000;
+  position: absolute;
+  left: 55px;
+  top: 30px;
+}
+
+/* .commentWrap.answerWrap::after {
   display: block;
   content: "";
   width: 2px;
@@ -176,7 +188,7 @@ a {
   position: absolute;
   left: 55px;
   top: -110px;
-}
+} */
 
 /* .commentWrap:last-of-type .cnt::before {
   display: none;
@@ -603,7 +615,7 @@ button.space {
 
 .registerPopup .queCnt {
   font-size: 13px;
-  height: 100px;
+  height: 100%;
 }
 
 .registerPopup .text {
@@ -621,7 +633,7 @@ button.space {
   display: block;
   content: "";
   width: 2px;
-  height: 60px;
+  height: 105%;
   background-color: #000;
   position: absolute;
   left: 40px;
@@ -659,6 +671,7 @@ button.space {
   border: 1px solid #000;
   border-radius: 32px;
   background-color: #fff;
+  margin-top: 11px;
 }
 
 /* slide */
