@@ -616,13 +616,19 @@ button.space {
 
 .registerPopup .queCnt {
   font-size: 13px;
-  height: 100%;
+  height: 150px;
+  text-overflow: ellipsis;
+  overflow: auto;
+  word-break: break-all; /*글자 기준으로 줄바꿈 되도록*/
 }
 
 .registerPopup .text {
   margin-top: 10px;
   font-size: 14px;
+  text-overflow: ellipsis;
+  word-break: break-all; /*글자 기준으로 줄바꿈 되도록*/
 }
+
 
 .que {
   margin-bottom: 18px;
