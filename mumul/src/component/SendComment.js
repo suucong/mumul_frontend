@@ -20,7 +20,6 @@ import "moment/locale/ko"; // 한국어
 
 function SendComment({ spaceId, info, currentUserInfo }) {
   const [sentComments, setSentComments] = useState([]);
-  const [filter_sent, setFilter_sent]=useState([]);
   // 답변 삭제 상태값
   const [a_deleteStates, a_setDeleteStates] = useState({});
 
@@ -30,29 +29,8 @@ function SendComment({ spaceId, info, currentUserInfo }) {
     name: "",
   });
 
-  useEffect(() => {
-    const fetchSentComments = async () => {
-      try {
-        const spaInfo = await getSpaceInfo(spaceId);
-        const sent = await getSentComment(spaceId);
-
-        console.log("sent:", sent);
-
-        const sentArray = Object.values(sent.data).map((item) => item || {});
-        console.log("sentArray:", sentArray);
-        setSentComments(sentArray);
-        setSpaceOwner(spaInfo);
-        // deleteStates 배열을 모든 질문에 대해 초기화
-        const initialDeleteStates = sentArray.map(() => false);
-        setDeleteStates(initialDeleteStates);
-        a_setDeleteStates(initialDeleteStates);
-      } catch (error) {
-        console.error("Error fetching sent comments:", error);
-      }
-    };
-
-    fetchSentComments();
-  }, [spaceId]);
+  // 질문 공유 상태값
+  const [shareStates, setShareStates] = useState({});
 
   //하트 상태값
   const [heartState, setHeartState] = useState(false);
@@ -86,6 +64,34 @@ function SendComment({ spaceId, info, currentUserInfo }) {
   const [selectedUserId, setSelectedUserId] = useState([]);
   // 질문 삭제 상태값
   const [deleteStates, setDeleteStates] = useState({});
+
+
+  useEffect(() => {
+    const fetchSentComments = async () => {
+      try {
+        const spaInfo = await getSpaceInfo(spaceId);
+        const sent = await getSentComment(spaceId);
+
+        console.log("sent:", sent);
+
+        const sentArray = Object.values(sent.data).map((item) => item || {});
+        console.log("sentArray:", sentArray);
+        setSentComments(sentArray);
+        setSpaceOwner(spaInfo);
+        // deleteStates 배열을 모든 질문에 대해 초기화
+        const initialDeleteStates = sentArray.map(() => false);
+        setDeleteStates(initialDeleteStates);
+        a_setDeleteStates(initialDeleteStates);
+        setShareStates(initialDeleteStates);
+      } catch (error) {
+        console.error("Error fetching sent comments:", error);
+      }
+    };
+
+    fetchSentComments();
+  }, [spaceId]);
+
+
 
   const clickHeart = () => {
     if (heartState) {
@@ -152,15 +158,14 @@ const a_showDelModal = (answerId, spaceId, userId) => {
     a_setDelModal(false);
   };
 
-  //공유하기  오픈
-  const showShareModal = () => {
-    if (share) {
-      setShareModal(false);
-      setShare(false);
-    } else {
-      setShareModal(true);
-      setShare(true);
-    }
+
+  // 클릭한 질문에 대한 공유하기 상태값 변경
+  const clickMore_s = (index) => {
+    setShareStates((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[index] = !newStates[index];
+      return newStates;
+    });
   };
 
   //공유하기  오픈
@@ -173,10 +178,14 @@ const a_showDelModal = (answerId, spaceId, userId) => {
       setShare_1(true);
     }
   };
-  const onClickcopy = () => {
-    setShare(false);
+
+
+  const onClickCopy = (questionId, spaceId) => {
+    setShareStates("");
+    navigator.clipboard.writeText(`localhost:3000/spaces/${spaceId}/#sent/${questionId}`);
     alert("링크가 복사 되었습니다");
   };
+
   return (
     <>
       {sentComments.length === 0 && <p>첫 질문을 보내 보세요👻</p>}
@@ -231,22 +240,22 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                 </div>
 
                 <div className="share">
-                  <img src={Share} alt="share" onClick={showShareModal} />
-                  {share && (
+                  <img src={Share} alt="share" onClick={() => clickMore_s(index)}  />
+                  {shareStates[index] && (
                     <div className="sharePopup">
-                      <p>
-                        <img src={InstaLogo} alt="insta" />
-                        스토리
-                      </p>
-                      <p onClick={onClickcopy}>
+                      <p onClick={() => onClickCopy(sent.id, spaceId)}>
                         <img src={CopyLink} alt="link" />
                         링크 복사
                       </p>
                     </div>
                   )}
                 </div>
+
+
               </div>
             </div>
+
+
 
             <div className="commentWrap answerWrap">
               <div className="profileArea">
@@ -308,22 +317,9 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                   </>
                 )}
 
-                <div className="share">
-                  <img src={Share} alt="share" onClick={showShareModal_1} />
-                  {share_1 && (
-                    <div className="sharePopup">
-                      <p>
-                        <img src={InstaLogo} alt="insta" />
-                        스토리
-                      </p>
-                      <p onClick={onClickcopy}>
-                        <img src={CopyLink} alt="link" />
-                        링크 복사
-                      </p>
-                    </div>
-                  )}
-                </div>
               </div>
+
+
 
               {/* 질문 삭제하기 팝업  */}
               {delModal && (

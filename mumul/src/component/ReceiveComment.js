@@ -14,6 +14,7 @@ import Comment from "./../img/icon/icChat.png";
 import AnonymousAnswer from "./AnonymousAnswer";
 import Delete from "./popup/QDelete";
 import { getReceivedComment } from "../api/Q&A/getReceivedComment";
+import {getQuestionShare} from "../api/Q&A/getQuestionShare"
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import UntilAnswering from "./UntilAnswering";
 import { DateTimeFormatter, LocalDateTime, ChronoUnit } from "js-joda";
@@ -22,16 +23,49 @@ import AnswerRegister from "./popup/AnswerRegister";
 import CantModal from "./popup/CantRegister";
 import ADelete from "./popup/ADelete";
 
-
 function ReceiveComment({ spaceId, currentUserInfo }) {
   const [receivedComments, setReceivedComments] = useState([]);
   // 질문 삭제 상태값
   const [deleteStates, setDeleteStates] = useState({});
-   // 답변 삭제 상태값
-   const [a_deleteStates, a_setDeleteStates] = useState({});
+  // 답변 삭제 상태값
+  const [a_deleteStates, a_setDeleteStates] = useState({});
 
-  // 질문데이터 배열 상태값
-  const [questionData, setQuestionData] = useState([]);
+  // 질문 공유 상태값
+  const [shareStates, setShareStates] = useState({});
+
+  
+  //하트 상태값
+  const [heartState, setHeartState] = useState(false);
+  //좋아요 상태값
+  const [goodState, setGoodState] = useState(false);
+  // 빈 하트
+  const [heart, setHeart] = useState(LineHeart);
+  //빈 좋아요
+  const [good, setGood] = useState(Good);
+
+
+  //질문 삭제 모달 오픈 상태값
+  const [delModal, setDelModal] = useState(false);
+  //답변 삭제 모달 오픈 상태값
+  const [a_delModal, a_setDelModal] = useState(false);
+  //등록불가 모달 오픈 상태값
+  const [cantModal, setCantModal] = useState(false);
+  const [answerModal, setAnswerModal] = useState(false);
+
+  // 선택한 답변의 고유 ID를 상태값에 저장
+  const [selectedAnswerId, setSelectedAnswerId] = useState([]);
+
+  // 선택한 질문의 고유 ID를 상태값에 저장
+  const [selectedQuestionId, setSelectedQuestionId] = useState([]);
+
+  const [selectedQuestionUserId, setSelectedQuestionUserId] = useState([]);
+  const [selectedQuestionUserPic, setSelectedQuestionPic] = useState([]);
+  const [selectedQuestionText, setSelectedQuestionText] = useState([]);
+
+  // 선택한 질문의 스페이스 ID와 유저 ID를 상태값에 저장
+  const [selectedSpaceId, setSelectedSpaceId] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState([]);
+
 
   // 이동한 스페이스 상태값
   const [spaceOwner, setSpaceOwner] = useState({
@@ -59,7 +93,7 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
         const initialDeleteStates = receivedArray.map(() => false);
         setDeleteStates(initialDeleteStates);
         a_setDeleteStates(initialDeleteStates);
-       
+        setShareStates(initialDeleteStates);
       } catch (error) {
         console.error("Error fetching received comments:", error);
       }
@@ -68,47 +102,6 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
     fetchReceivedComments();
   }, [spaceId]);
 
-  //하트 상태값
-  const [heartState, setHeartState] = useState(false);
-  //좋아요 상태값
-  const [goodState, setGoodState] = useState(false);
-  // 빈 하트
-  const [heart, setHeart] = useState(LineHeart);
-  //빈 좋아요
-  const [good, setGood] = useState(Good);
-  //삭제 상태값
-  const [del, setDelete] = useState(false);
-  const [del_1, setDelete_1] = useState(false);
-  //공유하기 상태값
-  const [share, setShare] = useState(false);
-  const [share_1, setShare_1] = useState(false);
-  //공유하기 모달 오픈 상태값
-  const [shareModal, setShareModal] = useState(false);
-  //질문 삭제 모달 오픈 상태값
-  const [delModal, setDelModal] = useState(false);
-   //답변 삭제 모달 오픈 상태값
-   const [a_delModal, a_setDelModal] = useState(false);
-  //등록불가 모달 오픈 상태값
-  const [cantModal, setCantModal] = useState(false);
-  const [answerModal, setAnswerModal] = useState(false);
-
-
-  // 선택한 답변의 고유 ID를 상태값에 저장
-  const [selectedAnswerId, setSelectedAnswerId] = useState([]);
-
-  // 선택한 질문의 고유 ID를 상태값에 저장
-  const [selectedQuestionId, setSelectedQuestionId] = useState([]);
-
-  const [selectedQuestionUserId, setSelectedQuestionUserId] = useState([]);
-  const [selectedQuestionUserPic, setSelectedQuestionPic] = useState([]);
-  const [selectedQuestionText, setSelectedQuestionText] = useState([]);
-
-  // 선택한 질문의 인덱스
-  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(null);
-
-  // 선택한 질문의 스페이스 ID와 유저 ID를 상태값에 저장
-const [selectedSpaceId, setSelectedSpaceId] =  useState([]);
-const [selectedUserId, setSelectedUserId] =  useState([]);
 
   //하트 상태값에 따른 이미지 변경 함수
   const clickHeart = () => {
@@ -150,26 +143,33 @@ const [selectedUserId, setSelectedUserId] =  useState([]);
     });
   };
 
+  // 클릭한 질문에 대한 공유하기 상태값 변경
+  const clickMore_s = (index) => {
+    setShareStates((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[index] = !newStates[index];
+      return newStates;
+    });
+  };
 
+  // 질문 삭제하기 클릭 시 모달 오픈
+  const showDelModal = (questionId, spaceId, userId) => {
+    // 삭제하기 드랍다운 지우기
+    setDeleteStates("");
+    setSelectedQuestionId(questionId); // 선택한 질문의 ID를 상태값에 저장
+    setSelectedSpaceId(spaceId); // 선택한 질문의 스페이스 ID를 상태값에 저장
+    setSelectedUserId(userId); // 선택한 질문의 유저 ID를 상태값에 저장
+    setDelModal(true);
+  };
 
-// 질문 삭제하기 클릭 시 모달 오픈
-const showDelModal = (questionId, spaceId, userId) => {
-  setSelectedQuestionId(questionId); // 선택한 질문의 ID를 상태값에 저장
-  setSelectedSpaceId(spaceId); // 선택한 질문의 스페이스 ID를 상태값에 저장
-  setSelectedUserId(userId); // 선택한 질문의 유저 ID를 상태값에 저장
-  setDelModal(true);
-};
-
-
-
-// 답변 삭제하기 클릭 시 모달 오픈
-const a_showDelModal = (answerId, spaceId, userId) => {
-  console.log("answerId: ", answerId);
-  setSelectedAnswerId(answerId); // 선택한 질문의 ID를 상태값에 저장
-  setSelectedSpaceId(spaceId); // 선택한 질문의 스페이스 ID를 상태값에 저장
-  setSelectedUserId(userId); // 선택한 질문의 유저 ID를 상태값에 저장
-  a_setDelModal(true);
-};
+  // 답변 삭제하기 클릭 시 모달 오픈
+  const a_showDelModal = (answerId, spaceId, userId) => {
+    console.log("answerId: ", answerId);
+    setSelectedAnswerId(answerId); // 선택한 질문의 ID를 상태값에 저장
+    setSelectedSpaceId(spaceId); // 선택한 질문의 스페이스 ID를 상태값에 저장
+    setSelectedUserId(userId); // 선택한 질문의 유저 ID를 상태값에 저장
+    a_setDelModal(true);
+  };
 
   // 두번째 답변 등록 시 모달 오픈
   const showCantModal = () => {
@@ -181,30 +181,15 @@ const a_showDelModal = (answerId, spaceId, userId) => {
     setDelModal(false);
     a_setDelModal(false);
     setCantModal(false);
-    setDelete(false);
+    // setShare(false);
   };
 
   //공유하기  오픈
-  const showShareModal = () => {
-    if (share) {
-      setShareModal(false);
-      setShare(false);
-    } else {
-      setShareModal(true);
-      setShare(true);
-    }
-  };
+  // const showShareModal = (questionId) => {
+  //   setSelectedQuestionId(questionId); // 선택한 질문의 ID를 상태값에 저장
+  //   setShare(true);
+  // };
 
-  //공유하기  오픈
-  const showShareModal_1 = () => {
-    if (share_1) {
-      setShareModal(false);
-      setShare_1(false);
-    } else {
-      setShareModal(true);
-      setShare_1(true);
-    }
-  };
   const showAnswerModal = (
     questionId,
     sentUserId,
@@ -222,10 +207,14 @@ const a_showDelModal = (answerId, spaceId, userId) => {
     setAnswerModal(false);
   };
 
-  const onClickcopy = () => {
-    setShare(false);
+  const onClickCopy = async (questionId) => {
+    localStorage.setItem('questionId', questionId);
+    // const linkShare =await getQuestionShare(questionId);
+    setShareStates("");
+    navigator.clipboard.writeText(`localhost:3000/spaces/${questionId}/get`);
     alert("링크가 복사 되었습니다");
   };
+
 
   return (
     <>
@@ -234,8 +223,8 @@ const a_showDelModal = (answerId, spaceId, userId) => {
         .slice()
         .reverse()
         .map((received, index) => (
-          <React.Fragment key={index}>
-            <div key={index} className="commentWrap questionWrap">
+          <React.Fragment>
+            <div key={received.id} className="commentWrap questionWrap">
               <div className="profileArea">
                 <img
                   src={received.sentUserPic}
@@ -304,22 +293,24 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                 </div>
 
                 <div className="share">
-                  <img src={Share} alt="share" onClick={showShareModal} />
-                  {share && (
+                  <img src={Share} alt="share" onClick={() => clickMore_s(index)}  />
+                  {shareStates[index] && (
                     <div className="sharePopup">
-                      <p>
-                        <img src={InstaLogo} alt="insta" />
-                        스토리
-                      </p>
-                      <p onClick={onClickcopy}>
+                      <p onClick={() => onClickCopy(received.id)}>
                         <img src={CopyLink} alt="link" />
                         링크 복사
                       </p>
                     </div>
                   )}
                 </div>
+
+
+
+                
               </div>
             </div>
+
+
 
             <div className="commentWrap answerWrap">
               <div className="profileArea">
@@ -381,7 +372,6 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                     </div>
                   </>
                 )}
-
               </div>
               {/* 질문 삭제하기 팝업  */}
               {delModal && (
