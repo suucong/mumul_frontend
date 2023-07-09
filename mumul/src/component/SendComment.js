@@ -188,7 +188,8 @@ const a_showDelModal = (answerId, spaceId, userId) => {
 
   return (
     <>
-      {sentComments.length === 0 && <p>첫 질문을 보내 보세요👻</p>}
+      <button className="onlyucansee">🛡️ 토끼 질문은 본인만 볼 수 있습니다 🛡️</button>
+      {sentComments.length === 0 && <h1>👻</h1>}
       {sentComments
         .slice()
         .reverse()
@@ -218,9 +219,9 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                 <p className="Nicname">{sent.userId}</p>
                 <p className="min">{getTimeDifference(sent.createdTime)}</p>
                 <p className="commentCnt"> {sent.questionText} </p>
-                <div className="heart">
+                {/* <div className="heart">
                   <img src={heart} alt="하트" onClick={clickHeart} />
-                </div>
+                </div> */}
 
                 <div className="more">
                   <img src={More} alt="more" onClick={() => clickMore(index)} />
@@ -239,7 +240,7 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                   )}
                 </div>
 
-                <div className="share">
+                {/* <div className="share">
                   <img src={Share} alt="share" onClick={() => clickMore_s(index)}  />
                   {shareStates[index] && (
                     <div className="sharePopup">
@@ -249,7 +250,7 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                       </p>
                     </div>
                   )}
-                </div>
+                </div> */}
 
 
               </div>
@@ -282,9 +283,9 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                     />
                   </>
                 )}
-                <div className="heart">
+                {/* <div className="heart">
                   <img src={good} alt="good" onClick={clickGood} />
-                </div>
+                </div> */}
 
                 {sent.answers.length === 0 ? (
                   ""

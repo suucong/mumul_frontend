@@ -17,6 +17,11 @@ body {
   letter-spacing: -0.6px;
 }
 
+h1{
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 a {
   color: #000;
   text-decoration: none;
@@ -485,6 +490,16 @@ button.space {
   font-weight: 700;
   height: 36px;
   margin: 10px 0;
+}
+.onlyucansee{
+  background-color: #5f85de;
+  color: #fff;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 1000;
+  height: 70px;
+  margin: 20px 10px 10px 10px;
 }
 
 .del {

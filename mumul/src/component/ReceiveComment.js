@@ -218,7 +218,7 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
 
   return (
     <>
-      {receivedComments.length === 0 && <p>첫 질문을 남겨 보세요👻</p>}
+      {receivedComments.length === 0 && <h1>👻</h1>}
       {receivedComments
         .slice()
         .reverse()
@@ -237,7 +237,7 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                 <p className="min">{getTimeDifference(received.createdTime)}</p>
                 <p className="commentCnt">{received.questionText}</p>
                 <div className="heart">
-                  <img src={heart} alt="하트" onClick={clickHeart} />
+                  {/* <img src={heart} alt="하트" onClick={clickHeart} /> */}
 
                   {received.answers.length > 0 ? (
                     <>
@@ -292,7 +292,7 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                   )}
                 </div>
 
-                <div className="share">
+                {/* <div className="share">
                   <img src={Share} alt="share" onClick={() => clickMore_s(index)}  />
                   {shareStates[index] && (
                     <div className="sharePopup">
@@ -302,7 +302,7 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                       </p>
                     </div>
                   )}
-                </div>
+                </div> */}
 
 
 
@@ -338,9 +338,9 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                   </>
                 )}
 
-                <div className="heart">
+                {/* <div className="heart">
                   <img src={good} alt="good" onClick={clickGood} />
-                </div>
+                </div> */}
 
                 {received.answers.length === 0 ? (
                   ""

@@ -11,6 +11,7 @@ function Setting({isLogin, setIsLogin}) {
     userId: '',
     picture: '',
     name: '',
+    email: '',
     introduce: '',
     instaId: '',
     link: '',
@@ -71,7 +72,7 @@ function Setting({isLogin, setIsLogin}) {
           <div>
             <p className="label">이메일 알림</p>
             <p>질문, 답변이 도착하면 아래 이메일로 알려줘요</p>
-            <p className="email">dev.choiey@gmail.com</p>
+            <p className="email">{currentUserInfo.email}</p>
           </div>
           <div className="switch">
             <label className="switch">
