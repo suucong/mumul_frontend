@@ -1,17 +1,9 @@
 import React, { useState } from "react";
 import Close from "../../img/icon/close.png";
-import Profile1 from "../../img/Ellipse 102.png";
-import Profile2 from "../../img/Ellipse 103.png";
 import { useParams } from "react-router-dom";
 import {createAnswer} from "../../api/Q&A/createAnswer";
 
 function AnswerRegister({ CloseAnswerModal , currentUserInfo, questionId, sentUserId, sentUserPic, questionText}) {
-
-  console.log("questionId: ",  questionId);
-  console.log("currentUserInfo: ", currentUserInfo);
-  console.log("currentUserInfo.picture: ", currentUserInfo.picture);
-
-  
   const { id } = useParams();
   let [inputCount, setInputCount] = useState(0);
   const [btn, setBtn] = useState(true);
