@@ -1,5 +1,3 @@
-// App.js
-
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Intro from "./pages/Intro";
@@ -16,8 +14,6 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [followSelected, setFollowSelected] = useState(true);
   
-
-
   return (
     <BrowserRouter>
       <Routes>
@@ -25,7 +21,7 @@ function App() {
         <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} />
         <Route path="/space/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin} 
         followSelected={followSelected} setFollowSelected={setFollowSelected}/>} />
-          <Route path="/space/:id/" element={<Main isLogin={isLogin} setIsLogin={setIsLogin} 
+          <Route path="/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin} 
         followSelected={followSelected} setFollowSelected={setFollowSelected}/>} />
         <Route path="/main2" element={<Main2 />} />
         <Route path="/policy" element={<Policy />} />
