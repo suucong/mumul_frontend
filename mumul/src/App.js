@@ -2,16 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import Intro from "./pages/Intro";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
 import Main2 from "./pages/Main2";
 import Policy from "./pages/Policy";
 import Setting from "./pages/Setting";
-import {getQuestionShare} from "./api/Q&A/getQuestionShare";
-import ShareComment from "./component/ShareComment";
-import {getUserInfo} from "./api/getUserInfo";
 import "./css/reset.css";
 import "./css/style.css";
 

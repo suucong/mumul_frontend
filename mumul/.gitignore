@@ -25,6 +25,7 @@ yarn-error.log
 .node_modules/
 node_modules/*
 
+
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml

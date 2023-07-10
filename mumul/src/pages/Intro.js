@@ -33,15 +33,9 @@ const Intro = ({isLogin}) => {
       <div className="contentWrap">
         <p className="introTitle">🐇토끼🐇로 무물에 녹아 들자</p>
         <Comment></Comment>
-        {(localStorage.getItem('token') || userInfo.userId === undefined) ? (
-            <Link to="/login" className="goSpace">
+        <Link to="/login" className="goSpace">
               <button className="space">스페이스 입장</button>
-            </Link>
-          ) : (
-            <Link to={`/space/${userInfo.userId}`} className="goSpace">
-              <button className="space">스페이스 입장</button>
-            </Link>
-        )}
+        </Link>
         <Link to="/policy" className="goPolicy">
           <p>PRIVACY POLICY</p>
         </Link>
