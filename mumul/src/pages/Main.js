@@ -9,9 +9,10 @@ import { useParams } from "react-router-dom";
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import { getUserInfo } from "../api/getUserInfo";
 
-
-function Main({isLogin, setIsLogin, followSelected, setFollowSelected, setCUserInfo}) {
+function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
   const {id} = useParams();
+  const [isNotFound, setIsNotFound] = useState(true);
+
   const [info, setInfo] = useState({
     userId: '',
     picture: '',
@@ -41,7 +42,12 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected, setCUserI
         const userInfo = await getUserInfo();
         setCurrentUserInfo(userInfo);
       }
-      setInfo(newInfo);
+      if (newInfo === false) {
+        setIsNotFound(true);
+      } else {
+        setIsNotFound(false);
+        setInfo(newInfo);
+      }
     };
   
     initUserInfo();
@@ -63,9 +69,14 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected, setCUserI
     },
   ];
 
-  // 유저의 고유 아이디를 사용하여 매핑
+
   return (
     <div className="wrap">
+      {isNotFound ? (
+        <div>404</div>
+      ) : (
+        <>
+            <div className="wrap">
       <Header isLogin={isLogin} setIsLogin={setIsLogin} currentUserInfo={currentUserInfo}></Header>
       <div className="contentWrap">
         <Storyslide spaceId={id} followSelected={followSelected}></Storyslide>
@@ -95,6 +106,9 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected, setCUserI
             ))}
         </div>
       </div>
+    </div>
+        </>
+      )}
     </div>
   );
 }

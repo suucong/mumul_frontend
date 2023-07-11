@@ -3,7 +3,6 @@ import { LocalDateTime } from "js-joda";
 
 
 export const createQuestion = async (info, id, currentUserInfo, questionText, btn, randomImage) => {
-  console.log("익명여부: "+btn)
   const token = localStorage.getItem('token');
   try {
     const response = await axios.post(
@@ -29,7 +28,6 @@ export const createQuestion = async (info, id, currentUserInfo, questionText, bt
       }
     );
 
-    console.log("질문 등록 성공:", response.data);
     // 추가적인 로직을 처리하거나 성공 후 작업을 수행합니다.
    // Call the Comment function with the necessary props
   } catch (error) {

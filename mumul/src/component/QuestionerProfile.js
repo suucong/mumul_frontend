@@ -16,12 +16,10 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
 
   const onClickFollowing = () => {
     setFollowSelected(true);
-    console.log(followSelected);
   }
 
   const onClickFollower = () => {
     setFollowSelected(false);
-    console.log(followSelected);
   }
 
   useEffect(() => {

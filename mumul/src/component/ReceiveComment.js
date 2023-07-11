@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import "moment/locale/ko";
-import Heart from "./../img/icHeaderBlack.png";
-import LineHeart from "./../img/icHeartWhite.png";
 import More from "./../img/icon/icMore.png";
-import Good from "./../img/icon/icGood.png";
-import GoodRed from "./../img/icon/icGoodRed.png";
 import Bin from "./../img/icon/icBin.png";
 import Comment from "./../img/icon/icChat.png";
 import AnonymousAnswer from "./AnonymousAnswer";
@@ -16,6 +12,11 @@ import UntilAnswering from "./UntilAnswering";
 import AnswerRegister from "./popup/AnswerRegister";
 import CantModal from "./popup/CantRegister";
 import ADelete from "./popup/ADelete";
+import AnswerBtn from "./AnswerButton";
+import Profile1 from "./../img/Ellipse 103.png";
+import Profile2 from "./../img/Ellipse 104.png";
+import Share from "./../img/icon/icShare.png";
+import CopyLink from "./../img/icon/CopyLink.png";
 
 function ReceiveComment({ spaceId, currentUserInfo }) {
   const [receivedComments, setReceivedComments] = useState([]);
@@ -26,17 +27,6 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
 
   // 질문 공유 상태값
   const [shareStates, setShareStates] = useState({});
-
-  
-  //하트 상태값
-  const [heartState, setHeartState] = useState(false);
-  //좋아요 상태값
-  const [goodState, setGoodState] = useState(false);
-  // 빈 하트
-  const [heart, setHeart] = useState(LineHeart);
-  //빈 좋아요
-  const [good, setGood] = useState(Good);
-
 
   //질문 삭제 모달 오픈 상태값
   const [delModal, setDelModal] = useState(false);
@@ -74,12 +64,10 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
         const spaInfo = await getSpaceInfo(spaceId);
         const received = await getReceivedComment(spaceId);
 
-        console.log("received:", received);
-
         const receivedArray = Object.values(received.data).map(
           (item) => item || {}
         );
-        console.log("receivedArray:", receivedArray);
+
         setReceivedComments(receivedArray);
         setSpaceOwner(spaInfo);
 
@@ -95,29 +83,6 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
 
     fetchReceivedComments();
   }, [spaceId]);
-
-
-  //하트 상태값에 따른 이미지 변경 함수
-  const clickHeart = () => {
-    if (heartState) {
-      setHeartState(false);
-      setHeart(LineHeart);
-    } else {
-      setHeartState(true);
-      setHeart(Heart);
-    }
-  };
-
-  //좋아요 상태값에 따른 이미지 변경 함수
-  const clickGood = () => {
-    if (goodState) {
-      setGoodState(false);
-      setGood(Good);
-    } else {
-      setGoodState(true);
-      setGood(GoodRed);
-    }
-  };
 
   // 클릭한 질문에 대한 삭제 상태값 변경
   const clickMore = (index) => {
@@ -158,7 +123,6 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
 
   // 답변 삭제하기 클릭 시 모달 오픈
   const a_showDelModal = (answerId, spaceId, userId) => {
-    console.log("answerId: ", answerId);
     setSelectedAnswerId(answerId); // 선택한 질문의 ID를 상태값에 저장
     setSelectedSpaceId(spaceId); // 선택한 질문의 스페이스 ID를 상태값에 저장
     setSelectedUserId(userId); // 선택한 질문의 유저 ID를 상태값에 저장
@@ -201,23 +165,52 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
     setAnswerModal(false);
   };
 
-  const onClickCopy = async (questionId) => {
-    localStorage.setItem('questionId', questionId);
-    // const linkShare =await getQuestionShare(questionId);
+  const onClickCopy = (questionId, spaceId) => {
     setShareStates("");
-    navigator.clipboard.writeText(`localhost:3000/spaces/${questionId}/get`);
-    alert("링크가 복사 되었습니다");
+    navigator.clipboard.writeText(`localhost:3000/spaces/${spaceId}/#sent/${questionId}`)
+      .then(() => {
+        alert("링크가 복사되었습니다");
+      })
+      .catch((error) => {
+        console.error("클립보드 복사 오류:", error);
+      });
+  
+    // 브라우저 창에 포커스 주기
+    window.focus();
   };
 
 
   return (
     <>
-      {receivedComments.length === 0 && <h1>👻</h1>}
+      {receivedComments.length === 0 && 
+      <>
+      <div className="commentWrap questionWrap">
+        <div className="profileArea">
+          <img src={Profile1} alt="profile1" className="questioner" />
+        </div>
+        <div className="cnt">
+          <p className="Nicname">익명의 토끼</p>
+          <p className="min">20분 전🔒</p>
+          <p className="commentCnt">
+            새로운 질문을 써주세요! 아직 질문이 없어요!
+          </p>
+        </div>
+      </div>
+      <div className="commentWrap answerWrap">
+        <div className="profileArea">
+          <img src={Profile2} alt="profile2" className="respondent" />
+        </div>
+        <div className="cnt">
+          <AnswerBtn></AnswerBtn>
+        </div>
+      </div>
+      </>
+      }
       {receivedComments
         .slice()
         .reverse()
         .map((received, index) => (
-          <React.Fragment>
+          <React.Fragment key={received.id}>
             <div key={received.id} className="commentWrap questionWrap">
               <div className="profileArea">
                 <img
@@ -231,7 +224,6 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                 <p className="min">{getTimeDifference(received.createdTime)}</p>
                 <p className="commentCnt">{received.questionText}</p>
                 <div className="heart">
-                  {/* <img src={heart} alt="하트" onClick={clickHeart} /> */}
 
                   {received.answers.length > 0 ? (
                     <>
@@ -285,27 +277,19 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                     </div>
                   )}
                 </div>
-
-                {/* <div className="share">
+                <div className="share">
                   <img src={Share} alt="share" onClick={() => clickMore_s(index)}  />
                   {shareStates[index] && (
                     <div className="sharePopup">
-                      <p onClick={() => onClickCopy(received.id)}>
+                      <p onClick={() => onClickCopy(received.id, spaceId)}>
                         <img src={CopyLink} alt="link" />
                         링크 복사
                       </p>
                     </div>
                   )}
-                </div> */}
-
-
-
-                
+                </div>
               </div>
             </div>
-
-
-
             <div className="commentWrap answerWrap">
               <div className="profileArea">
                 <img
@@ -331,10 +315,6 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                     />
                   </>
                 )}
-
-                {/* <div className="heart">
-                  <img src={good} alt="good" onClick={clickGood} />
-                </div> */}
 
                 {received.answers.length === 0 ? (
                   ""
@@ -367,6 +347,7 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                   </>
                 )}
               </div>
+
               {/* 질문 삭제하기 팝업  */}
               {delModal && (
                 <Delete

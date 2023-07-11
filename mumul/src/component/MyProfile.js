@@ -20,12 +20,10 @@ function MyProfile({ currentUserInfo, followSelected, setFollowSelected }) {
 
   const onClickFollowing = () => {
     setFollowSelected(true);
-    console.log(followSelected);
   }
 
   const onClickFollower = () => {
     setFollowSelected(false);
-    console.log(followSelected);
   }
 
   useEffect(() => {

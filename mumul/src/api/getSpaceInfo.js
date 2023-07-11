@@ -12,7 +12,7 @@ export const getSpaceInfo = async (spaceId) => {
               Authorization: 'Bearer ' + token
             }
           });
-        console.log("getSpaceInfo: "+response.data);
+
         return response.data;
     } catch(e) {
         console.error('getSpaceInfo Error: ', e.message);

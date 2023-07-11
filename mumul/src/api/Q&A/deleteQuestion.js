@@ -1,8 +1,6 @@
 import axios from 'axios';
 
 export const deleteQuestion = async (spaceId, questionId, userId) => {
-    console.log("delete spaceId: ", spaceId, ", delete questionId: ", questionId, ", userId: ", userId);
-
     const path = `/spaces/${spaceId}/${questionId}/${userId}/question/delete`;
 
     try {
@@ -22,7 +20,7 @@ export const deleteQuestion = async (spaceId, questionId, userId) => {
      
           
         );
-        console.log("delete response: ", response.data);
+
         return response.data;
     } catch (e) {
         console.error('Error deleting received comments:', e.message);

@@ -4,12 +4,11 @@ export const postLoginToken = async (idToken) => {
   const path = '/v1/oauth/login';
 
   try {
-    console.log("API 요청");
-    console.log(idToken);
 
     const response = await axios.post(path, idToken, {
       headers: {
         'Access-Control-Allow-Origin': '*',
+        'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
@@ -22,7 +21,6 @@ export const postLoginToken = async (idToken) => {
     }
 
     const jwtToken = response.headers['authorization']; // 첫 번째 요소 선택
-    console.log(jwtToken);
 
     // JWT 값을 스토리지에 저장합니다.
     localStorage.setItem('token', jwtToken);

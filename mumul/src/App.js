@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Intro from "./pages/Intro";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
-import Main2 from "./pages/Main2";
 import Policy from "./pages/Policy";
 import Setting from "./pages/Setting";
 import "./css/reset.css";
@@ -21,9 +20,6 @@ function App() {
         <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} />
         <Route path="/space/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin} 
         followSelected={followSelected} setFollowSelected={setFollowSelected}/>} />
-          <Route path="/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin} 
-        followSelected={followSelected} setFollowSelected={setFollowSelected}/>} />
-        <Route path="/main2" element={<Main2 />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/setting" element={<Setting isLogin={isLogin} setIsLogin={setIsLogin}/>} />
         <Route path="*" element={<div>404</div>} />

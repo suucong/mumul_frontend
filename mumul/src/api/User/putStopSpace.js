@@ -12,8 +12,8 @@ export const putStopSpace = async (currentUserId, stopSpace) => {
           Authorization: 'Bearer ' + token
         }
       });
-    console.log('!!!');
-    console.log(response.data);
+
+    return response.data;
   } catch (e) {
     console.error('putStopSpace Error: ', e.message);
   }

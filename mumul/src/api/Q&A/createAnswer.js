@@ -3,7 +3,7 @@ import { LocalDateTime } from "js-joda";
 
 
 export const createAnswer = async (id, currentUserInfo, answerText, btn, questionId) => {
-  console.log("익명여부: ", btn)
+
   try {
     const response = await axios.post(
       `/spaces/${id}/${questionId}/answer/create`,
@@ -27,7 +27,6 @@ export const createAnswer = async (id, currentUserInfo, answerText, btn, questio
       }
     );
 
-    console.log("질문 등록 성공:", response.data);
     return response.data;
   } catch (error) {
     if (error.response && error.response.status === 401) {

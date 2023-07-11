@@ -12,8 +12,6 @@ export const getUserInfo = async () => {
       },
       cache: 'no-cache' // 캐시를 비우는 옵션 추가
     });
-    
-    console.log("getUserInfo: "+response.data);
 
     if (response.status !== 200) {
       throw new Error('bad server condition');

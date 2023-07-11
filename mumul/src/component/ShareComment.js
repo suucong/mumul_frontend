@@ -6,8 +6,6 @@ import UntilAnswering from "./UntilAnswering";
 
 
 function ShareComment({ questionShareData, currentUserInfo  }) {
-    console.log("questionShareDate,", questionShareData);
-    console.log("currentUserInfo : ",currentUserInfo );
   return (
     <>
       {questionShareData.length === 0 && (

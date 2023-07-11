@@ -12,7 +12,6 @@ export const logoutUserToken = async () => {
             }
         });
 
-        console.log("로그아웃 api 응답: "+response);
         localStorage.removeItem('token');
 
         // 응답이 성공적인지 확인

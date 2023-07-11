@@ -1,8 +1,6 @@
 import axios from 'axios';
 
 export const deleteAnswer = async (spaceId, answerId, userId) => {
-    console.log("delete spaceId: ", spaceId, ", delete answerId: ", answerId, ", userId: ", userId);
-
     const path = `/spaces/${spaceId}/${answerId}/${userId}/answer/delete`;
 
     try {
@@ -22,7 +20,7 @@ export const deleteAnswer = async (spaceId, answerId, userId) => {
      
           
         );
-        console.log("delete response: ", response.data);
+
         return response.data;
     } catch (e) {
         console.error('Error deleting answer:', e.message);

@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import Heart from "./../img/icHeaderBlack.png";
-import LineHeart from "./../img/icHeartWhite.png";
 import More from "./../img/icon/icMore.png";
 import Share from "./../img/icon/icShare.png";
-import Good from "./../img/icon/icGood.png";
-import GoodRed from "./../img/icon/icGoodRed.png";
-import InstaLogo from "./../img/icon/instaLogo.jpeg";
-import CopyLink from "./../img/icon/CopyLink.png";
 import Bin from "./../img/icon/icBin.png";
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import Delete from "./popup/QDelete";
@@ -17,6 +11,9 @@ import UntilAnswering from "./UntilAnswering";
 import AnonymousAnswer from "./AnonymousAnswer";
 import moment from "moment";
 import "moment/locale/ko"; // 한국어 
+import AnswerBtn from "./AnswerButton";
+import Profile2 from "./../img/Ellipse 104.png";
+import CopyLink from "./../img/icon/CopyLink.png";
 
 function SendComment({ spaceId, info, currentUserInfo }) {
   const [sentComments, setSentComments] = useState([]);
@@ -31,15 +28,6 @@ function SendComment({ spaceId, info, currentUserInfo }) {
 
   // 질문 공유 상태값
   const [shareStates, setShareStates] = useState({});
-
-  //하트 상태값
-  const [heartState, setHeartState] = useState(false);
-  //좋아요 상태값
-  const [goodState, setGoodState] = useState(false);
-  // 빈 하트
-  const [heart, setHeart] = useState(LineHeart);
-  //빈 좋아요
-  const [good, setGood] = useState(Good);
   //삭제 상태값
   const [del, setDelete] = useState(false);
   const [del_1, setDelete_1] = useState(false);
@@ -52,14 +40,11 @@ function SendComment({ spaceId, info, currentUserInfo }) {
   const [delModal, setDelModal] = useState(false);
   //답변 삭제 모달 오픈 상태값
   const [a_delModal, a_setDelModal] = useState(false);
-  //하트 상태값에 따른 이미지 변경 함수
 
   // 선택한 질문의 고유 ID를 상태값에 저장
   const [selectedQuestionId, setSelectedQuestionId] = useState([]);
-  
   // 선택한 답변의 고유 ID를 상태값에 저장
   const [selectedAnswerId, setSelectedAnswerId] = useState([]);
-
   const [selectedSpaceId, setSelectedSpaceId] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState([]);
   // 질문 삭제 상태값
@@ -72,10 +57,8 @@ function SendComment({ spaceId, info, currentUserInfo }) {
         const spaInfo = await getSpaceInfo(spaceId);
         const sent = await getSentComment(spaceId);
 
-        console.log("sent:", sent);
-
         const sentArray = Object.values(sent.data).map((item) => item || {});
-        console.log("sentArray:", sentArray);
+
         setSentComments(sentArray);
         setSpaceOwner(spaInfo);
         // deleteStates 배열을 모든 질문에 대해 초기화
@@ -90,29 +73,6 @@ function SendComment({ spaceId, info, currentUserInfo }) {
 
     fetchSentComments();
   }, [spaceId]);
-
-
-
-  const clickHeart = () => {
-    if (heartState) {
-      setHeartState(false);
-      setHeart(LineHeart);
-    } else {
-      setHeartState(true);
-      setHeart(Heart);
-    }
-  };
-
-  //좋아요 상태값에 따른 이미지 변경 함수
-  const clickGood = () => {
-    if (goodState) {
-      setGoodState(false);
-      setGood(Good);
-    } else {
-      setGoodState(true);
-      setGood(GoodRed);
-    }
-  };
 
   // 클릭한 질문에 대한 삭제 상태값 변경
   const clickMore = (index) => {
@@ -143,13 +103,11 @@ function SendComment({ spaceId, info, currentUserInfo }) {
   
 // 답변 삭제하기 클릭 시 모달 오픈
 const a_showDelModal = (answerId, spaceId, userId) => {
-  console.log("answerId: ", answerId);
   setSelectedAnswerId(answerId); // 선택한 질문의 ID를 상태값에 저장
   setSelectedSpaceId(spaceId); // 선택한 질문의 스페이스 ID를 상태값에 저장
   setSelectedUserId(userId); // 선택한 질문의 유저 ID를 상태값에 저장
   a_setDelModal(true);
 };
-
 
   // 삭제 팝업  닫기
   const onClose = () => {
@@ -157,7 +115,6 @@ const a_showDelModal = (answerId, spaceId, userId) => {
     setDelete(false);
     a_setDelModal(false);
   };
-
 
   // 클릭한 질문에 대한 공유하기 상태값 변경
   const clickMore_s = (index) => {
@@ -182,14 +139,43 @@ const a_showDelModal = (answerId, spaceId, userId) => {
 
   const onClickCopy = (questionId, spaceId) => {
     setShareStates("");
-    navigator.clipboard.writeText(`localhost:3000/spaces/${spaceId}/#sent/${questionId}`);
-    alert("링크가 복사 되었습니다");
+    navigator.clipboard.writeText(`localhost:3000/spaces/${spaceId}/#sent/${questionId}`)
+      .then(() => {
+        alert("링크가 복사되었습니다");
+      })
+      .catch((error) => {
+        console.error("클립보드 복사 오류:", error);
+      });
+  
+    // 브라우저 창에 포커스 주기
+    window.focus();
   };
+  
 
   return (
     <>
-      <button className="onlyucansee">🛡️ 토끼 질문은 본인만 볼 수 있습니다 🛡️</button>
-      {sentComments.length === 0 && <h1>👻</h1>}
+      {sentComments.length === 0 && <>
+      <div className="commentWrap questionWrap">
+        <div className="profileArea">
+          <img src={spaceOwner.picture} alt="profile1" className="questioner" />
+        </div>
+        <div className="cnt">
+          <p className="Nicname">익명의 토끼</p>
+          <p className="min">20분 전🔒</p>
+          <p className="commentCnt">
+            보낸 질문이 없어요! 새로운 질문을 작성해주세요!
+          </p>
+        </div>
+      </div>
+      <div className="commentWrap answerWrap">
+        <div className="profileArea">
+          <img src={Profile2} alt="profile2" className="respondent" />
+        </div>
+        <div className="cnt">
+          <AnswerBtn></AnswerBtn>
+        </div>
+      </div>
+      </>}
       {sentComments
         .slice()
         .reverse()
@@ -219,9 +205,6 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                 <p className="Nicname">{sent.userId}</p>
                 <p className="min">{getTimeDifference(sent.createdTime)}</p>
                 <p className="commentCnt"> {sent.questionText} </p>
-                {/* <div className="heart">
-                  <img src={heart} alt="하트" onClick={clickHeart} />
-                </div> */}
 
                 <div className="more">
                   <img src={More} alt="more" onClick={() => clickMore(index)} />
@@ -240,7 +223,7 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                   )}
                 </div>
 
-                {/* <div className="share">
+                <div className="share">
                   <img src={Share} alt="share" onClick={() => clickMore_s(index)}  />
                   {shareStates[index] && (
                     <div className="sharePopup">
@@ -250,7 +233,7 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                       </p>
                     </div>
                   )}
-                </div> */}
+                </div>
 
 
               </div>

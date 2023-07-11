@@ -11,9 +11,7 @@ import tokki8 from "../../img/Ellipse 109.png";
 import tokki9 from "../../img/Ellipse 110.png";
 import tokki10 from "../../img/Ellipse 111.png";
 import { useParams } from "react-router-dom";
-import { getSpaceInfo } from "../../api/getSpaceInfo";
 import { createQuestion } from "../../api/Q&A/createQuestion";
-import { Comment } from "../Comment";
 
 function QuestionRegister({ info, currentUserInfo, onClose }) {
   const { id } = useParams();

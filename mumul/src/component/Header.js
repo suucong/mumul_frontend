@@ -30,12 +30,9 @@ function HeaderPopup({ isLogin, setIsLogin, currentUserInfo }) {
       const result = await logoutUserToken();
       if (result) {
         // 로그아웃 성공
-        console.log("로그아웃 성공");
         setIsLogin(false);
-        console.log(isLogin);
         window.location.reload();
       } else {
-        console.log("로그아웃 실패");
       }
     } catch (error) {
       console.error("로그아웃 오류: ", error.message);

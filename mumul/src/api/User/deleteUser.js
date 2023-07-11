@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const deleteUser = async (userId) => {
     const path = `/v1/oauth/user/secession/${userId}`;
+    localStorage.removeItem('token');
     const token = localStorage.getItem('token');
 
     try {
@@ -12,8 +13,7 @@ export const deleteUser = async (userId) => {
               Authorization: 'Bearer ' + token
             }
           });
-          console.log(response.data);
-          localStorage.removeItem('token');
+        return response.data;
     } catch (e) {
         console.error('deletUser Error: ', e.message);
     }

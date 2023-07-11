@@ -7,7 +7,7 @@ import { getUserInfo } from "../api/getUserInfo";
 
 const Login = ({ isLogin, setIsLogin }) => {
   const navigate = useNavigate();
-  
+
   const onGoogleSignIn = async (res) => {
     const { credential } = res;
     const result = await postLoginToken(credential);
@@ -44,9 +44,7 @@ const Login = ({ isLogin, setIsLogin }) => {
                 <br />
                 반가워 난 토끼야🐰
               </p>
-              <p className="loginDecs">
-                MUMUL 스페이스를 만드려면 로그인을 해야 돼
-              </p>
+              <p className="loginDecs">MUMUL 스페이스를 만드려면 로그인을 해야 돼</p>
             </div>
             <div className="buttonWrap">
               <GoogleLogin onGoogleSignIn={onGoogleSignIn} text="로그인" />

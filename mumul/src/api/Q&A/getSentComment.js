@@ -10,7 +10,7 @@ export const getSentComment = async (spaceId) => {
                 Accept: 'application/json'
               }
         });
-        console.log("getSentComment response: ", response.data);
+
         return response.data;
     } catch(e) {
         console.error('Error retrieving sent comments:', e.message);
