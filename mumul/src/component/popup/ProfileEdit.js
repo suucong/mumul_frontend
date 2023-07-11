@@ -51,6 +51,7 @@ function ProfileEdit({ onClose, currentUserInfo }) {
     );
 
     const response = putUserProfileEdit(currentUserInfo.userId, formData);
+
     // window.location.reload();
   };
 

@@ -15,8 +15,8 @@ import ADelete from "./popup/ADelete";
 import AnswerBtn from "./AnswerButton";
 import Profile1 from "./../img/Ellipse 103.png";
 import Profile2 from "./../img/Ellipse 104.png";
-import Share from "./../img/icon/icShare.png";
-import CopyLink from "./../img/icon/CopyLink.png";
+// import Share from "./../img/icon/icShare.png";
+// import CopyLink from "./../img/icon/CopyLink.png";
 
 function ReceiveComment({ spaceId, currentUserInfo }) {
   const [receivedComments, setReceivedComments] = useState([]);
@@ -165,19 +165,19 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
     setAnswerModal(false);
   };
 
-  const onClickCopy = (questionId, spaceId) => {
-    setShareStates("");
-    navigator.clipboard.writeText(`localhost:3000/spaces/${spaceId}/#sent/${questionId}`)
-      .then(() => {
-        alert("링크가 복사되었습니다");
-      })
-      .catch((error) => {
-        console.error("클립보드 복사 오류:", error);
-      });
+  // const onClickCopy = (questionId, spaceId) => {
+  //   setShareStates("");
+  //   navigator.clipboard.writeText(`localhost:3000/spaces/${spaceId}/#sent/${questionId}`)
+  //     .then(() => {
+  //       alert("링크가 복사되었습니다");
+  //     })
+  //     .catch((error) => {
+  //       console.error("클립보드 복사 오류:", error);
+  //     });
   
-    // 브라우저 창에 포커스 주기
-    window.focus();
-  };
+  //   // 브라우저 창에 포커스 주기
+  //   window.focus();
+  // };
 
 
   return (
@@ -277,7 +277,7 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                     </div>
                   )}
                 </div>
-                <div className="share">
+                {/* <div className="share">
                   <img src={Share} alt="share" onClick={() => clickMore_s(index)}  />
                   {shareStates[index] && (
                     <div className="sharePopup">
@@ -287,7 +287,7 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                       </p>
                     </div>
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="commentWrap answerWrap">

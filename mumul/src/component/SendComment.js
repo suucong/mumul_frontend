@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import More from "./../img/icon/icMore.png";
-import Share from "./../img/icon/icShare.png";
+// import Share from "./../img/icon/icShare.png";
 import Bin from "./../img/icon/icBin.png";
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import Delete from "./popup/QDelete";
@@ -13,7 +13,7 @@ import moment from "moment";
 import "moment/locale/ko"; // 한국어 
 import AnswerBtn from "./AnswerButton";
 import Profile2 from "./../img/Ellipse 104.png";
-import CopyLink from "./../img/icon/CopyLink.png";
+// import CopyLink from "./../img/icon/CopyLink.png";
 
 function SendComment({ spaceId, info, currentUserInfo }) {
   const [sentComments, setSentComments] = useState([]);
@@ -137,19 +137,19 @@ const a_showDelModal = (answerId, spaceId, userId) => {
   };
 
 
-  const onClickCopy = (questionId, spaceId) => {
-    setShareStates("");
-    navigator.clipboard.writeText(`localhost:3000/spaces/${spaceId}/#sent/${questionId}`)
-      .then(() => {
-        alert("링크가 복사되었습니다");
-      })
-      .catch((error) => {
-        console.error("클립보드 복사 오류:", error);
-      });
+  // const onClickCopy = (questionId, spaceId) => {
+  //   setShareStates("");
+  //   navigator.clipboard.writeText(`localhost:3000/spaces/${spaceId}/#sent/${questionId}`)
+  //     .then(() => {
+  //       alert("링크가 복사되었습니다");
+  //     })
+  //     .catch((error) => {
+  //       console.error("클립보드 복사 오류:", error);
+  //     });
   
-    // 브라우저 창에 포커스 주기
-    window.focus();
-  };
+  //   // 브라우저 창에 포커스 주기
+  //   window.focus();
+  // };
   
 
   return (
@@ -223,7 +223,7 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                   )}
                 </div>
 
-                <div className="share">
+                {/* <div className="share">
                   <img src={Share} alt="share" onClick={() => clickMore_s(index)}  />
                   {shareStates[index] && (
                     <div className="sharePopup">
@@ -233,7 +233,7 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                       </p>
                     </div>
                   )}
-                </div>
+                </div> */}
 
 
               </div>
