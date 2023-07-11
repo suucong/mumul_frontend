@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Intro isLogin={isLogin}/>} />
         <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} />
-        <Route path="/space/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin} 
+        <Route path="/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin} 
         followSelected={followSelected} setFollowSelected={setFollowSelected}/>} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/setting" element={<Setting isLogin={isLogin} setIsLogin={setIsLogin}/>} />
