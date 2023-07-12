@@ -47,5 +47,5 @@
             "last 1 safari version"
         ]
     },
-    "proxy": "http://prod-mumul1210-api-service.ap-northeast-2.elasticbeanstalk.com "
+    "proxy": "http://api.mumul.space"
 }
