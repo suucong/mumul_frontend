@@ -31,7 +31,7 @@ const Intro = () => {
         <p className="introTitle">🐇토끼🐇로 무물에 녹아 들자</p>
         <Comment></Comment>
         <Link
-          to={isLogin ? `/space/${currentUserInfo.userId}` : "/login"}
+          to={isLogin ? `/${currentUserInfo.userId}` : "/login"}
           className="goSpace">
           <button className="space">스페이스 입장</button>
         </Link>
