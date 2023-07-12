@@ -22,7 +22,7 @@ const Login = ({ isLogin, setIsLogin }) => {
         return;
       }
       const userInfo = await getUserInfo();
-      navigate(`/space/${userInfo.userId}`);
+      navigate(`/${userInfo.userId}`);
     };
     if (isLogin) {
       initLogin();

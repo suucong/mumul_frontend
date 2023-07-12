@@ -90,7 +90,7 @@ function Storyslide({spaceId, followSelected}) {
             src={item.picture}
             alt=""
             className="storyImg followImg"
-            onClick={() => (window.location.href = `/space/${item.userId}`)}
+            onClick={() => (window.location.href = `/${item.userId}`)}
           />
           <p className="stroryId Me">{item.name}</p>
         </SwiperSlide>

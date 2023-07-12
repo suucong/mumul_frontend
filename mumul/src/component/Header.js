@@ -49,7 +49,7 @@ function HeaderPopup({ isLogin, setIsLogin, currentUserInfo }) {
   return (
     <ul className="headerPopup">
       <li className="list" onClick={handleClickMySpace}>
-        <Link to={localStorage.getItem('token') !== null ? '/space/' + currentUserInfo.userId : '#'}>
+        <Link to={localStorage.getItem('token') !== null ? '/' + currentUserInfo.userId : '#'}>
           <p>내 스페이스</p>
         </Link>
       </li>
