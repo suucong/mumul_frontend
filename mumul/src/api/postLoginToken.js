@@ -2,20 +2,19 @@ import axios from 'axios';
 import { API_BASE_URL } from './api-config';
 
 export const postLoginToken = async (idToken) => {
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
-  const path = `${PROXY}/v1/oauth/login`;
-  // const path = '/v1/oauth/login';
+  const path = '/v1/oauth/login';
 
   try {
-    const response = await axios.post(path, idToken, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-      crossDomain: true,
-    });
+    // const response = await axios.post(path, idToken, {
+    //   headers: {
+    //     'Access-Control-Allow-Origin': '*',
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   withCredentials: true,
+    //   crossDomain: true,
+    // });
+    const response = await axios.post(path, idToken);
 
     if (response.status !== 200) {
       throw new Error('bad server condition');
