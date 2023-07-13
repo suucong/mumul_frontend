@@ -2,8 +2,9 @@ import axios from 'axios';
 import { API_BASE_URL } from './api-config';
 
 export const postLoginToken = async (idToken) => {
-  // const path = `${API_BASE_URL}/v1/oauth/login`;
-  const path = '/v1/oauth/login';
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+  const path = `${PROXY}/v1/oauth/login`;
+  // const path = '/v1/oauth/login';
 
   try {
     const response = await axios.post(path, idToken, {
