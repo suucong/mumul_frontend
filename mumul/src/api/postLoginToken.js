@@ -14,6 +14,9 @@ export const postLoginToken = async (idToken) => {
     //   withCredentials: true,
     //   crossDomain: true,
     // });
+    axios.defaults.xsrfCookieName = 'csrftoken';
+    axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+
     const response = await axios.post(path, idToken);
 
     if (response.status !== 200) {
