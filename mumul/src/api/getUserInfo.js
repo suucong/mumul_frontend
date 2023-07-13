@@ -19,7 +19,7 @@ export const getUserInfo = async () => {
     if (response.status !== 200) {
       throw new Error('bad server condition');
     }
-
+    console.log(response.data);
     return response.data; // response.data로 수정
   } catch (e) {
     console.error('getUserInfo Error: ', e.message);

@@ -5,19 +5,19 @@ export const postLoginToken = async (idToken) => {
   const path = '/v1/oauth/login';
 
   try {
-    // const response = await axios.post(path, idToken, {
-    //   headers: {
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   withCredentials: true,
-    //   crossDomain: true,
-    // });
-    axios.defaults.xsrfCookieName = 'csrftoken';
-    axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+    const response = await axios.post(path, idToken, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+      crossDomain: true,
+    });
+    // axios.defaults.xsrfCookieName = 'csrftoken';
+    // axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 
-    const response = await axios.post(path, idToken);
+    // const response = await axios.post(path, idToken);
 
     if (response.status !== 200) {
       throw new Error('bad server condition');
