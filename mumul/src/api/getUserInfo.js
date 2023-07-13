@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { API_BASE_URL } from './api-config';
 
 export const getUserInfo = async () => {
-  const path = '/v1/oauth/user/info';
+  // const path = `${API_BASE_URL}/v1/oauth/user/info`;
+  const path = "/v1/oauth/user/info";
 
   try {
     const response = await axios.get(path, {
