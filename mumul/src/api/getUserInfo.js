@@ -7,9 +7,6 @@ export const getUserInfo = async () => {
   const path = "/v1/oauth/user/info";
 
   try {
-
-    console.log("localStorage.getItem('token')", localStorage.getItem('token'));
-
     const response = await axios.get(path, {
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +19,7 @@ export const getUserInfo = async () => {
     if (response.status !== 200) {
       throw new Error('bad server condition');
     }
-    console.log(response.data);
+
     return response.data; // response.data로 수정
   } catch (e) {
     console.error('getUserInfo Error: ', e.message);
