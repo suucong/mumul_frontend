@@ -5,10 +5,7 @@ export const postLoginToken = async (idToken) => {
   const path = '/v1/oauth/login';
 
   try {
-    const response = await axios.post(path, null, {
-      params: {
-        idToken: idToken
-      },
+    const response = await axios.post(path, idToken, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -28,7 +25,6 @@ export const postLoginToken = async (idToken) => {
     localStorage.setItem('token', jwtToken);
 
     return true;
-    // ... 나머지 코드 ...
   } catch (e) {
     console.error('postLoginToken Error: ', e.message);
     return false;
