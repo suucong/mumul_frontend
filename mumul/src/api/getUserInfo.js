@@ -7,6 +7,9 @@ export const getUserInfo = async () => {
   const path = "/v1/oauth/user/info";
 
   try {
+
+    console.log("localStorage.getItem('token')", localStorage.getItem('token'));
+
     const response = await axios.get(path, {
       headers: {
         'Content-Type': 'application/json',
