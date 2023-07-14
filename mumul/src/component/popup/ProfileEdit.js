@@ -116,11 +116,10 @@ function ProfileEdit({ onClose, currentUserInfo }) {
                   <button
                     className="editProfile active"
                     type="submit"
-                    onClick={() => {
-                      handleSubmit();
-                      window.location.reload();
+                    onClick={(event) => {
+                      handleSubmit(event); // event 객체를 전달하여 handleSubmit 함수 호출
                       setTimeout(() => window.location.reload(), 1000);
-                    }}
+                    }}ㄴ
                   >
                     수정하기
                   </button>
