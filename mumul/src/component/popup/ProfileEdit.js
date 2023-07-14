@@ -50,7 +50,7 @@ function ProfileEdit({ onClose, currentUserInfo }) {
       new Blob([JSON.stringify(data.info)], { type: "application/json" })
     );
 
-    const response = putUserProfileEdit(currentUserInfo.userId, formData);
+    const response = await putUserProfileEdit(currentUserInfo.userId, formData);
     console.log(response.data);
   };
 
