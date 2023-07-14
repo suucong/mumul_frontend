@@ -119,7 +119,7 @@ function ProfileEdit({ onClose, currentUserInfo }) {
                     onClick={(event) => {
                       handleSubmit(event); // event 객체를 전달하여 handleSubmit 함수 호출
                       setTimeout(() => window.location.reload(), 1000);
-                    }}ㄴ
+                    }}
                   >
                     수정하기
                   </button>
