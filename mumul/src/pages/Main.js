@@ -11,7 +11,7 @@ import { getUserInfo } from "../api/getUserInfo";
 
 function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
   const {id} = useParams();
-  const [isNotFound, setIsNotFound] = useState(false);
+  const [isNotFound, setIsNotFound] = useState(true);
 
   const [info, setInfo] = useState({
     userId: '',
@@ -73,7 +73,7 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
   return (
     <div className="wrap">
       {isNotFound ? (
-        <div>없는 유저입니다.</div>
+        <div></div>
       ) : (
         <>
       <div className="wrap">
