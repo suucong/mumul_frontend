@@ -32,27 +32,25 @@ function ProfileEdit({ onClose, currentUserInfo }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const formData = new FormData();
-    formData.append("imgFile", selectedFile);
+  const formData = new FormData();
+  formData.append("imgFile", selectedFile);
 
-    const data = {
-      info: {
-        id: currentUserInfo.userId,
-        name: nicknameInput.current.value,
-        introduce: introduceInput.current.value,
-        instaId: snsInput.current.value,
-        link: linkInput.current.value,
-      },
-    };
+  const data = {
+    info: {
+      id: currentUserInfo.userId,
+      name: nicknameInput.current.value,
+      introduce: introduceInput.current.value,
+      instaId: snsInput.current.value,
+      link: linkInput.current.value,
+    },
+  };
 
-    formData.append(
-      "requestDto",
-      new Blob([JSON.stringify(data.info)], { type: "application/json" })
-    );
+  formData.append(
+    "requestDto",
+    new Blob([JSON.stringify(data.info)], { type: "application/json" })
+  );
 
-    const response = putUserProfileEdit(currentUserInfo.userId, formData);
-
-    // window.location.reload();
+  const response = await putUserProfileEdit(currentUserInfo.userId, formData);
   };
 
   return (
