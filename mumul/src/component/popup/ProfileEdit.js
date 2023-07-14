@@ -117,6 +117,7 @@ function ProfileEdit({ onClose, currentUserInfo }) {
                     className="editProfile active"
                     type="submit"
                     onClick={() => {
+                      handleSubmit();
                       window.location.reload();
                       setTimeout(() => window.location.reload(), 1000);
                     }}
