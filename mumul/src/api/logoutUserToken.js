@@ -8,7 +8,7 @@ export const logoutUserToken = async () => {
             headers: {
               'Content-Type': 'application/json',
               Accept: 'application/json',
-              Authorization: ''
+              Authorization: 'Bearer ' + localStorage.getItem('token')
             }
         });
 

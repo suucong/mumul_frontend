@@ -73,7 +73,7 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
   return (
     <div className="wrap">
       {isNotFound ? (
-        <div>404</div>
+        <div>없는 유저입니다.</div>
       ) : (
         <>
             <div className="wrap">
