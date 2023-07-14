@@ -11,7 +11,7 @@ import { getUserInfo } from "../api/getUserInfo";
 
 function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
   const {id} = useParams();
-  const [isNotFound, setIsNotFound] = useState(true);
+  const [isNotFound, setIsNotFound] = useState(false);
 
   const [info, setInfo] = useState({
     userId: '',
@@ -76,7 +76,7 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
         <div>없는 유저입니다.</div>
       ) : (
         <>
-            <div className="wrap">
+      <div className="wrap">
       <Header isLogin={isLogin} setIsLogin={setIsLogin} currentUserInfo={currentUserInfo}></Header>
       <div className="contentWrap">
         <Storyslide spaceId={id} followSelected={followSelected}></Storyslide>
