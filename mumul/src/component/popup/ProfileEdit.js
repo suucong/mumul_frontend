@@ -25,10 +25,6 @@ function ProfileEdit({ onClose, currentUserInfo }) {
     imageInput.current.click();
   };
 
-  // const handleFileChange = (event) => {
-  //   setSelectedFile(event.target.files[0]);
-  // };
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     const maxSizeInBytes = 1048576; // 1MB 이하로 설정 (1MB = 1048576 바이트)
