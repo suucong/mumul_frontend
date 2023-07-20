@@ -25,15 +25,20 @@ function ProfileEdit({ onClose, currentUserInfo }) {
     imageInput.current.click();
   };
 
+  // const handleFileChange = (event) => {
+  //   setSelectedFile(event.target.files[0]);
+  // };
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     const maxSizeInBytes = 1048576; // 1MB 이하로 설정 (1MB = 1048576 바이트)
 
     if (file && file.size > maxSizeInBytes) {
       alert("파일 크기가 너무 큽니다. 1MB 이하의 파일을 업로드해주세요.");
-      fileInputRef.current.value = null; // 파일 선택 초기화
+      event.target.value = null; // 파일 선택 초기화
     } else {
       // 파일 크기가 제한 이하일 때, 원하는 로직을 수행합니다.
+      setSelectedFile(event.target.files[0]);
     }
   };
 
