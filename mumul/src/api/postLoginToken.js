@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { API_BASE_URL } from './api-config';
 
 export const postLoginToken = async (idToken) => {
   const path = '/v1/oauth/login';

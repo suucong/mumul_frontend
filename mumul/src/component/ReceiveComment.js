@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import "moment/locale/ko";
 import More from "./../img/icon/icMore.png";
@@ -6,7 +6,7 @@ import Bin from "./../img/icon/icBin.png";
 import Comment from "./../img/icon/icChat.png";
 import AnonymousAnswer from "./AnonymousAnswer";
 import Delete from "./popup/QDelete";
-import { getReceivedComment } from "../api/Q&A/getReceivedComment";
+import { getPReceivedComment } from "../api/Q&A/getPReceivedComment";
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import UntilAnswering from "./UntilAnswering";
 import AnswerRegister from "./popup/AnswerRegister";
@@ -15,10 +15,14 @@ import ADelete from "./popup/ADelete";
 import AnswerBtn from "./AnswerButton";
 import Profile1 from "./../img/Ellipse 103.png";
 import Profile2 from "./../img/Ellipse 104.png";
-// import Share from "./../img/icon/icShare.png";
-// import CopyLink from "./../img/icon/CopyLink.png";
+import Loading from "./Loading"; 
 
 function ReceiveComment({ spaceId, currentUserInfo }) {
+  const [page, setPage] = useState(0); // 페이지 번호 상태값 추가
+  const [pageSize, setPageSize] = useState(5); // 페이지 크기 상태값 추가
+  const [loading, setLoading] = useState(false); // 로딩 상태값 추가
+  const [allDataFetched, setAllDataFetched] = useState(false); // 모든 데이터를 가져왔는지 여부를 나타내는 상태값 추가
+  const [fetchingMoreData, setFetchingMoreData] = useState(false);
   const [receivedComments, setReceivedComments] = useState([]);
   // 질문 삭제 상태값
   const [deleteStates, setDeleteStates] = useState({});
@@ -58,31 +62,82 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
     name: "",
   });
 
-  useEffect(() => {
-    const fetchReceivedComments = async () => {
-      try {
-        const spaInfo = await getSpaceInfo(spaceId);
-        const received = await getReceivedComment(spaceId);
+  const fetchData = async (isInitialFetch = true) => {
+    try {
+      setLoading(true);
 
-        const receivedArray = Object.values(received.data).map(
-          (item) => item || {}
-        );
-
-        setReceivedComments(receivedArray);
-        setSpaceOwner(spaInfo);
-
-        // deleteStates 배열을 모든 질문에 대해 초기화
-        const initialDeleteStates = receivedArray.map(() => false);
-        setDeleteStates(initialDeleteStates);
-        a_setDeleteStates(initialDeleteStates);
-        setShareStates(initialDeleteStates);
-      } catch (error) {
-        console.error("Error fetching received comments:", error);
+      // isInitialFetch가 true일 경우에만 페이지 번호를 초기화
+      if (isInitialFetch) {
+        setPage(0);
       }
+
+      const spaInfo = await getSpaceInfo(spaceId);
+      const response = await getPReceivedComment(spaceId, page, pageSize);
+
+      const newComments = isInitialFetch
+        ? response.data
+        : [...receivedComments, ...response.data];
+      setReceivedComments(newComments);
+      setSpaceOwner(spaInfo);
+
+      // deleteStates 배열을 모든 질문에 대해 초기화
+      const initialDeleteStates = newComments.map(() => false);
+      setDeleteStates(initialDeleteStates);
+      a_setDeleteStates(initialDeleteStates);
+      setShareStates(initialDeleteStates);
+
+      // 모든 데이터를 불러온 경우에는 더 이상 데이터를 불러오지 않도록 설정
+      if (response.data.length === 0) {
+        setAllDataFetched(true);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const spinnerRef = useRef(null);
+
+  useEffect(() => {
+    fetchData();
+  }, [spaceId, pageSize]);
+
+  useEffect(() => {
+    const fetchDataOnScroll = async () => {
+      if (fetchingMoreData || allDataFetched) {
+        return; // 이미 데이터를 불러오는 중이거나 모든 데이터를 불러왔으면 종료
+      }
+      setFetchingMoreData(true);
+      const response = await getPReceivedComment(spaceId, page + 1, pageSize);
+      setFetchingMoreData(false);
+
+      if (response.data.length === 0) {
+        setAllDataFetched(true);
+        return; // 더 이상 데이터를 불러올 필요가 없으므로 종료
+      }
+
+      setReceivedComments((prevData) => [
+        ...prevData,
+        ...response.data.map((item) => ({ ...item, key: item.id })),
+      ]);
+      setPage((prevPage) => prevPage + 1);
     };
 
-    fetchReceivedComments();
-  }, [spaceId]);
+    const observer = new IntersectionObserver(async (entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting) {
+        await fetchDataOnScroll();
+      }
+    });
+
+    observer.observe(spinnerRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [spinnerRef, page, pageSize, allDataFetched, fetchingMoreData]);
 
   // 클릭한 질문에 대한 삭제 상태값 변경
   const clickMore = (index) => {
@@ -165,19 +220,6 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
     setAnswerModal(false);
   };
 
-  // const onClickCopy = (questionId, spaceId) => {
-  //   setShareStates("");
-  //   navigator.clipboard.writeText(`localhost:3000/spaces/${spaceId}/#sent/${questionId}`)
-  //     .then(() => {
-  //       alert("링크가 복사되었습니다");
-  //     })
-  //     .catch((error) => {
-  //       console.error("클립보드 복사 오류:", error);
-  //     });
-  
-  //   // 브라우저 창에 포커스 주기
-  //   window.focus();
-  // };
 
 
   return (
@@ -208,7 +250,6 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
       }
       {receivedComments
         .slice()
-        .reverse()
         .map((received, index) => (
           <React.Fragment key={received.id}>
             <div key={received.id} className="commentWrap questionWrap">
@@ -381,6 +422,8 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
           questionText={selectedQuestionText}
         ></AnswerRegister>
       )}
+      {loading && <Loading/>}
+      <div ref={spinnerRef} /> 
     </>
   );
 }
