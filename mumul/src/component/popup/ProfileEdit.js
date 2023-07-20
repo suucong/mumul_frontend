@@ -52,6 +52,12 @@ function ProfileEdit({ onClose, currentUserInfo }) {
 
     const response = await putUserProfileEdit(currentUserInfo.userId, formData);
   };
+  
+  const isMobileDevice = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  };
 
   return (
     <div className="popupWrap">
@@ -68,9 +74,11 @@ function ProfileEdit({ onClose, currentUserInfo }) {
                 ) : (
                   <img src={currentUserInfo.picture} alt="myprofile" />
                 )}
-                <span className="editTxt" onClick={onClickInput}>
-                  Edit
-                </span>
+                {isMobileDevice() && (
+                  <span className="editTxt" onClick={onClickInput}>
+                    Edit
+                  </span>
+                )}
                 <input
                   type="file"
                   accept="image/*"

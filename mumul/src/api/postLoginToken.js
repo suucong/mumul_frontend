@@ -19,7 +19,6 @@ export const postLoginToken = async (idToken) => {
     }
 
     const jwtToken = response.headers['authorization']; // 첫 번째 요소 선택
-    console.log(jwtToken);
 
     // JWT 값을 스토리지에 저장합니다.
     localStorage.setItem('token', jwtToken);

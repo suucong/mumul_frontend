@@ -3,7 +3,7 @@ import Close from "../../img/icon/close.png";
 import { deleteUser } from "../../api/User/deleteUser";
 import { useNavigate } from "react-router-dom";
 
-function NoneMember({ onClose, currentUserInfo }) {
+function NoneMember({ onClose, currentUserInfo, setIsLogin }) {
   const navigate = useNavigate();
   const [active, setActive] = useState(true);
 
@@ -18,6 +18,7 @@ function NoneMember({ onClose, currentUserInfo }) {
   const handleWithdrawal = () => {
     if (!active) {
       deleteUser(currentUserInfo.userId);
+      setIsLogin(false);
       navigate("/");
     }
   };
