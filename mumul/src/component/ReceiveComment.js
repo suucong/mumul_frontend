@@ -19,7 +19,7 @@ import Loading from "./Loading";
 
 function ReceiveComment({ spaceId, currentUserInfo }) {
   const [page, setPage] = useState(0); // 페이지 번호 상태값 추가
-  const [pageSize, setPageSize] = useState(5); // 페이지 크기 상태값 추가
+  const [pageSize, setPageSize] = useState(10); // 페이지 크기 상태값 추가
   const [loading, setLoading] = useState(false); // 로딩 상태값 추가
   const [allDataFetched, setAllDataFetched] = useState(false); // 모든 데이터를 가져왔는지 여부를 나타내는 상태값 추가
   const [fetchingMoreData, setFetchingMoreData] = useState(false);
