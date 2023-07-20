@@ -35,10 +35,9 @@ function ProfileEdit({ onClose, currentUserInfo }) {
 
     if (file && file.size > maxSizeInBytes) {
       alert("파일 크기가 너무 큽니다. 1MB 이하의 파일을 업로드해주세요.");
-      event.target.value = null; // 파일 선택 초기화
+      event.target.files[0] = null; // 파일 선택 초기화
     } else {
-      // 파일 크기가 제한 이하일 때, 원하는 로직을 수행합니다.
-      setSelectedFile(event.target.files[0]);
+      setSelectedFile(file); // 파일 크기가 제한 이하일 때, selectedFile 상태를 업데이트합니다.
     }
   };
 
