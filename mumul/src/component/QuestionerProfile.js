@@ -116,11 +116,11 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
           <p className="mylink">
           <span>🔗</span>
           <a
-            href={currentUserInfo.link}
+            href={spaceUserInfo.link}
             target="_blank"
             rel="noreferrer"
           >
-            {currentUserInfo.link}
+            {spaceUserInfo.link}
           </a>
         </p>
           <div className="follow">

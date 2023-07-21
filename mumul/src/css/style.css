@@ -173,7 +173,7 @@ a {
   max-height: 250px;
   height: 250px;
 } */
-
+/* 
 .commentWrap.questionWrap::after {
   display: block;
   content: "";
@@ -182,19 +182,19 @@ a {
   background-color: #000;
   position: absolute;
   left: 55px;
-  top: 30px;
-}
+  top: 30px; 
+} */
 
-/* .commentWrap.answerWrap::after {
+.commentWrap.questionWrap::after {
   display: block;
   content: "";
   width: 2px;
-  height: 105%;
+  height: 80%;
   background-color: #000;
   position: absolute;
   left: 55px;
-  top: -110px;
-} */
+  top: 100px; 
+}
 
 /* .commentWrap:last-of-type .cnt::before {
   display: none;
@@ -314,7 +314,7 @@ button.space {
   height: 36px;
   border-radius: 32px;
   background-color: #fbfbfb;
-  border: 1px solid #eee;
+  border: 1px solid #5c5c5c;
 }
 
 .editProfile.active {
@@ -399,7 +399,7 @@ button.space {
   margin: 10px 0px;
 }
 .tabMenu li {
-  width: 33%;
+  width: 45%;
   height: 32px;
   line-height: 32px;
   text-align: center;
@@ -481,7 +481,7 @@ button.space {
   height: 36px;
   border-radius: 32px;
   background-color: #fbfbfb;
-  border: 1px solid #eee;
+  border: 1px solid #6c6c6c;
 }
 
 .answerBtn {

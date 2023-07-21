@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import More from "./../img/icon/icMore.png";
-// import Share from "./../img/icon/icShare.png";
 import Bin from "./../img/icon/icBin.png";
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import Delete from "./popup/QDelete";
@@ -13,9 +12,15 @@ import moment from "moment";
 import "moment/locale/ko"; // 한국어 
 import AnswerBtn from "./AnswerButton";
 import Profile2 from "./../img/Ellipse 104.png";
-// import CopyLink from "./../img/icon/CopyLink.png";
+import Loading from "./Loading";
+import { getPSentComment } from "../api/Q&A/getPSentComment";
 
 function SendComment({ spaceId, info, currentUserInfo }) {
+  const [page, setPage] = useState(0);  // 페이지 번호 상태값 추가 
+  const [pageSize, setPageSize] = useState(5);     // 페이지 크기 상태값 추가 
+  const [loading, setLoading] = useState(false);    // 로딩 상태값 추가 
+  const [allDataFetched, setAllDataFetched] = useState(false);    // 모든 데이터를 가져왔는지 여부를 나타내는 상태값 추가 
+  const [fetchingMoreData, setFetchingMoreData] = useState(false);
   const [sentComments, setSentComments] = useState([]);
   // 답변 삭제 상태값
   const [a_deleteStates, a_setDeleteStates] = useState({});
@@ -50,29 +55,83 @@ function SendComment({ spaceId, info, currentUserInfo }) {
   // 질문 삭제 상태값
   const [deleteStates, setDeleteStates] = useState({});
 
+  const fetchData = async (isInitialFetch = true) => {
+    try {
+      setLoading(true);
+
+      // isInitialFetch가 true일 경우에만 페이지 번호를 초기화
+      if (isInitialFetch) {
+        setPage(0);
+      }
+
+      const spaInfo = await getSpaceInfo(spaceId);
+      const response = await getPSentComment(spaceId, page, pageSize);
+
+      const newComments = isInitialFetch
+        ? response.data
+        : [...sentComments, ...response.data];
+      setSentComments(newComments);
+      setSpaceOwner(spaInfo);
+
+      // deleteStates 배열을 모든 질문에 대해 초기화
+      const initialDeleteStates = newComments.map(() => false);
+      setDeleteStates(initialDeleteStates);
+      a_setDeleteStates(initialDeleteStates);
+      setShareStates(initialDeleteStates);
+
+      // 모든 데이터를 불러온 경우에는 더 이상 데이터를 불러오지 않도록 설정
+      if (response.data.length === 0) {
+        setAllDataFetched(true);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching data: ", error);
+    }
+  };
+
+  const spinnerRef = useRef(null);
 
   useEffect(() => {
-    const fetchSentComments = async () => {
-      try {
-        const spaInfo = await getSpaceInfo(spaceId);
-        const sent = await getSentComment(spaceId);
+    fetchData();
+  }, [spaceId, pageSize]);
 
-        const sentArray = Object.values(sent.data).map((item) => item || {});
-
-        setSentComments(sentArray);
-        setSpaceOwner(spaInfo);
-        // deleteStates 배열을 모든 질문에 대해 초기화
-        const initialDeleteStates = sentArray.map(() => false);
-        setDeleteStates(initialDeleteStates);
-        a_setDeleteStates(initialDeleteStates);
-        setShareStates(initialDeleteStates);
-      } catch (error) {
-        console.error("Error fetching sent comments:", error);
+  useEffect(() => {
+    const fetchDataOnScroll = async () => {
+      if (fetchingMoreData || allDataFetched) {
+        return;   // 이미 데이터를 불러오는 중이거나 모든 데이터를 불러왔으면 종료
       }
+      setFetchingMoreData(true);
+      const response = await getPSentComment(spaceId, page + 1, pageSize);
+      setFetchingMoreData(false);
+
+      if (response.data.length === 0) {
+        setAllDataFetched(true);
+        return;
+      }
+
+      setSentComments((prevData) => [
+        ...prevData,
+        ...response.data.map((item) => ({ ...item, key: item.id})),
+      ]);
+      setPage((prevPage) => prevPage + 1);
     };
 
-    fetchSentComments();
-  }, [spaceId]);
+    const observer = new IntersectionObserver(async (entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting) {
+        await fetchDataOnScroll();
+      }
+    });
+
+    observer.observe(spinnerRef.current);
+
+    return () => {
+      observer.disconnect();
+    }
+  }, [spinnerRef, page, pageSize, allDataFetched, fetchingMoreData]);
+
 
   // 클릭한 질문에 대한 삭제 상태값 변경
   const clickMore = (index) => {
@@ -134,23 +193,7 @@ const a_showDelModal = (answerId, spaceId, userId) => {
       setShareModal(true);
       setShare_1(true);
     }
-  };
-
-
-  // const onClickCopy = (questionId, spaceId) => {
-  //   setShareStates("");
-  //   navigator.clipboard.writeText(`localhost:3000/spaces/${spaceId}/#sent/${questionId}`)
-  //     .then(() => {
-  //       alert("링크가 복사되었습니다");
-  //     })
-  //     .catch((error) => {
-  //       console.error("클립보드 복사 오류:", error);
-  //     });
-  
-  //   // 브라우저 창에 포커스 주기
-  //   window.focus();
-  // };
-  
+  };  
 
   return (
     <>
@@ -178,7 +221,6 @@ const a_showDelModal = (answerId, spaceId, userId) => {
       </>}
       {sentComments
         .slice()
-        .reverse()
         .filter(sent => {
           // 현재 로그인한 유저가 질문 보낸 유저가 아니라면
           if (currentUserInfo.userId !== sent.sendingUserId) {
@@ -188,10 +230,7 @@ const a_showDelModal = (answerId, spaceId, userId) => {
           return true;
         })
         .map((sent, index) => (
-
-
           <React.Fragment key={sent.id}>
-    
             <div className="commentWrap questionWrap">
               <div className="profileArea">
                 <img
@@ -222,25 +261,8 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                     </div>
                   )}
                 </div>
-
-                {/* <div className="share">
-                  <img src={Share} alt="share" onClick={() => clickMore_s(index)}  />
-                  {shareStates[index] && (
-                    <div className="sharePopup">
-                      <p onClick={() => onClickCopy(sent.id, spaceId)}>
-                        <img src={CopyLink} alt="link" />
-                        링크 복사
-                      </p>
-                    </div>
-                  )}
-                </div> */}
-
-
               </div>
             </div>
-
-
-
             <div className="commentWrap answerWrap">
               <div className="profileArea">
                 <img
@@ -266,10 +288,6 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                     />
                   </>
                 )}
-                {/* <div className="heart">
-                  <img src={good} alt="good" onClick={clickGood} />
-                </div> */}
-
                 {sent.answers.length === 0 ? (
                   ""
                 ) : (
@@ -327,6 +345,8 @@ const a_showDelModal = (answerId, spaceId, userId) => {
             </div>
           </React.Fragment>
         ))}
+        {loading && <Loading/>}
+        <div ref={spinnerRef}/>
     </>
   );
 }
