@@ -7,7 +7,7 @@ export const getReceivedComment = async (spaceId) => {
         const response = await axios.get(path, {
             headers: {
                 'Content-Type': 'application/json',
-                Accept: 'application/json'
+                Accept: 'application/json',
             }
         });
 

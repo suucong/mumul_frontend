@@ -51,12 +51,12 @@ function HeaderPopup({ isLogin, setIsLogin, currentUserInfo }) {
       <li className="list" onClick={handleClickMySpace}>
       <Link to={localStorage.getItem('token') !== null ? '/' + currentUserInfo.userId : '#'} onClick={(e) => {
         if (localStorage.getItem('token') !== null && window.location.pathname === '/' + currentUserInfo.userId) {
-        e.preventDefault(); // Prevent the default link behavior
-        window.location.reload(); // Force a page reload
+          e.preventDefault(); // Prevent the default link behavior
+          window.location.reload(); // Force a page reload
         }
       }}>
-    <p>내 스페이스</p>
-    </Link>
+        <p>내 스페이스</p>
+      </Link>
   </li>
 
       <li className="list" onClick={() => { if (token !== null) handleLogout(); }}>

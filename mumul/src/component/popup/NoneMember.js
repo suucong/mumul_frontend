@@ -20,6 +20,7 @@ function NoneMember({ onClose, currentUserInfo, setIsLogin }) {
       deleteUser(currentUserInfo.userId);
       setIsLogin(false);
       navigate("/");
+      window.location.reload(); 
     }
   };
 
@@ -40,9 +41,9 @@ function NoneMember({ onClose, currentUserInfo, setIsLogin }) {
             </div>
           </div>
           <div className="popupFooter">
-            <button className={active ? "btnStorke" : "btnRed"} onClick={handleWithdrawal}>
-              회원탈퇴
-            </button>
+              <button className={active ? "btnStorke" : "btnRed"} onClick={handleWithdrawal}>
+                회원탈퇴
+              </button>
             <button className="btnCancel" onClick={onClose}>
               취소
             </button>

@@ -11,15 +11,13 @@ export const deleteAnswer = async (spaceId, answerId, userId) => {
                 spaceId: spaceId,
                 answerId: answerId
               },
-              
-                headers: {
-                  "Content-Type": "application/json",
-                  Accept: "application/json",
-                },
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+              },
           }
-     
-          
-        );
+      );
 
         return response.data;
     } catch (e) {

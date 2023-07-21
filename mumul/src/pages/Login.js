@@ -22,12 +22,15 @@ const Login = ({ isLogin, setIsLogin }) => {
         return;
       }
       const userInfo = await getUserInfo();
+      if(userInfo === false) {
+        setIsLogin(false);
+      }
       navigate(`/${userInfo.userId}`);
     };
     if (isLogin) {
       initLogin();
     }
-  }, [isLogin, navigate]);
+  }, [isLogin, navigate, setIsLogin]);
 
   return (
     <div className="wrap">

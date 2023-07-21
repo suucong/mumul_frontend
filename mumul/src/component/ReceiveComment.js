@@ -106,38 +106,42 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
 
   useEffect(() => {
     const fetchDataOnScroll = async () => {
-      if (fetchingMoreData || allDataFetched) {
-        return; // 이미 데이터를 불러오는 중이거나 모든 데이터를 불러왔으면 종료
-      }
-      setFetchingMoreData(true);
-      const response = await getPReceivedComment(spaceId, page + 1, pageSize);
-      setFetchingMoreData(false);
+      if (!fetchingMoreData && !allDataFetched) {
+        setFetchingMoreData(true);
 
-      if (response.data.length === 0) {
-        setAllDataFetched(true);
-        return; // 더 이상 데이터를 불러올 필요가 없으므로 종료
-      }
+        const response = await getPReceivedComment(spaceId, page + 1, pageSize);
 
-      setReceivedComments((prevData) => [
-        ...prevData,
-        ...response.data.map((item) => ({ ...item, key: item.id })),
-      ]);
-      setPage((prevPage) => prevPage + 1);
+        setFetchingMoreData(false);
+
+        if (response.data.length === 0) {
+          setAllDataFetched(true);
+          return; // 더 이상 데이터를 불러올 필요가 없으므로 종료
+        }
+
+        setReceivedComments((prevData) => [
+          ...prevData,
+          ...response.data.map((item) => ({ ...item, key: item.id })),
+        ]);
+        setPage((prevPage) => prevPage + 1);
+      }
     };
 
-    const observer = new IntersectionObserver(async (entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting) {
-        await fetchDataOnScroll();
-      }
-    });
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const contentHeight = document.body.scrollHeight;
 
-    observer.observe(spinnerRef.current);
+      if (scrollY >= contentHeight - windowHeight - 200) {
+        fetchDataOnScroll();
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [spinnerRef, page, pageSize, allDataFetched, fetchingMoreData]);
+  }, [spaceId, page, pageSize, allDataFetched, fetchingMoreData]);
 
   // 클릭한 질문에 대한 삭제 상태값 변경
   const clickMore = (index) => {

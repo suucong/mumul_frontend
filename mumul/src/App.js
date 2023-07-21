@@ -16,7 +16,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Intro isLogin={isLogin}/>} />
+        <Route path="/" element={<Intro isLogin={isLogin} setIsLogin={setIsLogin}/>} />
         <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} />
         <Route path="/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin} 
         followSelected={followSelected} setFollowSelected={setFollowSelected}/>} />

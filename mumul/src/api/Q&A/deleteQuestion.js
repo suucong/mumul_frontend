@@ -11,11 +11,11 @@ export const deleteQuestion = async (spaceId, questionId, userId) => {
                 spaceId: spaceId,
                 questionId: questionId
               },
-              
-                headers: {
-                  "Content-Type": "application/json",
-                  Accept: "application/json",
-                },
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+              },
           }
      
           

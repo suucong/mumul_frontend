@@ -20,9 +20,9 @@ export const createAnswer = async (id, currentUserInfo, answerText, btn, questio
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Accept: 'application/json',
-        
+          Authorization: 'Bearer ' + localStorage.getItem('token')
         },
       }
     );
