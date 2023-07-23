@@ -10,6 +10,7 @@ const Login = ({ isLogin, setIsLogin }) => {
 
   const onGoogleSignIn = async (res) => {
     const { credential } = res;
+    console.log(credential);
     const result = await postLoginToken(credential);
     if (result) {
       setIsLogin(true); // 로그인 성공 시에만 isLogin을 true로 설정
