@@ -15,11 +15,10 @@ import useScript from "../hooks/useScript";
     window.google.accounts.id.initialize({
       client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID, // 환경 변수에서 Google 클라이언트 ID 가져옴
       callback: onGoogleSignIn, // Google 로그인 성공 시 실행될 콜백 함수 설정
-      ux_mode: "redirect", 
-      login_uri: "https://mumul.space/login"
+      // ux_mode: "redirect", 
+      // login_uri: "https://mumul.space/login"
     });
 
-    // Google 로그인 버튼 렌더링
     window.google.accounts.id.renderButton(
       googleSignInButton.current, // Google 로그인 버튼을 렌더링할 요소 참조
       { theme: 'outline', size: 'large', text, width: '300px' }, // 커스터마이즈 속성 설정
