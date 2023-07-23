@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { postLoginToken } from "../api/postLoginToken";
-import GoogleLogin from "../component/GoogleLogin";
+import {GoogleLogin} from "@react-oauth/google";
+import {GoogleOAuthProvider} from "@react-oauth/google";
 import Rabbit from "./../img/Group 12.png";
 import { getUserInfo } from "../api/getUserInfo";
 
@@ -10,7 +11,6 @@ const Login = ({ isLogin, setIsLogin }) => {
 
   const onGoogleSignIn = async (res) => {
     const { credential } = res;
-    console.log(credential);
     const result = await postLoginToken(credential);
     if (result) {
       setIsLogin(true); // 로그인 성공 시에만 isLogin을 true로 설정
@@ -51,7 +51,19 @@ const Login = ({ isLogin, setIsLogin }) => {
               <p className="loginDecs">MUMUL 스페이스를 만드려면 로그인을 해야 돼</p>
             </div>
             <div className="buttonWrap">
-              <GoogleLogin onGoogleSignIn={onGoogleSignIn} text="로그인" />
+            <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+                <GoogleLogin
+                    onSuccess={(res) => {
+                        onGoogleSignIn(res);
+                    }}
+                    onFailure={(err) => {
+                        console.log(err);
+                    }}
+                    // ux_mode= "redirect"
+                    width='300px'
+                />
+            </GoogleOAuthProvider>
+              {/* <GoogleLogin onGoogleSignIn={onGoogleSignIn} text="로그인" /> */}
             </div>
           </div>
         </div>
