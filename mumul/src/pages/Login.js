@@ -16,7 +16,7 @@ const Login = ({ isLogin, setIsLogin, hasRequestedCallback, setHasRequestedCallb
   const GoogleSocialLogin = useGoogleLogin({
     scope: "email profile",
     ux_mode: "redirect",
-    redirect_uri: "https://mumul.space/login",
+    // redirect_uri: "http://localhost:3000/login",
     flow: "auth-code",
   });
 
