@@ -8,6 +8,7 @@ import Policy from "./pages/Policy";
 import Setting from "./pages/Setting";
 import "./css/reset.css";
 import "./css/style.css";
+import KakaoAuthHandle from "./component/KakaoAuthHandle";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/" element={<Intro isLogin={isLogin} setIsLogin={setIsLogin}/>} />
         <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}
         hasRequestedCallback={hasRequestedCallback} setHasRequestedCallback={setHasRequestedCallback}/>} />
+        <Route exact path="/login/kakao" Component={KakaoAuthHandle}/>
         <Route path="/:id" element={<Main isLogin={isLogin} setIsLogin={setIsLogin} 
         followSelected={followSelected} setFollowSelected={setFollowSelected}/>} />
         <Route path="/policy" element={<Policy />} />

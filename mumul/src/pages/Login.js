@@ -7,11 +7,12 @@ import { useGoogleLogin } from "@react-oauth/google";
 import Rabbit from "./../img/Group 12.png";
 import { getUserInfo } from "../api/getUserInfo";
 import Goggle from "./../img/icon/icGoggle.png";
+import Cacao from "./../img/icon/icCacao.png";
 import axios from "axios";
-
 
 const Login = ({ isLogin, setIsLogin, hasRequestedCallback, setHasRequestedCallback }) => {
   const navigate = useNavigate();
+  const KAKAO_AUTH_URL = "https://kauth.kakao.com/oauth/authorize?client_id=aef338ad0a5650a845dd1ce3f5ff8571&redirect_uri=https://mumul.space/login/kakao&response_type=code";
 
   const GoogleSocialLogin = useGoogleLogin({
     scope: "email profile",
@@ -19,6 +20,10 @@ const Login = ({ isLogin, setIsLogin, hasRequestedCallback, setHasRequestedCallb
     // redirect_uri: "http://localhost:3000/login",
     flow: "auth-code",
   });
+
+  const kakaoLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
+}
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -59,24 +64,24 @@ const Login = ({ isLogin, setIsLogin, hasRequestedCallback, setHasRequestedCallb
       };
       initLogin();
     }
-  }, [isLogin, hasRequestedCallback, navigate, setIsLogin]);
+  }, [isLogin, setHasRequestedCallback, navigate, setIsLogin]);
 
-  useEffect(() => {
-    const initLogin = async () => {
-      if (!isLogin) {
-        return;
-      }
-      const userInfo = await getUserInfo();
-      if(userInfo === false) {
-        setIsLogin(false);
-      }
-      navigate(`/${userInfo.userId}`);
-      setHasRequestedCallback(false);
-    };
-    if (isLogin) {
-      initLogin();
-    }
-  }, [isLogin, navigate, setIsLogin]);
+  // useEffect(() => {
+  //   const initLogin = async () => {
+  //     if (!isLogin) {
+  //       return;
+  //     }
+  //     const userInfo = await getUserInfo();
+  //     if(userInfo === false) {
+  //       setIsLogin(false);
+  //     }
+  //     navigate(`/${userInfo.userId}`);
+  //     setHasRequestedCallback(false);
+  //   };
+  //   if (isLogin) {
+  //     initLogin();
+  //   }
+  // }, [isLogin, navigate, setIsLogin]);
 
   return (
     <div className="wrap">
@@ -111,6 +116,10 @@ const Login = ({ isLogin, setIsLogin, hasRequestedCallback, setHasRequestedCallb
             <button onClick={GoogleSocialLogin}>
               <img src={Goggle} alt="" />
               Google 계정으로 계속
+            </button>
+            <button onClick={kakaoLogin}>
+              <img src={Cacao} alt="" />
+              Kakao 계정으로 계속
             </button>
             </div>
           </div>
