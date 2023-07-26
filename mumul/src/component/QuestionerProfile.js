@@ -72,9 +72,40 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
     try {
       if (isFollowing) {
         // 언팔로우
-        postUnFollow(spaceUserInfo.userId);
+        const path = '/unFollow/' + spaceId;
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = axios.post(path, {}, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      });
+
+        return response.data;
+    } catch (e) {
+        console.error('postFollow Error: ', e.message);
+    }
       } else {
-        postFollow(spaceUserInfo.userId);
+        const path = '/follow/' + spaceId;
+        const token = localStorage.getItem('token');
+
+    try {
+        const response = axios.post(path, {}, {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        });
+
+        return response.data;
+    } catch (e) {
+        console.error('postFollow Error: ', e.message);
+    }
+        // postFollow(spaceUserInfo.userId);
       }
 
       setIsFollowing(!isFollowing);
