@@ -7,7 +7,6 @@ import { postUnFollow } from "../api/Follow/postUnFollow";
 import { getIsFollow } from "../api/Follow/getIsFollow";
 import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
 import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
-import axios from "axios";
 
 function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, setFollowSelected }) {
   const [queModal, setQueModal] = useState(false);
@@ -68,56 +67,15 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
       alert('로그인 하세요.');
       return;
     }
-  
-    try {
-      if (isFollowing) {
-        // 언팔로우
-        const path = '/unFollow/' + spaceId;
-    const token = localStorage.getItem('token');
-
-    try {
-      const response = axios.post(path, {}, {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + token
-        }
-      });
-
-        return response.data;
-    } catch (e) {
-        console.error('postFollow Error: ', e.message);
-    }
-      } else {
-        const path = '/follow/' + spaceId;
-        const token = localStorage.getItem('token');
-
-    try {
-        const response = axios.post(path, {}, {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: 'Bearer ' + token
-          }
-        });
-
-        return response.data;
-    } catch (e) {
-        console.error('postFollow Error: ', e.message);
-    }
-        // postFollow(spaceUserInfo.userId);
-      }
-
-      setIsFollowing(!isFollowing);
-  
-      // 캐시 무효화
-      axios.get('/v1/some-endpoint-to-invalidate-cache');
-  
-      // 페이지 리로드
+    if(isFollowing) {
+      // 언팔로우
+      postUnFollow(spaceUserInfo.userId);
       window.location.reload();
-    } catch (error) {
-      console.error('Error occurred while toggling following status: ', error);
+    } else {
+      postFollow(spaceUserInfo.userId);
+      window.location.reload();
     }
+    setIsFollowing(!isFollowing);
   };
 
   return (
