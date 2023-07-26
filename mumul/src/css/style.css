@@ -880,6 +880,64 @@ input:checked + .slider:before {
   padding: 16px;
 }
 
+/* Policy.css */
+.policy-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.policy-container h1 {
+  margin-top: 0;
+}
+
+.policy-container p {
+  margin-bottom: 20px;
+}
+
+.wpembed-toc {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.wpembed-toc h3 {
+  margin-top: 0;
+}
+
+.wpembed-toc ol {
+  list-style-type: decimal;
+  margin-left: 20px;
+}
+
+.wpembed-toc li {
+  margin-bottom: 5px;
+}
+
+.wpembed-toc a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.wpembed-toc a:hover {
+  text-decoration: underline;
+}
+
+.madewith {
+  text-align: center;
+}
+
+.madewith img {
+  border: none;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .policy-container {
+    padding: 10px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .loginWrap .img img {
     width: 360px;
