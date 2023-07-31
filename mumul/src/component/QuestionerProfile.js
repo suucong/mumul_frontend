@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import QuestionRegister from "./popup/QuestionRegister";
+import Storyslide from "./Storyslide";
 import InstaLogo from "../img/icon/instaLogo.jpeg";
 
 import { postFollow } from "../api/Follow/postFollow";
@@ -7,13 +8,16 @@ import { postUnFollow } from "../api/Follow/postUnFollow";
 import { getIsFollow } from "../api/Follow/getIsFollow";
 import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
 import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
-import Storyslide from "./Storyslide";
+import { getFollowerList } from "../api/Follow/getFollowerList";
+import { getFollowingList } from "../api/Follow/getFollowingList";
 
 function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, setFollowSelected }) {
   const [queModal, setQueModal] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followingNumber, setFollowingNumber] = useState(null);
   const [followerNumber, setFollowerNumber] = useState(null);
+  const [followingList, setFollowingList] = useState([]);
+  const [followerList, setFollowerList] = useState([]);
 
   const onClickFollowing = () => {
     setFollowSelected(true);
@@ -71,9 +75,27 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
     if(isFollowing) {
       // 언팔로우
       postUnFollow(spaceUserInfo.userId);
+      const followerList_ = getFollowerList(spaceUserInfo.userId);
+      setFollowerList(followerList);
+      getFollwerNumber(spaceUserInfo.userId)
+      .then((result) => {
+        setFollowerNumber(result);
+      })
+      .catch((error) => {
+        console.error('getFollowerNumber Error: ', error.message);
+      }) 
       // window.location.reload();
     } else {
       postFollow(spaceUserInfo.userId);
+      const followerList_ = getFollowerList(spaceUserInfo.userId);
+      setFollowerList(followerList);
+      getFollwerNumber(spaceUserInfo.userId)
+      .then((result) => {
+        setFollowerNumber(result);
+      })
+      .catch((error) => {
+        console.error('getFollowerNumber Error: ', error.message);
+      }) 
       // window.location.reload();
     }
     setIsFollowing(!isFollowing);
@@ -81,7 +103,7 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
 
   return (
     <>
-      <Storyslide spaceId={spaceUserInfo.userId} followSelected={followSelected}></Storyslide>
+      <Storyslide spaceId={spaceUserInfo.userId} followSelected={followSelected} followerList={followerList}></Storyslide>
       <div className="myProfileWrap">
         <div className="profile">
           <img src={spaceUserInfo.picture} alt="myprofile" />

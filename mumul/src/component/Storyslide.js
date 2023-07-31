@@ -8,10 +8,10 @@ import { getSpaceInfo } from "../api/getSpaceInfo";
 import { getFollowerList } from "../api/Follow/getFollowerList";
 
 
-function Storyslide({spaceId, followSelected}) {
+function Storyslide({spaceId, followSelected, followerList}) {
   const [swiperRef, setSwiperRef] = useState(null);
   const [followingList, setFollowingList] = useState([]);
-  const [followerList, setFollowerList] = useState([]);
+  // const [followerList, setFollowerList] = useState([]);
   const [spaceInfo, setSpaceInfo] = useState({
     userId: '',
     picture: '',
@@ -22,12 +22,12 @@ function Storyslide({spaceId, followSelected}) {
     const fetchData = async () => {
       try {
         const response = await getFollowingList(spaceId);
-        const followerlist = await getFollowerList(spaceId);
+        // const followerlist = await getFollowerList(spaceId);
         const spaceUserInfo = await getSpaceInfo(spaceId);
 
         setSpaceInfo(spaceUserInfo);
         setFollowingList(response);
-        setFollowerList(followerlist);
+        // setFollowerList(followerlist);
       } catch (error) {
         console.error(error);
       }
