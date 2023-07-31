@@ -260,7 +260,14 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
               <img
                 src={received.sentUserPic}
                 alt="profile1"
-                className="questioner"
+                className={`questioner ${
+                  received.isAnonymous ? "anonymous" : ""
+                }`}
+                onClick={() => {
+                  if (!received.isAnonymous) {
+                    window.location.href = `/${received.sendingUserId}`;
+                  }
+                }}           
               />
             </div>
             <div className="cnt">
