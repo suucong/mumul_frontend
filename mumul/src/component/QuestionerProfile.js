@@ -7,6 +7,7 @@ import { postUnFollow } from "../api/Follow/postUnFollow";
 import { getIsFollow } from "../api/Follow/getIsFollow";
 import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
 import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
+import Storyslide from "./Storyslide";
 
 function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, setFollowSelected }) {
   const [queModal, setQueModal] = useState(false);
@@ -80,6 +81,7 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
 
   return (
     <>
+      <Storyslide spaceId={spaceUserInfo.userId} followSelected={followSelected}></Storyslide>
       <div className="myProfileWrap">
         <div className="profile">
           <img src={spaceUserInfo.picture} alt="myprofile" />

@@ -3,6 +3,7 @@ import ProfileEdit from "../component/popup/ProfileEdit";
 import InstaLogo from "../img/icon/instaLogo.jpeg";
 import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
 import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
+import Storyslide from "./Storyslide";
 
 
 function MyProfile({ currentUserInfo, followSelected, setFollowSelected }) {
@@ -46,6 +47,8 @@ function MyProfile({ currentUserInfo, followSelected, setFollowSelected }) {
   }, [currentUserInfo.userId]);
 
   return (
+    <>
+    <Storyslide spaceId={currentUserInfo.userId} followSelected={followSelected}></Storyslide>
     <div className="myProfileWrap">
       <div className="profile">
         <img src={currentUserInfo.picture} alt="myprofile" />
@@ -86,6 +89,7 @@ function MyProfile({ currentUserInfo, followSelected, setFollowSelected }) {
       </div>
       {modal && <ProfileEdit onClose={onClose} currentUserInfo={currentUserInfo} ></ProfileEdit>}
     </div>
+    </>
   );
 }
 

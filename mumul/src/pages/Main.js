@@ -83,7 +83,7 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
       <div className="wrap">
       <Header isLogin={isLogin} setIsLogin={setIsLogin} currentUserInfo={currentUserInfo}></Header>
       <div className="contentWrap">
-        <Storyslide spaceId={id} followSelected={followSelected}></Storyslide>
+        {/* <Storyslide spaceId={id} followSelected={followSelected}></Storyslide> */}
         {currentUserInfo.userId === info.userId ? (
             <MyProfile currentUserInfo={currentUserInfo}
             followSelected={followSelected} setFollowSelected={setFollowSelected}></MyProfile>
