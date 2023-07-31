@@ -9,14 +9,12 @@ import { getIsFollow } from "../api/Follow/getIsFollow";
 import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
 import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
 import { getFollowerList } from "../api/Follow/getFollowerList";
-import { getFollowingList } from "../api/Follow/getFollowingList";
 
 function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, setFollowSelected }) {
   const [queModal, setQueModal] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followingNumber, setFollowingNumber] = useState(null);
   const [followerNumber, setFollowerNumber] = useState(null);
-  const [followingList, setFollowingList] = useState([]);
   const [followerList, setFollowerList] = useState([]);
 
   const onClickFollowing = () => {
@@ -135,8 +133,19 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
         </div>
         <div className="myInfo">
           <p className="id">
-            {spaceUserInfo.name}
-            <span className="intro">{spaceUserInfo.introduce}</span>
+            <div>
+              {spaceUserInfo.name}
+              {isFollowing ? 
+                <button className="followMeBtn">
+                  나를 팔로우함
+                </button> : 
+                (
+                  ""
+                )}
+            </div>
+            <div>
+              <span className="intro">{spaceUserInfo.introduce}</span>
+            </div>
           </p>
           <p className="snsLink">
             <img src={InstaLogo} alt="instaLogo" />

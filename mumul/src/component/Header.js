@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Profile from "./../img/Ellipse 102.png";
 import { logoutUserToken } from "../api/logoutUserToken";
 
 function Header({ isLogin, setIsLogin, currentUserInfo }) {
@@ -34,15 +33,15 @@ function Header({ isLogin, setIsLogin, currentUserInfo }) {
     <header className="header">
        <h1 className="title" onClick={handleMumulClick}>MUMUL</h1>
       <div className="profile" ref={profileRef}>
-        <img
-          src={
-            isLogin === true
-              ? currentUserInfo.picture
-              : Profile
-          }
-          alt="profile"
-          onClick={handleProfileClick}
-        />
+        {isLogin === true ? (
+          <img
+            src={ currentUserInfo.picture}
+            alt="profile"
+            onClick={handleProfileClick}
+          />
+        ):(
+          <button className="loginBtn" onClick={handleProfileClick}>로그인</button>
+        )}
       </div>
       {modal && (
         <HeaderPopup
@@ -64,9 +63,8 @@ function HeaderPopup({ isLogin, setIsLogin, currentUserInfo }) {
       if (result) {
         // 로그아웃 성공
         setIsLogin(false);
-        window.location.reload();
-      } else {
-      }
+        window.location.href = '/login';
+      } 
     } catch (error) {
       console.error("로그아웃 오류: ", error.message);
     }
@@ -82,7 +80,7 @@ function HeaderPopup({ isLogin, setIsLogin, currentUserInfo }) {
   return (
     <ul className="headerPopup">
       <li className="list" onClick={handleClickMySpace}>
-      <Link to={isLogin === true ? '/' + currentUserInfo.userId : '#'} onClick={(e) => {
+      <Link to={isLogin !== false ? '/' + currentUserInfo.userId : '#'} onClick={(e) => {
         if (isLogin !== false && window.location.pathname === '/' + currentUserInfo.userId) {
           e.preventDefault(); // Prevent the default link behavior
           window.location.reload(); // Force a page reload
@@ -92,7 +90,7 @@ function HeaderPopup({ isLogin, setIsLogin, currentUserInfo }) {
       </Link>
   </li>
 
-      <li className="list" onClick={() => { if (isLogin) handleLogout(); }}>
+      <li className="list" onClick={() => { if(isLogin !== false) handleLogout(); }}>
         <Link to="/login">
           <p>{isLogin ? "로그아웃" : "로그인"}</p>
         </Link>

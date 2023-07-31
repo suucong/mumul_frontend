@@ -260,7 +260,14 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
               <img
                 src={received.sentUserPic}
                 alt="profile1"
-                className="questioner"
+                className={`questioner ${
+                  received.isAnonymous ? "anonymous" : ""
+                }`}
+                onClick={() => {
+                  if (!received.isAnonymous) {
+                    window.location.href = `/${received.sendingUserId}`;
+                  }
+                }}
               />
             </div>
             <div className="cnt">
@@ -339,29 +346,39 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                 </div> */}
             </div>
           </div>
+        
           <div className="commentWrap answerWrap">
             <div className="profileArea">
-            {received.answers.length === 0 ?(
+              {received.answers.length === 0 ? (
                 <img
-                src={spaceOwner.picture}
-                alt="profile2"
-                className="pre_questioner"
-              />
-            ):(
-              <img
-              src={spaceOwner.picture}
-              alt="profile2"
-              className="respondent"
-            />
-            )}
-            
+                  src={spaceOwner.picture}
+                  alt="profile2"
+                  className="pre_questioner"
+                />
+              ) : (
+                <img
+                  src={spaceOwner.picture}
+                  alt="profile2"
+                  className="respondent"
+                  onClick={() =>{
+                    console.log("spaceId: ",spaceId, " received.answers[0].userId:", received.answers[0].userId.toString());
+                    if(spaceId !== received.answers[0].userId.toString()){
+                  
+                      window.location.href = `/${received.answers[0].userId}`
+                    }
+                   
+                  }
+                  }
+                  
+                />
+              )}
             </div>
             <div className="cnt">
-            {received.answers.length === 0 ?(
-             <p className="pre_Nickname">{spaceOwner.name}</p>
-            ):
-            (<p className="Nicname">{spaceOwner.name}</p>)}
-          
+              {received.answers.length === 0 ? (
+                <p className="pre_Nickname">{spaceOwner.name}</p>
+              ) : (
+                <p className="Nicname">{spaceOwner.name}</p>
+              )}
 
               {received.answers.length === 0 ? (
                 <UntilAnswering></UntilAnswering>

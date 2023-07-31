@@ -42,6 +42,19 @@ a {
   cursor: pointer;
 }
 
+.loginBtn {
+  font-weight: 550;
+  background-color: #5f85de;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  
+  cursor: pointer;
+  margin-bottom: 32px;
+}
+
+
 .loginWrap {
   display: flex;
   align-items: center;
@@ -100,9 +113,11 @@ a {
   border: 1px solid #eee;
   position: absolute;
   right: 70px;
-  top: 40px;
+  top: 60px;
+  transform: translateX(50%); /* Center the popup horizontally */
   z-index: 20;
 }
+
 
 .headerPopup li {
   font-size: 14px;
@@ -186,6 +201,10 @@ a {
   top: 30px; 
 } */
 
+
+
+/* The following CSS makes sure that the line connecting question and answer is visible */
+/* The value of z-index can be adjusted based on your design and other CSS properties */
 .commentWrap.questionWrap::after {
   display: block;
   content: "";
@@ -194,9 +213,13 @@ a {
   background-color: #000;
   position: absolute;
   left: 55px;
-  top: 100px; 
+  top: 100px;
 }
 
+.commentWrap.answerWrap {
+  /* Adjust the z-index value to be higher than .respondent */
+  z-index: 2;
+}
 
 
 .pre.commentWrap.questionWrap::after {
@@ -233,6 +256,10 @@ a {
 .respondent {
   border: 2px solid #eee;
   border-radius: 100%;
+}
+
+.respondent:hover {
+ cursor: pointer; 
 }
 
 .popup .profileArea {
@@ -291,6 +318,30 @@ a {
   color: #616161;
   font-weight: 300;
 }
+
+/* CSS 파일 또는 스타일 시트에 추가 */
+.followMeBtn {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  margin-left: 10px;
+  padding: 2px 5px 2px 5px;
+  font-size: 10px;
+  color: #454545;
+  cursor: default;
+}
+
+
+
+/* This CSS will apply the hover effect to the questioner class when not anonymous */
+.questioner:not(.anonymous):hover {
+  /* Add your hover styles here */
+  /* For example, you can change the image opacity, add a border, etc. */
+
+  cursor: pointer;
+}
+
+
 
 .heart {
   margin-bottom: 18px;
