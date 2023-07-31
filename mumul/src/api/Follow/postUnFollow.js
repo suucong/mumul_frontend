@@ -3,6 +3,7 @@ import axios from "axios";
 export const postUnFollow = async (spaceId) => {
     const path = '/unFollow/' + spaceId;
     const token = localStorage.getItem('token');
+    console.log("unfollow");
 
     try {
       const response = await axios.post(path, {}, {
@@ -12,6 +13,7 @@ export const postUnFollow = async (spaceId) => {
           Authorization: 'Bearer ' + token
         }
       });
+      console.log("unfollow");
 
         return response.data;
     } catch (e) {

@@ -28,8 +28,7 @@ const Login = ({ isLogin, setIsLogin, hasRequestedCallback, setHasRequestedCallb
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const codeFromURL = queryParams.get("code");
-    console.log(codeFromURL);
-
+    
     if (!isLogin && !hasRequestedCallback && codeFromURL) {
       setHasRequestedCallback(true);
       axios
@@ -42,7 +41,6 @@ const Login = ({ isLogin, setIsLogin, hasRequestedCallback, setHasRequestedCallb
           crossDomain: true,
         })
         .then(response => {
-          console.log(response);
           const authToken = response.headers['authorization'];
 
           localStorage.setItem('token', authToken);

@@ -3,6 +3,7 @@ import axios from "axios";
 export const postFollow = async (spaceId) => {
     const path = '/follow/' + spaceId;
     const token = localStorage.getItem('token');
+    console.log("follow");
 
     try {
         const response = await axios.post(path, {}, {
@@ -12,6 +13,8 @@ export const postFollow = async (spaceId) => {
             Authorization: 'Bearer ' + token
           }
         });
+
+        console.log("follow");
 
         return response.data;
     } catch (e) {
