@@ -8,17 +8,17 @@ import ADelete from "./popup/ADelete";
 import UntilAnswering from "./UntilAnswering";
 import AnonymousAnswer from "./AnonymousAnswer";
 import moment from "moment";
-import "moment/locale/ko"; // 한국어 
+import "moment/locale/ko"; // 한국어
 import AnswerBtn from "./AnswerButton";
 import Profile2 from "./../img/Ellipse 104.png";
 import Loading from "./Loading";
 import { getPSentComment } from "../api/Q&A/getPSentComment";
 
 function SendComment({ spaceId, info, currentUserInfo }) {
-  const [page, setPage] = useState(0);  // 페이지 번호 상태값 추가 
-  const [pageSize, setPageSize] = useState(5);     // 페이지 크기 상태값 추가 
-  const [loading, setLoading] = useState(false);    // 로딩 상태값 추가 
-  const [allDataFetched, setAllDataFetched] = useState(false);    // 모든 데이터를 가져왔는지 여부를 나타내는 상태값 추가 
+  const [page, setPage] = useState(0); // 페이지 번호 상태값 추가
+  const [pageSize, setPageSize] = useState(5); // 페이지 크기 상태값 추가
+  const [loading, setLoading] = useState(false); // 로딩 상태값 추가
+  const [allDataFetched, setAllDataFetched] = useState(false); // 모든 데이터를 가져왔는지 여부를 나타내는 상태값 추가
   const [fetchingMoreData, setFetchingMoreData] = useState(false);
   const [sentComments, setSentComments] = useState([]);
   // 답변 삭제 상태값
@@ -135,7 +135,6 @@ function SendComment({ spaceId, info, currentUserInfo }) {
     };
   }, [spaceId, page, pageSize, allDataFetched, fetchingMoreData]);
 
-
   // 클릭한 질문에 대한 삭제 상태값 변경
   const clickMore = (index) => {
     setDeleteStates((prevStates) => {
@@ -162,14 +161,13 @@ function SendComment({ spaceId, info, currentUserInfo }) {
     setDelModal(true);
   };
 
-  
-// 답변 삭제하기 클릭 시 모달 오픈
-const a_showDelModal = (answerId, spaceId, userId) => {
-  setSelectedAnswerId(answerId); // 선택한 질문의 ID를 상태값에 저장
-  setSelectedSpaceId(spaceId); // 선택한 질문의 스페이스 ID를 상태값에 저장
-  setSelectedUserId(userId); // 선택한 질문의 유저 ID를 상태값에 저장
-  a_setDelModal(true);
-};
+  // 답변 삭제하기 클릭 시 모달 오픈
+  const a_showDelModal = (answerId, spaceId, userId) => {
+    setSelectedAnswerId(answerId); // 선택한 질문의 ID를 상태값에 저장
+    setSelectedSpaceId(spaceId); // 선택한 질문의 스페이스 ID를 상태값에 저장
+    setSelectedUserId(userId); // 선택한 질문의 유저 ID를 상태값에 저장
+    a_setDelModal(true);
+  };
 
   // 삭제 팝업  닫기
   const onClose = () => {
@@ -196,35 +194,33 @@ const a_showDelModal = (answerId, spaceId, userId) => {
       setShareModal(true);
       setShare_1(true);
     }
-  };  
+  };
 
   return (
     <>
-      {sentComments.length === 0 && <>
-      <div className="commentWrap questionWrap">
-        <div className="profileArea">
-          <img src={spaceOwner.picture} alt="profile1" className="questioner" />
-        </div>
-        <div className="cnt">
-          <p className="Nicname">익명의 토끼</p>
-          <p className="min">20분 전🔒</p>
-          <p className="commentCnt">
-            보낸 질문이 없어요! 새로운 질문을 작성해주세요!
-          </p>
-        </div>
-      </div>
-      <div className="commentWrap answerWrap">
-        <div className="profileArea">
-          <img src={Profile2} alt="profile2" className="respondent" />
-        </div>
-        <div className="cnt">
-          <AnswerBtn></AnswerBtn>
-        </div>
-      </div>
-      </>}
+      {sentComments.length === 0 && (
+        <>
+          <div className="pre commentWrap questionWrap">
+            <div className="profileArea">
+              <img
+                src={spaceOwner.picture}
+                alt="profile1"
+                className="pre_questioner"
+              />
+            </div>
+            <div className="cnt">
+              <p className="pre_Nickname">{spaceOwner.name}</p>
+              <p className="pre_min">언젠가🔒</p>
+              <p className="pre_commentCnt">
+                보낸 질문이 없어요🤖 첫 무물을 남겨 보세요!
+              </p>
+            </div>
+          </div>
+        </>
+      )}
       {sentComments
         .slice()
-        .filter(sent => {
+        .filter((sent) => {
           // 현재 로그인한 유저가 질문 보낸 유저가 아니라면
           if (currentUserInfo.userId !== sent.sendingUserId) {
             // isAnonymous가 false인 sent만 반환
@@ -249,7 +245,16 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                 <p className="commentCnt"> {sent.questionText} </p>
 
                 <div className="more">
-                  <img src={More} alt="more" onClick={() => clickMore(index)} />
+                  {currentUserInfo.userId === spaceOwner.userId ||
+                  currentUserInfo.userId === sent.sendingUserId ? (
+                    <img
+                      src={More}
+                      alt="more"
+                      onClick={() => clickMore(index)}
+                    />
+                  ) : (
+                    ""
+                  )}
                   {deleteStates[index] && (
                     <div
                       className="del"
@@ -268,14 +273,25 @@ const a_showDelModal = (answerId, spaceId, userId) => {
             </div>
             <div className="commentWrap answerWrap">
               <div className="profileArea">
-                <img
+              {sent.answers.length === 0 ?(
+                   <img
+                   src={sent.receivedUserPic}
+                   alt="profile2"
+                   className="pre_questioner"
+                 />
+              ):(<img
                   src={sent.receivedUserPic}
                   alt="profile2"
                   className="respondent"
-                />
+                />)}
+             
               </div>
               <div className="cnt">
+              {sent.answers.length === 0 ?(
+                <p className="pre_Nickname">{sent.receivedUserName}</p>
+              ):(
                 <p className="Nicname">{sent.receivedUserName}</p>
+              )}
 
                 {sent.answers.length === 0 ? (
                   <UntilAnswering></UntilAnswering>
@@ -296,11 +312,16 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                 ) : (
                   <>
                     <div className="more">
-                      <img
-                        src={More}
-                        alt="more"
-                        onClick={() => clickMore_1(index)}
-                      />
+                      {currentUserInfo.userId === sent.answers[0].userId ? (
+                        <img
+                          src={More}
+                          alt="more"
+                          onClick={() => clickMore_1(index)}
+                        />
+                      ) : (
+                        ""
+                      )}
+
                       {a_deleteStates[index] && (
                         <div
                           className="del"
@@ -321,10 +342,7 @@ const a_showDelModal = (answerId, spaceId, userId) => {
                     </div>
                   </>
                 )}
-
               </div>
-
-
 
               {/* 질문 삭제하기 팝업  */}
               {delModal && (
@@ -348,14 +366,13 @@ const a_showDelModal = (answerId, spaceId, userId) => {
             </div>
           </React.Fragment>
         ))}
-        {loading && <Loading/>}
-        <div ref={spinnerRef}/>
+      {loading && <Loading />}
+      <div ref={spinnerRef} />
     </>
   );
 }
 
 export default SendComment;
-
 
 // 질문 등록 시간과 현재 시간 사이의 차이를 계산하는 함수
 function getTimeDifference(createdTime) {

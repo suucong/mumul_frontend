@@ -13,9 +13,9 @@ import AnswerRegister from "./popup/AnswerRegister";
 import CantModal from "./popup/CantRegister";
 import ADelete from "./popup/ADelete";
 import AnswerBtn from "./AnswerButton";
-import Profile1 from "./../img/Ellipse 103.png";
+import Profile5 from "./../img/Ellipse 105.png";
 import Profile2 from "./../img/Ellipse 104.png";
-import Loading from "./Loading"; 
+import Loading from "./Loading";
 
 function ReceiveComment({ spaceId, currentUserInfo }) {
   const [page, setPage] = useState(0); // 페이지 번호 상태값 추가
@@ -25,9 +25,9 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
   const [fetchingMoreData, setFetchingMoreData] = useState(false);
   const [receivedComments, setReceivedComments] = useState([]);
   // 질문 삭제 상태값
-  const [deleteStates, setDeleteStates] = useState({});
+  const [deleteStates, setDeleteStates] = useState([]);
   // 답변 삭제 상태값
-  const [a_deleteStates, a_setDeleteStates] = useState({});
+  const [a_deleteStates, a_setDeleteStates] = useState([]);
 
   // 질문 공유 상태값
   const [shareStates, setShareStates] = useState({});
@@ -54,6 +54,9 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
   const [selectedSpaceId, setSelectedSpaceId] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState([]);
 
+  // More 아이콘 드롭다운 오픈 여부 상태값
+  const [q_openedDropdownIndex, q_setOpenedDropdownIndex] = useState([]);
+  const [a_openedDropdownIndex, a_setOpenedDropdownIndex] = useState([]);
 
   // 이동한 스페이스 상태값
   const [spaceOwner, setSpaceOwner] = useState({
@@ -145,6 +148,10 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
 
   // 클릭한 질문에 대한 삭제 상태값 변경
   const clickMore = (index) => {
+    q_setOpenedDropdownIndex((prevIndex) =>
+      prevIndex === index ? null : index
+    );
+    a_setOpenedDropdownIndex(null); // Close answer modal if any is open
     setDeleteStates((prevStates) => {
       const newStates = [...prevStates];
       newStates[index] = !newStates[index];
@@ -154,6 +161,10 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
 
   // 클릭한 답변에 대한 삭제 상태값 변경
   const clickMore_1 = (index) => {
+    a_setOpenedDropdownIndex((prevIndex) =>
+      prevIndex === index ? null : index
+    );
+    q_setOpenedDropdownIndex(null); // Close question modal if any is open
     a_setDeleteStates((prevStates) => {
       const newStates = [...prevStates];
       newStates[index] = !newStates[index];
@@ -224,105 +235,98 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
     setAnswerModal(false);
   };
 
-
-
   return (
     <>
-      {receivedComments.length === 0 && 
-      <>
-      <div className="commentWrap questionWrap">
-        <div className="profileArea">
-          <img src={Profile1} alt="profile1" className="questioner" />
-        </div>
-        <div className="cnt">
-          <p className="Nicname">익명의 토끼</p>
-          <p className="min">20분 전🔒</p>
-          <p className="commentCnt">
-            새로운 질문을 써주세요! 아직 질문이 없어요!
-          </p>
-        </div>
-      </div>
-      <div className="commentWrap answerWrap">
-        <div className="profileArea">
-          <img src={Profile2} alt="profile2" className="respondent" />
-        </div>
-        <div className="cnt">
-          <AnswerBtn></AnswerBtn>
-        </div>
-      </div>
-      </>
-      }
-      {receivedComments
-        .slice()
-        .map((received, index) => (
-          <React.Fragment key={received.id}>
-            <div key={received.id} className="commentWrap questionWrap">
-              <div className="profileArea">
-                <img
-                  src={received.sentUserPic}
-                  alt="profile1"
-                  className="questioner"
-                />
-              </div>
-              <div className="cnt">
-                <p className="Nicname">{received.userId}</p>
-                <p className="min">{getTimeDifference(received.createdTime)}</p>
-                <p className="commentCnt">{received.questionText}</p>
-                <div className="heart">
-
-                  {received.answers.length > 0 ? (
-                    <>
+      {receivedComments.length === 0 && (
+        <>
+          <div className="pre commentWrap questionWrap">
+            <div className="profileArea">
+              <img src={Profile5} alt="profile1" className="pre_questioner" />
+            </div>
+            <div className="cnt">
+              <p className="pre_Nickname">익명의 토끼</p>
+              <p className="pre_min">언젠가🔒</p>
+              <p className="pre_commentCnt">
+                받은 질문이 없어요🤖 첫 무물의 주인공이 되어 보세요!
+              </p>
+            </div>
+          </div>
+        </>
+      )}
+      {receivedComments.slice().map((received, index) => (
+        <React.Fragment key={received.id}>
+          <div key={received.id} className="commentWrap questionWrap">
+            <div className="profileArea">
+              <img
+                src={received.sentUserPic}
+                alt="profile1"
+                className="questioner"
+              />
+            </div>
+            <div className="cnt">
+              <p className="Nicname">{received.userId}</p>
+              <p className="min">{getTimeDifference(received.createdTime)}</p>
+              <p className="commentCnt">{received.questionText}</p>
+              <div className="heart">
+                {received.answers.length > 0 ? (
+                  <>
+                    <img
+                      src={Comment}
+                      alt="comment"
+                      className="chat"
+                      onClick={showCantModal}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {currentUserInfo.userId !== spaceOwner.userId ? (
+                      ""
+                    ) : (
                       <img
                         src={Comment}
                         alt="comment"
                         className="chat"
-                        onClick={showCantModal}
+                        onClick={() =>
+                          showAnswerModal(
+                            received.id,
+                            received.userId,
+                            received.sentUserPic,
+                            received.questionText
+                          )
+                        }
                       />
-                    </>
-                  ) : (
-                    <>
-                      {currentUserInfo.userId !== spaceOwner.userId ? (
-                        ""
-                      ) : (
-                        <img
-                          src={Comment}
-                          alt="comment"
-                          className="chat"
-                          onClick={() =>
-                            showAnswerModal(
-                              received.id,
-                              received.userId,
-                              received.sentUserPic,
-                              received.questionText
-                            )
-                          }
-                        />
-                      )}
-                    </>
-                  )}
-                </div>
+                    )}
+                  </>
+                )}
+              </div>
 
-                <div className="more">
+              {
+                // 1. 내 스페이스의 질문일 때 currentUserInfo.userId === spaceOwner.userId
+                // 2. 내가 작성한 질문, 답변일 때 currentUserInfo.userId === received.userId
+              }
+              <div className="more">
+                {currentUserInfo.userId === spaceOwner.userId ||
+                currentUserInfo.userId === received.sendingUserId ? (
                   <img src={More} alt="more" onClick={() => clickMore(index)} />
-                  {deleteStates[index] && (
-                    <div
-                      className="del"
-                      onClick={() =>
-                        showDelModal(
-                          received.id,
-                          spaceId,
-                          currentUserInfo.userId
-                        )
-                      }
-                    >
-                      <p>
-                        <img src={Bin} alt="btin" />
-                        삭제하기
-                      </p>
-                    </div>
-                  )}
-                </div>
-                {/* <div className="share">
+                ) : (
+                  ""
+                )}
+                {deleteStates[index] && (
+                  <div
+                    className="del"
+                    onClick={() =>
+                      showDelModal(received.id, spaceId, currentUserInfo.userId)
+                    }
+                  >
+                    <p>
+                      <img src={Bin} alt="btin" />
+                      삭제하기
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* <div className="share">
                   <img src={Share} alt="share" onClick={() => clickMore_s(index)}  />
                   {shareStates[index] && (
                     <div className="sharePopup">
@@ -333,89 +337,107 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                     </div>
                   )}
                 </div> */}
-              </div>
             </div>
-            <div className="commentWrap answerWrap">
-              <div className="profileArea">
+          </div>
+          <div className="commentWrap answerWrap">
+            <div className="profileArea">
+            {received.answers.length === 0 ?(
                 <img
-                  src={spaceOwner.picture}
-                  alt="profile2"
-                  className="respondent"
-                />
-              </div>
-              <div className="cnt">
-                <p className="Nicname">{spaceOwner.name}</p>
+                src={spaceOwner.picture}
+                alt="profile2"
+                className="pre_questioner"
+              />
+            ):(
+              <img
+              src={spaceOwner.picture}
+              alt="profile2"
+              className="respondent"
+            />
+            )}
+            
+            </div>
+            <div className="cnt">
+            {received.answers.length === 0 ?(
+             <p className="pre_Nickname">{spaceOwner.name}</p>
+            ):
+            (<p className="Nicname">{spaceOwner.name}</p>)}
+          
 
-                {received.answers.length === 0 ? (
-                  <UntilAnswering></UntilAnswering>
-                ) : (
-                  <>
-                    <p className="min">
-                      {getTimeDifference(received.answers[0].createdTime)}
-                    </p>
-                    <AnonymousAnswer
-                      question={received}
-                      answers={received.answers}
-                      currentUserInfo={currentUserInfo}
-                    />
-                  </>
-                )}
+              {received.answers.length === 0 ? (
+                <UntilAnswering></UntilAnswering>
+              ) : (
+                <>
+                  <p className="min">
+                    {getTimeDifference(received.answers[0].createdTime)}
+                  </p>
+                  <AnonymousAnswer
+                    question={received}
+                    answers={received.answers}
+                    currentUserInfo={currentUserInfo}
+                  />
+                </>
+              )}
 
-                {received.answers.length === 0 ? (
-                  ""
-                ) : (
-                  <>
-                    <div className="more">
+              {received.answers.length === 0 ? (
+                ""
+              ) : (
+                <>
+                  <div className="more">
+                    {currentUserInfo.userId === received.answers[0].userId ? (
                       <img
                         src={More}
                         alt="more"
                         onClick={() => clickMore_1(index)}
                       />
-                      {a_deleteStates[index] && (
-                        <div
-                          className="del"
-                          onClick={() =>
-                            a_showDelModal(
-                              received.answers[0].id,
-                              spaceId,
-                              currentUserInfo.userId
-                            )
-                          }
-                        >
-                          <p>
-                            <img src={Bin} alt="btin" />
-                            삭제하기
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </>
-                )}
-              </div>
+                    ) : (
+                      ""
+                    )}
 
-              {/* 질문 삭제하기 팝업  */}
-              {delModal && (
-                <Delete
-                  questionId={selectedQuestionId}
-                  spaceId={selectedSpaceId} // 스페이스 ID 전달
-                  userId={selectedUserId} // 유저 ID 전달
-                  onClose={onClose}
-                ></Delete>
+                    {a_deleteStates[index] && (
+                      <div
+                        className="del"
+                        onClick={() =>
+                          a_showDelModal(
+                            received.answers[0].id,
+                            spaceId,
+                            currentUserInfo.userId
+                          )
+                        }
+                      >
+                        <p>
+                          <img src={Bin} alt="btin" />
+                          삭제하기
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </>
               )}
-              {/* 답변 삭제하기 팝업  */}
-              {a_delModal && (
-                <ADelete
-                  answerId={selectedAnswerId}
-                  spaceId={selectedSpaceId} // 스페이스 ID 전달
-                  userId={selectedUserId} // 유저 ID 전달
-                  onClose={onClose}
-                ></ADelete>
-              )}
-              {/* -- 등록불가 팝업 */}
-              {cantModal && <CantModal onClose={onClose}></CantModal>}
             </div>
-          </React.Fragment>
-        ))}
+
+            {/* 질문 삭제하기 팝업  */}
+            {delModal && (
+              <Delete
+                questionId={selectedQuestionId}
+                spaceId={selectedSpaceId} // 스페이스 ID 전달
+                userId={selectedUserId} // 유저 ID 전달
+                onClose={onClose}
+              ></Delete>
+            )}
+            {/* 답변 삭제하기 팝업  */}
+            {a_delModal && (
+              <ADelete
+                answerId={selectedAnswerId}
+                spaceId={selectedSpaceId} // 스페이스 ID 전달
+                userId={selectedUserId} // 유저 ID 전달
+                onClose={onClose}
+              ></ADelete>
+            )}
+            {/* -- 등록불가 팝업 */}
+            {cantModal && <CantModal onClose={onClose}></CantModal>}
+          </div>
+        </React.Fragment>
+      ))}
       {answerModal && (
         <AnswerRegister
           CloseAnswerModal={closeAnswerModal}
@@ -426,8 +448,8 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
           questionText={selectedQuestionText}
         ></AnswerRegister>
       )}
-      {loading && <Loading/>}
-      <div ref={spinnerRef} /> 
+      {loading && <Loading />}
+      <div ref={spinnerRef} />
     </>
   );
 }

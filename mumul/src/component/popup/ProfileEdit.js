@@ -41,7 +41,10 @@ function ProfileEdit({ onClose, currentUserInfo }) {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append("imgFile", selectedFile);
+    if (selectedFile) {
+      formData.append("imgFile", selectedFile); // Append the image file to the FormData if it exists
+    }
+   
 
     const data = {
       info: {
@@ -103,7 +106,7 @@ function ProfileEdit({ onClose, currentUserInfo }) {
                     id="introduce"
                     ref={introduceInput}
                   />
-                  <label htmlFor="sns">SNS 링크</label>
+                  <label htmlFor="sns">인스타그램 아이디</label>
                   <input
                     type="text"
                     defaultValue={currentUserInfo.instaId}
