@@ -11,7 +11,7 @@ function Header({ isLogin, setIsLogin, currentUserInfo }) {
       <h1 className="title"> MUMUL</h1>
       <div className="profile" onClick={() => setModal(!modal)}>
       <img
-          src={localStorage.getItem('token') !== null ? currentUserInfo.picture : Profile}
+          src={isLogin === true ? currentUserInfo.picture : Profile}
           alt="profile"
         />
       </div>
@@ -49,7 +49,7 @@ function HeaderPopup({ isLogin, setIsLogin, currentUserInfo }) {
   return (
     <ul className="headerPopup">
       <li className="list" onClick={handleClickMySpace}>
-      <Link to={localStorage.getItem('token') !== null ? '/' + currentUserInfo.userId : '#'} onClick={(e) => {
+      <Link to={isLogin !== true ? '/' + currentUserInfo.userId : '#'} onClick={(e) => {
         if (localStorage.getItem('token') !== null && window.location.pathname === '/' + currentUserInfo.userId) {
           e.preventDefault(); // Prevent the default link behavior
           window.location.reload(); // Force a page reload

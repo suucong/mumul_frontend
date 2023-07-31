@@ -41,6 +41,9 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
   
       if (token !== null) {
         const userInfo = await getUserInfo();
+        if(userInfo === false) {
+          setIsLogin(false);
+        }
         setCurrentUserInfo(userInfo);
       }
       if (newInfo === false) {
