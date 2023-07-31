@@ -70,10 +70,10 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
     if(isFollowing) {
       // 언팔로우
       postUnFollow(spaceUserInfo.userId);
-      window.location.reload();
+      // window.location.reload();
     } else {
       postFollow(spaceUserInfo.userId);
-      window.location.reload();
+      // window.location.reload();
     }
     setIsFollowing(!isFollowing);
   };
