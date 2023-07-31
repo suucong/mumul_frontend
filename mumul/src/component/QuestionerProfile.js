@@ -52,6 +52,13 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
       .catch((error) => {
         console.error('getFollowerNumber Error: ', error.message);
       }) 
+      getFollowerList(spaceUserInfo.userId)
+        .then((result) => {
+          setFollowerList(result);
+        }) 
+        .catch((error) => {
+          console.error('getFollowerNumber Error: ', error.message);
+        }) 
   }, [currentUserInfo.userId, spaceUserInfo.userId, followSelected]);
 
   const showQueModal = () => {

@@ -3,6 +3,7 @@ import ProfileEdit from "../component/popup/ProfileEdit";
 import InstaLogo from "../img/icon/instaLogo.jpeg";
 import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
 import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
+import { getFollowerList } from "../api/Follow/getFollowerList";
 import Storyslide from "./Storyslide";
 
 
@@ -10,6 +11,7 @@ function MyProfile({ currentUserInfo, followSelected, setFollowSelected }) {
   const [modal, setModal] = useState(false);
   const [followingNumber, setFollowingNumber] = useState(null);
   const [followerNumber, setFollowerNumber] = useState(null);
+  const [followerList, setFollowerList] = useState([]);
 
   const onClickEdit = () => {
     setModal(true);
@@ -43,12 +45,20 @@ function MyProfile({ currentUserInfo, followSelected, setFollowSelected }) {
       })
       .catch((error) => {
         console.error('getFollowerNumber Error: ', error.message)
-      })}
+      })
+    getFollowerList(currentUserInfo.userId)
+      .then((result) => {
+        setFollowerList(result);
+      })
+      .catch((error) => {
+        console.error('getFollowerList Error: ', error.message);
+      })
+    }
   }, [currentUserInfo.userId]);
 
   return (
     <>
-    <Storyslide spaceId={currentUserInfo.userId} followSelected={followSelected}></Storyslide>
+    <Storyslide spaceId={currentUserInfo.userId} followSelected={followSelected} followerList={followerList}></Storyslide>
     <div className="myProfileWrap">
       <div className="profile">
         <img src={currentUserInfo.picture} alt="myprofile" />
