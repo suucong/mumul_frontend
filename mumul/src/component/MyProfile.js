@@ -67,10 +67,16 @@ function MyProfile({ currentUserInfo, followSelected, setFollowSelected }) {
         </button>
       </div>
       <div className="myInfo">
-        <p className="id">
-          {currentUserInfo.name}
-          <span className="intro">{currentUserInfo.introduce}</span>
-        </p>
+        <div>
+          <p className="id">
+            {currentUserInfo.name}
+          </p>
+        </div>
+        <div>
+          <p className="id">
+            <span className="intro">{currentUserInfo.introduce}</span>
+          </p>
+        </div>
         <p className="snsLink">
           <img src={InstaLogo} alt="instaLogo" />
 
