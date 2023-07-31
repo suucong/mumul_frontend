@@ -27,25 +27,25 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
     setFollowSelected(false);
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     if (currentUserInfo.userId !== '') {
-      await getIsFollow(spaceUserInfo.userId)
-      .then((result) => {
-        setIsFollowing(result);
-      })
-      .catch((error) => {
-        console.error('getIsFollow Error: ', error.message);
-      });
+      getIsFollow(spaceUserInfo.userId)
+        .then((result) => {
+          setIsFollowing(result);
+        })
+        .catch((error) => {
+          console.error('getIsFollow Error: ', error.message);
+        });
     }
-    await getFollowingNumber(spaceUserInfo.userId)
-      .then((result) => {
-        setFollowingNumber(result);
-      })
-      .catch((error) => {
-        console.error('getFollowingNuber Error: ', error.message);
-      });
+      getFollowingNumber(spaceUserInfo.userId)
+        .then((result) => {
+          setFollowingNumber(result);
+        })
+        .catch((error) => {
+          console.error('getFollowingNuber Error: ', error.message);
+        });
 
-    await getFollwerNumber(spaceUserInfo.userId)
+      getFollwerNumber(spaceUserInfo.userId)
       .then((result) => {
         setFollowerNumber(result);
       })
