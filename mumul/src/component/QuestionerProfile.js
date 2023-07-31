@@ -27,9 +27,9 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
     setFollowSelected(false);
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     if (currentUserInfo.userId !== '') {
-      getIsFollow(spaceUserInfo.userId)
+      await getIsFollow(spaceUserInfo.userId)
       .then((result) => {
         setIsFollowing(result);
       })
@@ -37,7 +37,7 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
         console.error('getIsFollow Error: ', error.message);
       });
     }
-    getFollowingNumber(spaceUserInfo.userId)
+    await getFollowingNumber(spaceUserInfo.userId)
       .then((result) => {
         setFollowingNumber(result);
       })
@@ -45,7 +45,7 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
         console.error('getFollowingNuber Error: ', error.message);
       });
 
-    getFollwerNumber(spaceUserInfo.userId)
+    await getFollwerNumber(spaceUserInfo.userId)
       .then((result) => {
         setFollowerNumber(result);
       })
@@ -67,17 +67,17 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
   };
 
 
-  const toggleFollowing = () => {
+  const toggleFollowing = async () => {
     if (currentUserInfo.userId === '') {
       alert('로그인 하세요.');
       return;
     }
     if(isFollowing) {
       // 언팔로우
-      postUnFollow(spaceUserInfo.userId);
-      const followerList_ = getFollowerList(spaceUserInfo.userId);
-      setFollowerList(followerList);
-      getFollwerNumber(spaceUserInfo.userId)
+      await postUnFollow(spaceUserInfo.userId);
+      const followerList_ = await getFollowerList(spaceUserInfo.userId);
+      setFollowerList(followerList_);
+      await getFollwerNumber(spaceUserInfo.userId)
       .then((result) => {
         setFollowerNumber(result);
       })
@@ -86,10 +86,10 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
       }) 
       // window.location.reload();
     } else {
-      postFollow(spaceUserInfo.userId);
-      const followerList_ = getFollowerList(spaceUserInfo.userId);
-      setFollowerList(followerList);
-      getFollwerNumber(spaceUserInfo.userId)
+      await postFollow(spaceUserInfo.userId);
+      const followerList_ = await getFollowerList(spaceUserInfo.userId);
+      setFollowerList(followerList_);
+      await getFollwerNumber(spaceUserInfo.userId)
       .then((result) => {
         setFollowerNumber(result);
       })
