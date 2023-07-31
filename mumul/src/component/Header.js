@@ -49,8 +49,8 @@ function HeaderPopup({ isLogin, setIsLogin, currentUserInfo }) {
   return (
     <ul className="headerPopup">
       <li className="list" onClick={handleClickMySpace}>
-      <Link to={isLogin !== true ? '/' + currentUserInfo.userId : '#'} onClick={(e) => {
-        if (localStorage.getItem('token') !== null && window.location.pathname === '/' + currentUserInfo.userId) {
+      <Link to={isLogin === true ? '/' + currentUserInfo.userId : '#'} onClick={(e) => {
+        if (isLogin !== false && window.location.pathname === '/' + currentUserInfo.userId) {
           e.preventDefault(); // Prevent the default link behavior
           window.location.reload(); // Force a page reload
         }
@@ -61,7 +61,7 @@ function HeaderPopup({ isLogin, setIsLogin, currentUserInfo }) {
 
       <li className="list" onClick={() => { if (token !== null) handleLogout(); }}>
         <Link to="/login">
-          <p>{isLogin ? "로그인" : "로그아웃"}</p>
+          <p>{isLogin ? "로그아웃" : "로그인"}</p>
         </Link>
       </li>
       <li className="list" onClick={handleClickMySpace}>
