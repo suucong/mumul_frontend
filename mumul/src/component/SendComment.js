@@ -323,7 +323,7 @@ function SendComment({ spaceId, info, currentUserInfo }) {
                    src={sent.receivedUserPic}
                    alt="profile2"
                    className="pre_questioner"
-                
+                   onClick={() => (window.location.href = `/${sent.receivingUserId}`)}
                  />
               ):(<img
                   src={sent.receivedUserPic}
