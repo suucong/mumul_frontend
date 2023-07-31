@@ -19,7 +19,7 @@ function NoneMember({ onClose, currentUserInfo, setIsLogin }) {
     if (!active) {
       deleteUser(currentUserInfo.userId);
       setIsLogin(false);
-      navigate("/");
+      navigate("/login");
       window.location.reload(); 
     }
   };
