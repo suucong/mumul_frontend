@@ -6,6 +6,7 @@ import InstaLogo from "../img/icon/instaLogo.jpeg";
 import { postFollow } from "../api/Follow/postFollow";
 import { postUnFollow } from "../api/Follow/postUnFollow";
 import { getIsFollow } from "../api/Follow/getIsFollow";
+import { getIsFollower } from "../api/Follow/getIsFollower";
 import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
 import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
 import { getFollowerList } from "../api/Follow/getFollowerList";
@@ -16,6 +17,7 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
   const [followingNumber, setFollowingNumber] = useState(null);
   const [followerNumber, setFollowerNumber] = useState(null);
   const [followerList, setFollowerList] = useState([]);
+  const [isCurrentUserFollowing, setIsCurrentUserFollowing] = useState(false);
 
   const onClickFollowing = () => {
     setFollowSelected(true);
@@ -30,6 +32,13 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
       getIsFollow(spaceUserInfo.userId)
         .then((result) => {
           setIsFollowing(result);
+        })
+        .catch((error) => {
+          console.error('getIsFollow Error: ', error.message);
+        });
+      getIsFollower(spaceUserInfo.userId)
+        .then((result) => {
+          setIsCurrentUserFollowing(result);
         })
         .catch((error) => {
           console.error('getIsFollow Error: ', error.message);
@@ -132,21 +141,23 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
           </div>
         </div>
         <div className="myInfo">
-          <p className="id">
-            <div>
+          <div>
+            <p className="id">
               {spaceUserInfo.name}
-              {isFollowing ? 
+              {isCurrentUserFollowing ? 
                 <button className="followMeBtn">
                   나를 팔로우함
                 </button> : 
                 (
                   ""
                 )}
-            </div>
-            <div>
+            </p>
+          </div>
+          <div>
+            <p className="id">
               <span className="intro">{spaceUserInfo.introduce}</span>
-            </div>
-          </p>
+            </p>
+          </div>
           <p className="snsLink">
             <img src={InstaLogo} alt="instaLogo" />
             <a href={'https://www.instagram.com/' + spaceUserInfo.instaId} target="_blank" rel="noreferrer">

@@ -21,7 +21,6 @@ function App() {
       const response = await getUserInfo();
       if(response === false) {
         setIsLogin(false);
-        console.log(isLogin);
         return;
       } else {
         setIsLogin(true);

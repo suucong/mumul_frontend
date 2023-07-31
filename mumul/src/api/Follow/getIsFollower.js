@@ -1,11 +1,11 @@
-import axios from "axios";
+import axios from 'axios';
 
-export const postFollow = async (spaceId) => {
-    const path = '/follow/' + spaceId;
+export const getIsFollower = async (spaceId) => {
+    const path = `/isFollower/${spaceId}`;
     const token = localStorage.getItem('token');
 
     try {
-        const response = await axios.post(path, {}, {
+        const response = await axios.get(path, {
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
@@ -15,7 +15,7 @@ export const postFollow = async (spaceId) => {
 
         return response.data;
     } catch (e) {
-        console.error('postFollow Error: ', e.message);
+        console.error('getIsFollow Error: ', e.message);
+        return false;
     }
-}
-
+};

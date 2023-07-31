@@ -5,7 +5,6 @@ import { getUserInfo } from '../api/getUserInfo';
 const KakaoAuthHandle = (props) => {
   useEffect(() => {
     let code = new URL(window.location.href).searchParams.get('code');
-    console.log(code);
     const kakaoLogin = async () => {
       try {
         const res = await axios.get(`/v1/oauth/login/kakao?code=${code}`);
