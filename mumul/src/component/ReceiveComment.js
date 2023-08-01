@@ -282,15 +282,15 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
               <p className="min">{getTimeDifference(received.createdTime)}</p>
               <p className="commentCnt">{received.questionText}</p>
               <div className="heart">
-                {received.answers.length > 0 && received.userId === currentUserInfo.userId ? (
-                  <>
+                {received.answers.length > 0 ? (
+                  received.receivingUserId === currentUserInfo.userId && (
                     <img
                       src={Comment}
                       alt="comment"
                       className="chat"
                       onClick={showCantModal}
                     />
-                  </>
+                  )
                 ) : (
                   <>
                     {currentUserInfo.userId !== spaceOwner.userId ? (
