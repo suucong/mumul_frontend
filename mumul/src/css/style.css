@@ -237,6 +237,7 @@ a {
   justify-content: center;
   position: relative;
   box-sizing: border-box;
+  z-index: -1000000;
 }
 
 .commentWrap.questionWrap::after {
@@ -248,6 +249,7 @@ a {
   position: absolute;
   left: 55px;
   top: 100px;
+  z-index: 0;
 }
 
 .pre:after {
@@ -277,6 +279,7 @@ a {
 .pre_questioner {
   border: 2px dotted #808080;
   border-radius: 100%;
+  z-index: 0;
   }
 
 .respondent {
@@ -302,8 +305,10 @@ a {
   position: relative;
   padding: 10px;
   width: calc(100% - 80px);
+  z-index: 0;
 }
 .commentWrap .more , .pre .more {
+  z-index: 0;
   position: absolute;
   right: 0;
   top: 0;
@@ -366,6 +371,7 @@ a {
   /* For example, you can change the image opacity, add a border, etc. */
 
   cursor: pointer;
+  z-index: 0;
 }
 
 
@@ -542,7 +548,10 @@ button.space {
 }
 
 .popupContainer {
-  padding: 20px 40px;
+  padding-top: 20px;
+  padding-bottom:20px;
+  padding-left:40px;
+  padding-right:40px;
   z-index: 10000;
 }
 .popupHeader {
@@ -682,8 +691,9 @@ button.space {
   color: #000;
   font-size: 18px;
   font-weight: 500;
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+  overflow: hidden; /* Hide any overflowing text */
 }
-
 .noneMember .inputArea {
   margin: 32px 0;
 }
@@ -1054,6 +1064,10 @@ input:checked + .slider:before {
 
 .madewith img {
   border: none;
+}
+
+.zindex {
+  z-index: 0;
 }
 
 /* Responsive styles */

@@ -354,12 +354,6 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                   alt="profile2"
                   className="respondent"
                   onClick={() => {
-                    console.log(
-                      "spaceId: ",
-                      spaceId,
-                      " received.answers[0].userId:",
-                      received.answers[0].userId.toString()
-                    );
                     if (spaceId !== received.answers[0].userId.toString()) {
                       window.location.href = `/${received.answers[0].userId}`;
                     }

@@ -63,12 +63,12 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
   const tabContArr = [
     {
       id: 0,
-      tabTitle: "받은 질문",
+      tabTitle: "받은 무물",
       tabCont: <ReceiveComment spaceId={id} currentUserInfo={currentUserInfo}></ReceiveComment>,
     },
     {
       id: 1,
-      tabTitle: "보낸 질문",
+      tabTitle: "보낸 무물",
       tabCont: <SendComment spaceId={id} currentUserInfo={currentUserInfo}></SendComment>,
     },
   ];

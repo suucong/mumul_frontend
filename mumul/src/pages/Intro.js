@@ -13,8 +13,6 @@ const Intro = ({ isLogin, setIsLogin }) => {
 
   const [showPopup, setShowPopup] = useState(false); // 팝업창 표시 여부 상태
 
-
-
   useEffect(() => {
     const initUserInfo = async () => {
       const response = await getUserInfo();
@@ -40,9 +38,7 @@ const Intro = ({ isLogin, setIsLogin }) => {
     <div className="wrap intro">
       <div className="contentWrap">
         <p className="introTitle">🐇토끼🐇로 무물에 녹아 들자</p>
-        <div className="commentContainer">
         <Comment></Comment>
-        </div>
       
         {isLogin ? (
           <Link to={`/${currentUserInfo.userId}`} className="goSpace">
@@ -55,10 +51,9 @@ const Intro = ({ isLogin, setIsLogin }) => {
         )}
 
           <div>
-           <p className="inApp" onClick={() => setShowPopup(true)}>다른 앱을 통해서 이중접속했다면</p>
+           <p className="inApp" onClick={() => setShowPopup(true)}>다른 앱을 통해서 접속했다면</p>
             {showPopup && <MobileBrowser onClose={handleConfirmPopup} />}
           </div>
-      
 
         <Link to="/policy" className="goPolicy">
           <p>PRIVACY POLICY</p>

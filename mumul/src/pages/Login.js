@@ -111,13 +111,13 @@ const Login = ({ isLogin, setIsLogin, hasRequestedCallback, setHasRequestedCallb
                 />
             </GoogleOAuthProvider> */}
               {/* <GoogleLogin onGoogleSignIn={onGoogleSignIn} text="로그인" /> */}
-            <button onClick={GoogleSocialLogin}>
-              <img src={Goggle} alt="" />
-              Google 계정으로 계속
-            </button>
             <button onClick={kakaoLogin}>
               <img src={Cacao} alt="" />
               Kakao 계정으로 계속
+            </button>
+            <button onClick={GoogleSocialLogin}>
+              <img src={Goggle} alt="" />
+              Google 계정으로 계속
             </button>
             </div>
           </div>
