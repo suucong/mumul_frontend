@@ -5,7 +5,7 @@ const MobileBrowser = ({ onClose }) =>  {
   return (
     <div className="popupWrap">
       <div className="popup">
-        <div className="popupContainer">
+        <div className="popupContainer_">
           <div className="popupHeader">
             <img src={Close} alt="close" onClick={onClose} />
           </div>
