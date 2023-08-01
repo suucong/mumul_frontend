@@ -40,7 +40,9 @@ function Header({ isLogin, setIsLogin, currentUserInfo }) {
             onClick={handleProfileClick}
           />
         ):(
-          <button className="loginBtn" onClick={handleProfileClick}>로그인</button>
+          <Link to="/login" className="loginBtn">
+            로그인
+          </Link>
         )}
       </div>
       {modal && (
