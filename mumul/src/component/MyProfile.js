@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ProfileEdit from "../component/popup/ProfileEdit";
-import InstaLogo from "../img/icon/instaLogo.jpeg";
 import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
 import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
 import { getFollowerList } from "../api/Follow/getFollowerList";

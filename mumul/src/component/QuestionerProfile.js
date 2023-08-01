@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import QuestionRegister from "./popup/QuestionRegister";
 import Storyslide from "./Storyslide";
-import InstaLogo from "../img/icon/instaLogo.jpeg";
 
 import { postFollow } from "../api/Follow/postFollow";
 import { postUnFollow } from "../api/Follow/postUnFollow";
