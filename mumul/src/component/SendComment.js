@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 
 import More from "./../img/icon/icMore.png";
@@ -55,8 +56,8 @@ function SendComment({ spaceId, info, currentUserInfo }) {
   const [deleteStates, setDeleteStates] = useState({});
 
   // 익명질문만 존재값
-  const [hasOnlyAnonymousQuestions, setHasOnlyAnonymousQuestions] = useState(false);
-
+  const [hasOnlyAnonymousQuestions, setHasOnlyAnonymousQuestions] =
+    useState(false);
 
   const fetchData = async (isInitialFetch = true) => {
     try {
@@ -88,12 +89,11 @@ function SendComment({ spaceId, info, currentUserInfo }) {
       }
 
       //모든 질문이 익명 질문이면 변수 true로 설정
-      const hasOnlyAnonymousQuestions = response.data.length > 0 && response.data.every(
-        (sent) => sent.isAnonymous === true 
-      );
+      const hasOnlyAnonymousQuestions =
+        response.data.length > 0 &&
+        response.data.every((sent) => sent.isAnonymous === true);
       setHasOnlyAnonymousQuestions(hasOnlyAnonymousQuestions);
 
-      
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -209,9 +209,9 @@ function SendComment({ spaceId, info, currentUserInfo }) {
 
   return (
     <>
-      {sentComments.length === 0 &&  (
+      {sentComments.length === 0 && (
         <>
-          <div className="pre commentWrap questionWrap">
+         <div className="placeholder">
             <div className="profileArea">
               <img
                 src={spaceOwner.picture}
@@ -221,39 +221,36 @@ function SendComment({ spaceId, info, currentUserInfo }) {
             </div>
             <div className="cnt">
               <p className="pre_Nickname">{spaceOwner.name}</p>
-              <p className="pre_min">언젠가🔒</p>
+              <p className="pre_min">언젠가</p>
               <p className="pre_commentCnt">
                 보낸 질문이 없어요🤖 첫 무물을 남겨 보세요!
               </p>
             </div>
           </div>
         </>
-      )
-    }
-    { hasOnlyAnonymousQuestions &&  (
+      )}
+      {hasOnlyAnonymousQuestions && (
         <>
-        {currentUserInfo.userId !== spaceOwner.userId ?(
-           <div className="pre commentWrap questionWrap">
-           <div className="profileArea">
-             <img
-               src={spaceOwner.picture}
-               alt="profile1"
-               className="pre_questioner"
-             />
-           </div>
-           <div className="cnt">
-             <p className="pre_Nickname">{spaceOwner.name}</p>
-             <p className="pre_min">언젠가🔒</p>
-             <p className="pre_commentCnt">
-               보낸 질문이 없어요🤖 첫 무물을 남겨 보세요!
-             </p>
-           </div>
-         </div>
-        ): null }
-         
+          {currentUserInfo.userId !== spaceOwner.userId ? (
+            <div className="pre commentWrap questionWrap">
+              <div className="profileArea">
+                <img
+                  src={spaceOwner.picture}
+                  alt="profile1"
+                  className="pre_questioner"
+                />
+              </div>
+              <div className="cnt">
+                <p className="pre_Nickname">{spaceOwner.name}</p>
+                <p className="pre_min">언젠가🔒</p>
+                <p className="pre_commentCnt">
+                  보낸 질문이 없어요🤖 첫 무물을 남겨 보세요!
+                </p>
+              </div>
+            </div>
+          ) : null}
         </>
-      )
-    }
+      )}
       {sentComments
         .slice()
         .filter((sent) => {
@@ -266,20 +263,24 @@ function SendComment({ spaceId, info, currentUserInfo }) {
         })
         .map((sent, index) => (
           <React.Fragment key={sent.id}>
-            <div className="commentWrap questionWrap">
+            <div className={
+              sent.answers.length > 0
+                ? "commentWrap questionWrap"
+                : "pre"
+            }>
               <div className="profileArea">
-              <img
-                src={sent.sentUserPic}
-                alt="profile1"
-                className={`questioner ${
-                  sent.isAnonymous ? "anonymous" : ""
-                }`}
-                onClick={() => {
-                  if (spaceId !== sent.sendingUserId.toString()) {
-                    window.location.href = `/${sent.sendingUserId}`
-                  }
-                }}
-              />
+                <img
+                  src={sent.sentUserPic}
+                  alt="profile1"
+                  className={`questioner ${
+                    sent.isAnonymous ? "anonymous" : ""
+                  }`}
+                  onClick={() => {
+                    if (spaceId !== sent.sendingUserId.toString()) {
+                      window.location.href = `/${sent.sendingUserId}`;
+                    }
+                  }}
+                />
               </div>
 
               <div className="cnt">
@@ -315,30 +316,34 @@ function SendComment({ spaceId, info, currentUserInfo }) {
               </div>
             </div>
 
-
             <div className="commentWrap answerWrap">
               <div className="profileArea">
-              {sent.answers.length === 0 ?(
-                   <img
-                   src={sent.receivedUserPic}
-                   alt="profile2"
-                   className="pre_questioner"
-                   onClick={() => (window.location.href = `/${sent.receivingUserId}`)}
-                 />
-              ):(<img
-                  src={sent.receivedUserPic}
-                  alt="profile2"
-                  className="respondent"
-                  onClick={() => (window.location.href = `/${sent.answers[0].userId}`)}
-                />)}
-             
+                {sent.answers.length === 0 ? (
+                  <img
+                    src={sent.receivedUserPic}
+                    alt="profile2"
+                    className="pre_questioner"
+                    onClick={() =>
+                      (window.location.href = `/${sent.receivingUserId}`)
+                    }
+                  />
+                ) : (
+                  <img
+                    src={sent.receivedUserPic}
+                    alt="profile2"
+                    className="respondent"
+                    onClick={() =>
+                      (window.location.href = `/${sent.answers[0].userId}`)
+                    }
+                  />
+                )}
               </div>
               <div className="cnt">
-              {sent.answers.length === 0 ?(
-                <p className="pre_Nickname">{sent.receivedUserName}</p>
-              ):(
-                <p className="Nicname">{sent.receivedUserName}</p>
-              )}
+                {sent.answers.length === 0 ? (
+                  <p className="pre_Nickname">{sent.receivedUserName}</p>
+                ) : (
+                  <p className="Nicname">{sent.receivedUserName}</p>
+                )}
 
                 {sent.answers.length === 0 ? (
                   <UntilAnswering></UntilAnswering>
@@ -425,3 +430,4 @@ export default SendComment;
 function getTimeDifference(createdTime) {
   return moment(createdTime).locale("ko").fromNow();
 }
+

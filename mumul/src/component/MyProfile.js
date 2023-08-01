@@ -77,13 +77,56 @@ function MyProfile({ currentUserInfo, followSelected, setFollowSelected }) {
             <span className="intro">{currentUserInfo.introduce}</span>
           </p>
         </div>
-        <p className="snsLink">
-          <img src={InstaLogo} alt="instaLogo" />
-
-          <a href={'https://www.instagram.com/' + currentUserInfo.instaId} target="_blank" rel="noreferrer">
-            <span>{currentUserInfo.instaId}</span>
-          </a>
-        </p>
+        {currentUserInfo.instaId === "" || currentUserInfo.instaId === null? (
+            ""
+          ) : (
+            <div className="svg snsLink">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none" // Remove fill attribute to preserve transparency
+                  stroke="#2855c1"
+                  strokeWidth="2" // Set the stroke width (for icon shapes)
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mr-1 h-5 w-5"
+                  // y="100" // Vertical offset to move the image downwards
+                >
+                  {/* Your SVG path and shapes */}
+                  <rect
+                    width="20"
+                    height="20"
+                    x="2"
+                    y="2"
+                    rx="5"
+                    ry="5"
+                    fill="none" // Set fill to "none" for transparent background
+                  ></rect>
+                  <path
+                    d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                    fill="none" // Set fill to "none" for transparent background
+                  ></path>
+                  <line
+                    x1="17.5"
+                    x2="17.51"
+                    y1="6.5"
+                    y2="6.5"
+                    fill="none" // Set fill to "none" for transparent background
+                  ></line>
+                </svg>
+              <a
+                  href={"https://www.instagram.com/" + currentUserInfo.instaId}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <div className="instaId">
+                    @ <span>{currentUserInfo.instaId}</span>
+                  </div>
+                </a>
+            </div>
+          )}
         <p className="mylink">
           <span>🔗</span>
           <a

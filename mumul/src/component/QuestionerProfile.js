@@ -141,39 +141,81 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
           </div>
         </div>
         <div className="myInfo">
-          <div>
-            <p className="id">
+        <div className="id">
+            <div>
               {spaceUserInfo.name}
-              {isCurrentUserFollowing ? 
-                <button className="followMeBtn">
-                  나를 팔로우함
-                </button> : 
-                (
-                  ""
-                )}
-            </p>
-          </div>
-          <div>
-            <p className="id">
+              {isCurrentUserFollowing ? (
+                <button className="followMeBtn">나를 팔로우함</button>
+              ) : (
+                ""
+              )}
+            </div>
+            <div>
               <span className="intro">{spaceUserInfo.introduce}</span>
-            </p>
+            </div>
           </div>
-          <p className="snsLink">
-            <img src={InstaLogo} alt="instaLogo" />
-            <a href={'https://www.instagram.com/' + spaceUserInfo.instaId} target="_blank" rel="noreferrer">
-              <span>{spaceUserInfo.instaId}</span>
-            </a>
-          </p>
-          <p className="mylink">
-          <span>🔗</span>
-          <a
-            href={spaceUserInfo.link}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {spaceUserInfo.link}
-          </a>
-        </p>
+          {spaceUserInfo.instaId === "" || spaceUserInfo.instaId === null? (
+            ""
+          ) : (
+            <div className="snsLink svg">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none" // Remove fill attribute to preserve transparency
+                stroke="#2855c1"
+                strokeWidth="2" // Set the stroke width (for icon shapes)
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mr-1 h-5 w-5"
+                // y="100" // Vertical offset to move the image downwards
+              >
+                {/* Your SVG path and shapes */}
+                <rect
+                  width="20"
+                  height="20"
+                  x="2"
+                  y="2"
+                  rx="5"
+                  ry="5"
+                  fill="none" // Set fill to "none" for transparent background
+                ></rect>
+                <path
+                  d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                  fill="none" // Set fill to "none" for transparent background
+                ></path>
+                <line
+                  x1="17.5"
+                  x2="17.51"
+                  y1="6.5"
+                  y2="6.5"
+                  fill="none" // Set fill to "none" for transparent background
+                ></line>
+              </svg>
+
+              <a
+                href={"https://www.instagram.com/" + currentUserInfo.instaId}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div className="instaId">
+                  @ <span>{spaceUserInfo.instaId}</span>
+                </div>
+              </a>
+            </div>
+          )}
+
+          {spaceUserInfo.link === "" || spaceUserInfo.link === null? (
+            ""
+          ) : (
+            <div className="mylink">
+              <span>🔗</span>
+              <a href={spaceUserInfo.link} target="_blank" rel="noreferrer">
+                {spaceUserInfo.link}
+              </a>
+            </div>
+          )}
           <div className="follow">
           <p className={`follower ${followSelected ? 'followerGray' : ''}`} onClick={onClickFollower}>
             팔로워 <span className="num">{followerNumber}</span>

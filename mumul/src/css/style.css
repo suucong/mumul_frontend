@@ -42,6 +42,37 @@ a {
   cursor: pointer;
 }
 
+.inApp {
+  text-decoration: underline;
+  color: #496bbd;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.commentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.btnOk {
+  background-color: #496bbd;
+  font-weight: bold;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.btnOk:hover {
+  background-color: #3a5498;
+}
+
+
 .loginBtn {
   font-weight: 550;
   background-color: #5f85de;
@@ -101,8 +132,8 @@ a {
 }
 
 .header .profile img {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   margin-bottom: 32px;
 }
@@ -113,7 +144,7 @@ a {
   border: 1px solid #eee;
   position: absolute;
   right: 70px;
-  top: 60px;
+  top: 56px;
   transform: translateX(50%); /* Center the popup horizontally */
   z-index: 20;
 }
@@ -169,6 +200,30 @@ a {
   margin: 32px 0;
 }
 
+/* styles.css */
+.snsLink img {
+  -webkit-filter: opacity(.5) drop-shadow(0 0 0 gray);
+  filter: opacity(.5) drop-shadow(0 0 0 gray);
+}
+
+
+
+.snsLink span {
+  /* Replace 'pink' with your desired pink color code */
+  text-decoration: underline;
+}
+
+.instaId{
+  color: #2855c1;
+  margin-left: 5px;
+}
+
+
+.svg {
+  display: flex;
+  align-items: center;
+}
+
 .goPolicy {
   color: #496bbd;
   display: block;
@@ -176,7 +231,7 @@ a {
   margin: 100px 0 20px 0;
 }
 
-.commentWrap {
+.commentWrap, .pre {
   padding: 16px;
   display: flex;
   justify-content: center;
@@ -184,31 +239,10 @@ a {
   box-sizing: border-box;
 }
 
-/* .commentWrap.answerWrap .cnt {
-  min-height: 120px;
-  max-height: 250px;
-  height: 250px;
-} */
-/* 
 .commentWrap.questionWrap::after {
   display: block;
   content: "";
-  width: 2px;
-  height: 105%;
-  background-color: #000;
-  position: absolute;
-  left: 55px;
-  top: 30px; 
-} */
-
-
-
-/* The following CSS makes sure that the line connecting question and answer is visible */
-/* The value of z-index can be adjusted based on your design and other CSS properties */
-.commentWrap.questionWrap::after {
-  display: block;
-  content: "";
-  width: 2px;
+  width: 1.2px;
   height: 90%;
   background-color: #000;
   position: absolute;
@@ -216,36 +250,28 @@ a {
   top: 100px;
 }
 
-.commentWrap.answerWrap {
-  /* Adjust the z-index value to be higher than .respondent */
-  z-index: 2;
+.pre:after {
+   display: block;
+    content: "";
+    height: 90%;
+    border: 1px dashed #808080; /* 점선으로 변경 */
+    position: absolute;
+    left: 55px;
+    top: 100px;
 }
-
-
-.pre.commentWrap.questionWrap::after {
-  display: block;
-  width: 2px;
-  height: 0; /* 높이를 0으로 설정하여 숨김 */
-  background-color: #000;
-  position: absolute;
-  left: 55px;
-  top: 100px; 
-}
-/* .commentWrap:last-of-type .cnt::before {
-  display: none;
-} */
 
 .profileArea {
   margin-right: 18px;
   padding-top: 10px;
   width: 80px;
   position: relative;
-  z-index: 20;
+  z-index: 0;
 }
 
 .questioner {
   border: 2px solid #000;
   border-radius: 100%;
+  z-index: 0;
 }
 
 .pre_questioner {
@@ -277,11 +303,12 @@ a {
   padding: 10px;
   width: calc(100% - 80px);
 }
-.commentWrap .more {
+.commentWrap .more , .pre .more {
   position: absolute;
   right: 0;
   top: 0;
 }
+
 
 .Nicname {
   font-size: 18px;
@@ -352,7 +379,7 @@ a {
 }
 
 .chat {
-  margin: 0 8px;
+  margin: 0 0px;
 }
 
 .share {
@@ -421,7 +448,7 @@ button.space {
   font-weight: 400;
   font-size: 16px;
   color: #616161;
- 
+
 }
 
 .myInfo .snsLink {
@@ -429,19 +456,16 @@ button.space {
   font-weight: 700;
 }
 
-.snsLink span {
-  text-decoration: underline;
-}
-.snsLink img {
-  width: 24px;
-  padding-right: 8px;
-}
-
 .mylink {
-  color: #616161;
   margin-bottom: 10px;
   display: flex;
   word-break: break-all;
+ 
+}
+.mylink a{
+  color: #000000;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 .mylink span {
@@ -503,7 +527,6 @@ button.space {
   top: 0%;
   width: 100%;
   height: 100%;
-  z-index: 50;
   background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -515,11 +538,12 @@ button.space {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 60;
+  z-index: 10000;
 }
 
 .popupContainer {
   padding: 20px 40px;
+  z-index: 10000;
 }
 .popupHeader {
   text-align: right;
@@ -603,6 +627,13 @@ button.space {
   margin: 0 8px;
 }
 
+.placeholder{
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+} 
 .sharePopup {
   width: 120px;
   border-radius: 8px;
@@ -767,12 +798,15 @@ button.space {
   width: 60px;
   font-size: 14px;
   color: #fff;
-  background-color: #000;
+  background-color: #4369c3;
   border-radius: 10px;
   text-align: center;
   line-height: 38px;
-}
+} 
 
+.registerPopup:hover .popupFooter:hover .btnSave:hover {
+  background-color: rgb(51, 89, 185);
+}
 .openBtn {
   padding: 0 20px;
   height: 36px;
@@ -780,7 +814,10 @@ button.space {
   border-radius: 32px;
   background-color: #fff;
   margin-top: 11px;
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+  overflow: hidden; /* Hide any overflowing text */
 }
+
 
 /* slide */
 
@@ -789,6 +826,7 @@ button.space {
   padding: 20px 0;
   box-sizing: border-box;
   border-bottom: 1px solid #000;
+  z-index: 0;
 }
 
 .storyImg {
@@ -808,6 +846,7 @@ button.space {
   width: 55px;
   height: 55px;
   border-radius: 100%;
+  z-index: 0;
 }
 
 .stroryId {
@@ -1073,10 +1112,6 @@ input:checked + .slider:before {
     margin-bottom: 32px;
   }
 
-  /* .commentWrap.answerWrap .cnt::after {
-    height: calc(100% + 40px);
-    top: -128%;
-  } */
 }
 
 @media screen and (max-width: 480px) {

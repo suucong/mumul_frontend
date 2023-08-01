@@ -2,7 +2,7 @@ import React from "react";
 
 function UntilAnswering() {
   return (
-    <div>답변 대기 중 ...👀</div>
+    <div className="pre_commentCnt">답변을 기다리는 중입니다 ...</div>
   );
 }
 

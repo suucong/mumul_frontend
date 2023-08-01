@@ -79,14 +79,14 @@ function QuestionRegister({ info, currentUserInfo, onClose }) {
                   <>
                     <p className="myId">익명의 토끼</p>
                     <button className="openBtn" onClick={clickOpenBtn}>
-                      🔒 토끼로 녹아 들기
+                     🐰 토끼로 녹아들기
                     </button>
                   </>
                 ) : (
                   <>
                     <p className="myId">{currentUserInfo.name}</p>
                     <button className="openBtn" onClick={clickOpenBtn}>
-                      🔓 공개 무물하기
+                     👤 공개 무물하기
                     </button>
                   </>
                 )}

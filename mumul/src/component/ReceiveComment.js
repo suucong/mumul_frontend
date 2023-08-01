@@ -239,13 +239,13 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
     <>
       {receivedComments.length === 0 && (
         <>
-          <div className="pre commentWrap questionWrap">
+         <div className="placeholder">
             <div className="profileArea">
               <img src={Profile5} alt="profile1" className="pre_questioner" />
             </div>
             <div className="cnt">
               <p className="pre_Nickname">익명의 토끼</p>
-              <p className="pre_min">언젠가🔒</p>
+              <p className="pre_min">언젠가</p>
               <p className="pre_commentCnt">
                 받은 질문이 없어요🤖 첫 무물의 주인공이 되어 보세요!
               </p>
@@ -255,7 +255,14 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
       )}
       {receivedComments.slice().map((received, index) => (
         <React.Fragment key={received.id}>
-          <div key={received.id} className="commentWrap questionWrap">
+          <div
+            key={received.id}
+            className={
+              received.answers.length > 0
+                ? "commentWrap questionWrap"
+                : "pre"
+            }
+          >
             <div className="profileArea">
               <img
                 src={received.sentUserPic}
@@ -267,7 +274,7 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                   if (!received.isAnonymous) {
                     window.location.href = `/${received.sendingUserId}`;
                   }
-                }}           
+                }}
               />
             </div>
             <div className="cnt">
@@ -332,43 +339,42 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                   </div>
                 )}
               </div>
-
-              {/* <div className="share">
-                  <img src={Share} alt="share" onClick={() => clickMore_s(index)}  />
-                  {shareStates[index] && (
-                    <div className="sharePopup">
-                      <p onClick={() => onClickCopy(received.id, spaceId)}>
-                        <img src={CopyLink} alt="link" />
-                        링크 복사
-                      </p>
-                    </div>
-                  )}
-                </div> */}
             </div>
           </div>
+
           <div className="commentWrap answerWrap">
             <div className="profileArea">
-            {received.answers.length === 0 ?(
+              {received.answers.length === 0 ? (
                 <img
-                src={spaceOwner.picture}
-                alt="profile2"
-                className="pre_questioner"
-              />
-            ):(
-              <img
-              src={spaceOwner.picture}
-              alt="profile2"
-              className="respondent"
-            />
-            )}
-            
+                  src={spaceOwner.picture}
+                  alt="profile2"
+                  className="pre_questioner"
+                />
+              ) : (
+                <img
+                  src={spaceOwner.picture}
+                  alt="profile2"
+                  className="respondent"
+                  onClick={() => {
+                    console.log(
+                      "spaceId: ",
+                      spaceId,
+                      " received.answers[0].userId:",
+                      received.answers[0].userId.toString()
+                    );
+                    if (spaceId !== received.answers[0].userId.toString()) {
+                      window.location.href = `/${received.answers[0].userId}`;
+                    }
+                  }}
+                />
+              )}
             </div>
             <div className="cnt">
-            {received.answers.length === 0 ?(
-             <p className="pre_Nickname">{spaceOwner.name}</p>
-            ):
-            (<p className="Nicname">{spaceOwner.name}</p>)}
-          
+              {received.answers.length === 0 ? (
+                <p className="pre_Nickname">{spaceOwner.name}</p>
+              ) : (
+                <p className="Nicname">{spaceOwner.name}</p>
+              )}
 
               {received.answers.length === 0 ? (
                 <UntilAnswering></UntilAnswering>
