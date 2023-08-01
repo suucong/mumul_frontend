@@ -194,7 +194,7 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
               </svg>
 
               <a
-                href={"https://www.instagram.com/" + currentUserInfo.instaId}
+                href={"https://www.instagram.com/" + spaceUserInfo.instaId}
                 target="_blank"
                 rel="noreferrer"
               >
