@@ -12,7 +12,9 @@ import UntilAnswering from "./UntilAnswering";
 import AnswerRegister from "./popup/AnswerRegister";
 import CantModal from "./popup/CantRegister";
 import ADelete from "./popup/ADelete";
+import AnswerBtn from "./AnswerButton";
 import Profile5 from "./../img/Ellipse 105.png";
+import Profile2 from "./../img/Ellipse 104.png";
 import Loading from "./Loading";
 
 function ReceiveComment({ spaceId, currentUserInfo }) {
@@ -170,14 +172,14 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
     });
   };
 
-  // // 클릭한 질문에 대한 공유하기 상태값 변경
-  // const clickMore_s = (index) => {
-  //   setShareStates((prevStates) => {
-  //     const newStates = [...prevStates];
-  //     newStates[index] = !newStates[index];
-  //     return newStates;
-  //   });
-  // };
+  // 클릭한 질문에 대한 공유하기 상태값 변경
+  const clickMore_s = (index) => {
+    setShareStates((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[index] = !newStates[index];
+      return newStates;
+    });
+  };
 
   // 질문 삭제하기 클릭 시 모달 오픈
   const showDelModal = (questionId, spaceId, userId) => {
@@ -354,6 +356,12 @@ function ReceiveComment({ spaceId, currentUserInfo }) {
                   alt="profile2"
                   className="respondent"
                   onClick={() => {
+                    console.log(
+                      "spaceId: ",
+                      spaceId,
+                      " received.answers[0].userId:",
+                      received.answers[0].userId.toString()
+                    );
                     if (spaceId !== received.answers[0].userId.toString()) {
                       window.location.href = `/${received.answers[0].userId}`;
                     }
