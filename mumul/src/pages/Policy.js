@@ -39,7 +39,7 @@ function Policy() {
       </p>
       <div className="wpembed-toc">
         <h3>Table of contents</h3>
-        <ol class="wpembed-toc">
+        <ol className="wpembed-toc">
           <li>
             <a href="#collection-of-personal-information">
               Collection of personal information
@@ -371,7 +371,7 @@ function Policy() {
         applicable data protection laws.
       </p>
       <p>This document was last updated on July 25, 2023</p>
-      <p class="madewith">
+      <p className="madewith">
       <a
           href="https://www.websitepolicies.com/privacy-policy-generator?via=madewithbadge"
           target="_blank"
@@ -382,7 +382,7 @@ function Policy() {
             height="25"
             alt="Made with WebsitePolicies privacy policy generator"
             src="https://cdn.websitepolicies.io/img/badge.png"
-            srcset="https://cdn.websitepolicies.io/img/badge_2x.png 2x"
+            srcSet="https://cdn.websitepolicies.io/img/badge_2x.png 2x"
           ></img>
         </a>
       </p>
