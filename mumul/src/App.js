@@ -6,6 +6,8 @@ import Login from "./pages/Login";
 import Main from "./pages/Main";
 import Policy from "./pages/Policy";
 import Setting from "./pages/Setting";
+import BookMark from "./pages/bookMark";
+
 import "./css/reset.css";
 import "./css/style.css";
 import KakaoAuthHandle from "./component/KakaoAuthHandle";
@@ -40,6 +42,7 @@ function App() {
         followSelected={followSelected} setFollowSelected={setFollowSelected}/>} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/setting" element={<Setting isLogin={isLogin} setIsLogin={setIsLogin}/>} />
+        <Route path="/bookmark" element={<BookMark />} />
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </BrowserRouter>
