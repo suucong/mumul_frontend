@@ -1,33 +1,42 @@
-import Profile1 from "./../img/Ellipse 103.png";
-import Profile2 from "./../img/Ellipse 104.png";
-import AnswerButton from "./../component/AnswerButton";
+import React from "react";
 
-function ReceiveComment() {
+import Profile1 from "./../img/Ellipse 113.png";
+import Profile2 from "./../img/Ellipse 106.png";
+
+
+function Comment() {
   return (
     <>
       <div className="commentWrap questionWrap">
         <div className="profileArea">
-          <img src={Profile1} alt="profile1" className="questioner" />
+          <img src={Profile2} alt="profile1" className="questioner" />
         </div>
         <div className="cnt">
           <p className="Nicname">익명의 토끼</p>
-          <p className="min">20분 전🔒</p>
+          <p className="min">20분 전</p>
           <p className="commentCnt">
-            중요한 결정을 내려야 할 때 찾는 장소가 있나요? 마음 속의 장소도
-            좋아요. <br></br>그곳은 어떤 곳인가요?
+            MUMUL(무물)은 무슨 뜻이고 어떤 사이트인가요? 
           </p>
+        
         </div>
       </div>
+
+
       <div className="commentWrap answerWrap">
         <div className="profileArea">
-          <img src={Profile2} alt="profile2" className="respondent" />
+          <img src={Profile1} alt="profile1" className="respondent" />
         </div>
         <div className="cnt">
-          <AnswerButton></AnswerButton>
+          <p className="Nicname">MUMUL 개발자</p>
+          <p className="min">방금 전</p>
+          <p className="commentCnt">
+            무물이란 <strong>'무엇이든 물어보세요'</strong> 의 줄임말로, MUMUL은 익명 혹은 닉네임으로 자유롭게 문답하는 사이트입니다 😎
+          </p>
+        
         </div>
       </div>
     </>
   );
 }
 
-export default ReceiveComment;
+export default Comment;

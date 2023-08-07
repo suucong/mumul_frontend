@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Comment from "../component/Comment";
+import Comment from "../pages/Comment";
 import React, { useState, useEffect } from "react";
 import { getUserInfo } from "../api/getUserInfo";
 import MobileBrowser from "../component/popup/MobileBrowser"; // 팝업창 컴포넌트 임포트
