@@ -4,7 +4,6 @@ import SendComment from "../component/SendComment";
 import ReceiveComment from "../component/ReceiveComment";
 import MyProfile from "../component/MyProfile";
 import QuestionerProfile from "../component/QuestionerProfile";
-import Storyslide from "../component/Storyslide";
 import { useParams } from "react-router-dom";
 import { getSpaceInfo } from "../api/getSpaceInfo";
 import { getUserInfo } from "../api/getUserInfo";
@@ -89,7 +88,8 @@ function Main({isLogin, setIsLogin, followSelected, setFollowSelected}) {
             followSelected={followSelected} setFollowSelected={setFollowSelected}></MyProfile>
           ) : (
             <QuestionerProfile spaceUserInfo={info} currentUserInfo={currentUserInfo} 
-            followSelected={followSelected} setFollowSelected={setFollowSelected}></QuestionerProfile>
+            followSelected={followSelected} setFollowSelected={setFollowSelected}
+            isLogin={isLogin}></QuestionerProfile>
         )}
         <ul className="tabMenu">
           {tabContArr.map((item) => (

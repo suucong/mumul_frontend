@@ -10,7 +10,7 @@ import { getFollowingNumber } from "../api/Follow/getFollowingNumber";
 import { getFollwerNumber } from "../api/Follow/getFollowerNumber";
 import { getFollowerList } from "../api/Follow/getFollowerList";
 
-function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, setFollowSelected }) {
+function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, setFollowSelected, isLogin }) {
   const [queModal, setQueModal] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followingNumber, setFollowingNumber] = useState(null);
@@ -27,7 +27,7 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
   }
 
   useEffect(() => {
-    if (currentUserInfo.userId !== '') {
+    if (isLogin === true) {
       getIsFollow(spaceUserInfo.userId)
         .then((result) => {
           setIsFollowing(result);
@@ -65,10 +65,10 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
         .catch((error) => {
           console.error('getFollowerNumber Error: ', error.message);
         }) 
-  }, [currentUserInfo.userId, spaceUserInfo.userId, followSelected]);
+  }, [currentUserInfo.userId, spaceUserInfo.userId, followSelected, isLogin]);
 
   const showQueModal = () => {
-    if (currentUserInfo.userId === '') {
+    if (isLogin === false) {
       alert('로그인 하세요.');
       return;
     }
@@ -81,7 +81,7 @@ function QuestionerProfile({ spaceUserInfo, currentUserInfo, followSelected, set
 
 
   const toggleFollowing = async () => {
-    if (currentUserInfo.userId === '') {
+    if (isLogin === false) {
       alert('로그인 하세요.');
       return;
     }
