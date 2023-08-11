@@ -106,631 +106,259 @@ $ git clone https://github.com/suucong/ama_backend.git
 
 ### 디렉토리 구조
 ```bash
-│  .gitignore
-│  build.gradle
-│  gradlew
-│  gradlew.bat
-│  mumul_intro_.png
-│  README.md
-│  settings.gradle
-│
-
-├─.elasticbeanstalk
-│      config.yml
-│
-
-├─.gradle
-│  │  file-system.probe
-│  │
-
-│  ├─8.0
-│  │  │  gc.properties
-│  │  │
-
-│  │  ├─checksums
-│  │  │      checksums.lock
-│  │  │      md5-checksums.bin
-│  │  │      sha1-checksums.bin
-│  │  │
-│  │  ├─dependencies-accessors
-│  │  │      dependencies-accessors.lock
-│  │  │      gc.properties
-│  │  │
-│  │  ├─executionHistory
-│  │  │      executionHistory.bin
-│  │  │      executionHistory.lock
-│  │  │
-│  │  ├─fileChanges
-│  │  │      last-build.bin
-│  │  │
-│  │  ├─fileHashes
-│  │  │      fileHashes.bin
-│  │  │      fileHashes.lock
-│  │  │      resourceHashesCache.bin
-│  │  │
-│  │  └─vcsMetadata
-│  ├─buildOutputCleanup
-│  │      buildOutputCleanup.lock
-│  │      cache.properties
-│  │      outputFiles.bin
-│  │
-│  └─vcs-1
-│          gc.properties
-│
-├─.idea
-│  │  .gitignore
-│  │  .name
-│  │  compiler.xml
-│  │  dbnavigator.xml
-│  │  gradle.xml
-│  │  jarRepositories.xml
-│  │  misc.xml
-│  │  vcs.xml
-│  │  workspace.xml
-│  │
-│  └─modules
-├─build
-│  │  resolvedMainClassName
-│  │
-│  ├─classes
-│  │  └─java
-│  │      ├─main
-│  │      │  └─com
-│  │      │      └─example
-│  │      │          └─ama_backend
-│  │      │              │  AmaBackendApplication.class
-│  │      │              │
-│  │      │              ├─config
-│  │      │              │  │  JWTRequestFilter.class
-│  │      │              │  │  JWTUtils.class
-│  │      │              │  │  WebConfig.class
-│  │      │              │  │
-│  │      │              │  ├─auth
-│  │      │              │  │      SecurityConfig.class
-│  │      │              │  │
-
-│  │      │              │  └─mail
-│  │      │              │          MailConfig.class
-│  │      │              │
-│  │      │              ├─controller
-│  │      │              │      AnswerController.class
-│  │      │              │      FollowController.class
-│  │      │              │      HealthCheckController.class
-│  │      │              │      QuestionController.class
-│  │      │              │      SpaceController.class
-│  │      │              │      UserController.class
-│  │      │              │
-
-│  │      │              ├─dto
-│  │      │              │      AnswerDTO$AnswerDTOBuilder.class
-│  │      │              │      AnswerDTO.class
-│  │      │              │      CodeRequestDto.class
-│  │      │              │      FollowingDTO$FollowingDTOBuilder.class
-│  │      │              │      FollowingDTO.class
-│  │      │              │      IdTokenRequestDto.class
-│  │      │              │      QuestionDTO$QuestionDTOBuilder.class
-│  │      │              │      QuestionDTO.class
-│  │      │              │      ResponseDTO$ResponseDTOBuilder.class
-│  │      │              │      ResponseDTO.class
-│  │      │              │      TestRequestBodyDTO.class
-│  │      │              │      UserUpdateRequestDto$UserUpdateRequestDtoBuilder.class
-│  │      │              │      UserUpdateRequestDto.class
-│  │      │              │
-│  │      │              ├─entity
-│  │      │              │      AnswerEntity$AnswerEntityBuilder.class
-│  │      │              │      AnswerEntity.class
-│  │      │              │      Follow$FollowBuilder.class
-│  │      │              │      Follow.class
-│  │      │              │      QuestionEntity$QuestionEntityBuilder.class
-│  │      │              │      QuestionEntity.class
-│  │      │              │      Role.class
-│  │      │              │      SpaceEntity$SpaceEntityBuilder.class
-│  │      │              │      SpaceEntity.class
-│  │      │              │      UserEntity$UserEntityBuilder.class
-│  │      │              │      UserEntity.class
-│  │      │              │
-│  │      │              ├─persistence
-│  │      │              │      AnswerRepository.class
-│  │      │              │      FollowRepository.class
-│  │      │              │      QuestionRepository.class
-│  │      │              │      SpaceRepository.class
-│  │      │              │      UserRepository.class
-│  │      │              │
-│  │      │              └─service
-│  │      │                      FollowService.class
-│  │      │                      MailService.class
-│  │      │                      QAService.class
-│  │      │                      UserService$1.class
-│  │      │                      UserService.class
-│  │      │
-│  │      └─test
-│  │          └─com
-│  │              └─example
-│  │                  └─ama_backend
-│  │                          AmaBackendApplicationTests.class
-│  │
-│  ├─generated
-│  │  └─sources
-│  │      ├─annotationProcessor
-│  │      │  └─java
-│  │      │      ├─main
-│  │      │      └─test
-│  │      └─headers
-│  │          └─java
-│  │              ├─main
-│  │              └─test
-│  ├─libs
-│  │      mumul-0.0.1-SNAPSHOT-plain.jar
-│  │      mumul-0.0.1-SNAPSHOT.jar
-│  │
-│  ├─reports
-│  │  └─tests
-│  │      └─test
-│  │          │  index.html
-│  │          │
-│  │          ├─classes
-│  │          │      com.example.ama_backend.AmaBackendApplicationTests.html
-│  │          │
-│  │          ├─css
-│  │          │      base-style.css
-│  │          │      style.css
-│  │          │
-│  │          ├─js
-│  │          │      report.js
-│  │          │
-│  │          └─packages
-│  │                  com.example.ama_backend.html
-│  │
-│  ├─resources
-│  │  └─main
-│  │          application-dev.yml
-│  │          application-prod.yml
-│  │          application.yml
-│  │
-│  ├─test-results
-│  │  └─test
-│  │      │  TEST-com.example.ama_backend.AmaBackendApplicationTests.xml
-│  │      │
-│  │      └─binary
-│  │              output.bin
-│  │              output.bin.idx
-│  │              results.bin
-│  │
-│  └─tmp
-│      ├─bootJar
-│      │      MANIFEST.MF
-│      │
-│      ├─compileJava
-│      │  │  previous-compilation-data.bin
-│      │  │
-
-│      │  └─compileTransaction
-│      │      ├─annotation-output
-│      │      ├─compile-output
-│      │      │  └─com
-│      │      │      └─example
-│      │      │          └─ama_backend
-│      │      │              ├─config
-│      │      │              │  └─auth
-│      │      │              ├─controller
-│      │      │              ├─dto
-│      │      │              ├─entity
-│      │      │              ├─persistence
-│      │      │              └─service
-│      │      ├─header-output
-│      │      └─stash-dir
-│      │              AnswerController.class.uniqueId6
-│      │              AnswerDTO$AnswerDTOBuilder.class.uniqueId13
-│      │              AnswerDTO.class.uniqueId8
-│      │              AnswerEntity$AnswerEntityBuilder.class.uniqueId4
-│      │              AnswerEntity.class.uniqueId10
-│      │              AnswerRepository.class.uniqueId15
-│      │              QAService.class.uniqueId12
-│      │              QuestionController.class.uniqueId5
-│      │              QuestionDTO$QuestionDTOBuilder.class.uniqueId9
-│      │              QuestionDTO.class.uniqueId14
-│      │              QuestionEntity$QuestionEntityBuilder.class.uniqueId3
-│      │              QuestionEntity.class.uniqueId1
-│      │              QuestionRepository.class.uniqueId2
-│      │              UserController.class.uniqueId7
-│      │              UserService$1.class.uniqueId11
-│      │              UserService.class.uniqueId0
-│      │
-│      ├─compileTestJava
-│      │      previous-compilation-data.bin
-│      │
-│      ├─jar
-│      │      MANIFEST.MF
-│      │
-│      └─test
-├─gradle
-│  └─wrapper
-│          gradle-wrapper.jar
-│          gradle-wrapper.properties
-│
-└─src
-├─main
-│  ├─java
-│  │  └─com
-│  │      └─example
-│  │          └─ama_backend
-│  │              │  AmaBackendApplication.java
-│  │              │
-│  │              ├─config
-│  │              │  │  JWTRequestFilter.java
-│  │              │  │  JWTUtils.java
-│  │              │  │  WebConfig.java
-│  │              │  │
-│  │              │  ├─auth
-│  │              │  │      SecurityConfig.java
-│  │              │  │
-│  │              │  └─mail
-│  │              │          MailConfig.java
-│  │              │
-│  │              ├─controller
-│  │              │      AnswerController.java
-│  │              │      FollowController.java
-│  │              │      HealthCheckController.java
-│  │              │      QuestionController.java
-│  │              │      SpaceController.java
-│  │              │      UserController.java
-│  │              │
-│  │              ├─dto
-│  │              │      AnswerDTO.java
-│  │              │      CodeRequestDto.java
-│  │              │      FollowingDTO.java
-│  │              │      IdTokenRequestDto.java
-│  │              │      QuestionDTO.java
-│  │              │      ResponseDTO.java
-│  │              │      TestRequestBodyDTO.java
-│  │              │      UserUpdateRequestDto.java
-│  │              │
-│  │              ├─entity
-│  │              │      AnswerEntity.java
-│  │              │      Follow.java
-│  │              │      QuestionEntity.java
-│  │              │      Role.java
-│  │              │      SpaceEntity.java
-│  │              │      UserEntity.java
-│  │              │
-│  │              ├─persistence
-│  │              │      AnswerRepository.java
-│  │              │      FollowRepository.java
-│  │              │      QuestionRepository.java
-│  │              │      SpaceRepository.java
-│  │              │      UserRepository.java
-│  │              │
-│  │              └─service
-│  │                      FollowService.java
-│  │                      MailService.java
-│  │                      QAService.java
-│  │                      UserService.java
-│  │
-│  └─resources
-│          application-dev.yml
-│          application-prod.yml
-│
-└─test
-└─java
-└─com
-└─example
-└─ama_backend
-AmaBackendApplicationTests.java
+mumul.space
+└─ mumul_frontend
+   ├─ .DS_Store
+   ├─ mumul
+   │  ├─ .env
+   │  ├─ .platform
+   │  ├─ package-lock.json
+   │  ├─ package.json
+   │  ├─ public
+   │  │  ├─ favicon.ico
+   │  │  ├─ index.html
+   │  │  ├─ logo192.png
+   │  │  ├─ logo512.png
+   │  │  ├─ manifest.json
+   │  │  └─ robots.txt
+   │  └─ src
+   │     ├─ api
+   │     │  ├─ Follow
+   │     │  │  ├─ getFollowerList.js
+   │     │  │  ├─ getFollowerNumber.js
+   │     │  │  ├─ getFollowingList.js
+   │     │  │  ├─ getFollowingNumber.js
+   │     │  │  ├─ getIsFollow.js
+   │     │  │  ├─ getIsFollower.js
+   │     │  │  ├─ postFollow.js
+   │     │  │  └─ postUnFollow.js
+   │     │  ├─ getSpaceInfo.js
+   │     │  ├─ getUserInfo.js
+   │     │  ├─ logoutUserToken.js
+   │     │  ├─ postLoginToken.js
+   │     │  ├─ putUserProfileEdit.js
+   │     │  ├─ Q&A
+   │     │  │  ├─ createAnswer.js
+   │     │  │  ├─ createQuestion.js
+   │     │  │  ├─ deleteAnswer.js
+   │     │  │  ├─ deleteQuestion.js
+   │     │  │  ├─ getPReceivedComment.js
+   │     │  │  ├─ getPSentComment.js
+   │     │  │  ├─ getQuestionShare.js
+   │     │  │  ├─ getReceivedComment.js
+   │     │  │  └─ getSentComment.js
+   │     │  └─ User
+   │     │     ├─ deleteUser.js
+   │     │     ├─ putAlertSpace.js
+   │     │     └─ putStopSpace.js
+   │     ├─ App.css
+   │     ├─ App.js
+   │     ├─ App.test.js
+   │     ├─ component
+   │     │  ├─ AnonymousAnswer.js
+   │     │  ├─ AnswerButton.js
+   │     │  ├─ Comment.js
+   │     │  ├─ GoogleLogin.js
+   │     │  ├─ Header.js
+   │     │  ├─ KakaoAuthHandle.js
+   │     │  ├─ Loading.js
+   │     │  ├─ MyProfile.js
+   │     │  ├─ popup
+   │     │  │  ├─ ADelete.js
+   │     │  │  ├─ AnswerRegister.js
+   │     │  │  ├─ CantRegister.js
+   │     │  │  ├─ MobileBrowser.js
+   │     │  │  ├─ NoneMember.js
+   │     │  │  ├─ ProfileEdit.js
+   │     │  │  ├─ QDelete.js
+   │     │  │  ├─ QuestionRegister.js
+   │     │  │  └─ Share.js
+   │     │  ├─ QuestionerProfile.js
+   │     │  ├─ ReceiveComment.js
+   │     │  ├─ SendComment.js
+   │     │  ├─ ShareComment.js
+   │     │  ├─ Storyslide.js
+   │     │  └─ UntilAnswering.js
+   │     ├─ css
+   │     │  ├─ reset.css
+   │     │  └─ style.css
+   │     ├─ img
+   │     │  ├─ Ellipse 102.png
+   │     │  ├─ Ellipse 103.png
+   │     │  ├─ Ellipse 104.png
+   │     │  ├─ Ellipse 105.png
+   │     │  ├─ Ellipse 106.png
+   │     │  ├─ Ellipse 107.png
+   │     │  ├─ Ellipse 108.png
+   │     │  ├─ Ellipse 109.png
+   │     │  ├─ Ellipse 110.png
+   │     │  ├─ Ellipse 111.png
+   │     │  ├─ Ellipse 112.png
+   │     │  ├─ Ellipse 113.png
+   │     │  ├─ Group 12.png
+   │     │  ├─ icHeaderBlack.png
+   │     │  ├─ icHeartWhite.png
+   │     │  ├─ icon
+   │     │  │  ├─ close.png
+   │     │  │  ├─ CopyLink.png
+   │     │  │  ├─ gram.png
+   │     │  │  ├─ icBin.png
+   │     │  │  ├─ icCacao.png
+   │     │  │  ├─ icChat.png
+   │     │  │  ├─ icGoggle.png
+   │     │  │  ├─ icGood.png
+   │     │  │  ├─ icGoodRed.png
+   │     │  │  ├─ icMore.png
+   │     │  │  ├─ icShare.png
+   │     │  │  ├─ instagram.png
+   │     │  │  ├─ instaLogo.jpeg
+   │     │  │  ├─ left-chevron.png
+   │     │  │  └─ right-chevron.png
+   │     │  └─ Spinner.gif
+   │     ├─ index.css
+   │     ├─ index.js
+   │     ├─ logo.svg
+   │     ├─ pages
+   │     │  ├─ bookMark.js
+   │     │  ├─ Comment.js
+   │     │  ├─ Intro.js
+   │     │  ├─ Login.js
+   │     │  ├─ Main.js
+   │     │  ├─ Main2.js
+   │     │  ├─ Policy.js
+   │     │  └─ Setting.js
+   │     ├─ reportWebVitals.js
+   │     └─ setupTests.js
+   └─ README.md
 
 ```
 
 <!--
 ```bash
-│  .gitignore
-│  build.gradle
-│  gradlew
-│  gradlew.bat
-│  mumul_intro_.png
-│  README.md
-│  settings.gradle
-│
-
-├─.elasticbeanstalk
-│      config.yml
-│
-
-├─.gradle
-│  │  file-system.probe
-│  │
-
-│  ├─8.0
-│  │  │  gc.properties
-│  │  │
-
-│  │  ├─checksums
-│  │  │      checksums.lock
-│  │  │      md5-checksums.bin
-│  │  │      sha1-checksums.bin
-│  │  │
-│  │  ├─dependencies-accessors
-│  │  │      dependencies-accessors.lock
-│  │  │      gc.properties
-│  │  │
-│  │  ├─executionHistory
-│  │  │      executionHistory.bin
-│  │  │      executionHistory.lock
-│  │  │
-│  │  ├─fileChanges
-│  │  │      last-build.bin
-│  │  │
-│  │  ├─fileHashes
-│  │  │      fileHashes.bin
-│  │  │      fileHashes.lock
-│  │  │      resourceHashesCache.bin
-│  │  │
-│  │  └─vcsMetadata
-│  ├─buildOutputCleanup
-│  │      buildOutputCleanup.lock
-│  │      cache.properties
-│  │      outputFiles.bin
-│  │
-│  └─vcs-1
-│          gc.properties
-│
-├─.idea
-│  │  .gitignore
-│  │  .name
-│  │  compiler.xml
-│  │  dbnavigator.xml
-│  │  gradle.xml
-│  │  jarRepositories.xml
-│  │  misc.xml
-│  │  vcs.xml
-│  │  workspace.xml
-│  │
-│  └─modules
-├─build
-│  │  resolvedMainClassName
-│  │
-│  ├─classes
-│  │  └─java
-│  │      ├─main
-│  │      │  └─com
-│  │      │      └─example
-│  │      │          └─ama_backend
-│  │      │              │  AmaBackendApplication.class
-│  │      │              │
-│  │      │              ├─config
-│  │      │              │  │  JWTRequestFilter.class
-│  │      │              │  │  JWTUtils.class
-│  │      │              │  │  WebConfig.class
-│  │      │              │  │
-│  │      │              │  ├─auth
-│  │      │              │  │      SecurityConfig.class
-│  │      │              │  │
-
-│  │      │              │  └─mail
-│  │      │              │          MailConfig.class
-│  │      │              │
-│  │      │              ├─controller
-│  │      │              │      AnswerController.class
-│  │      │              │      FollowController.class
-│  │      │              │      HealthCheckController.class
-│  │      │              │      QuestionController.class
-│  │      │              │      SpaceController.class
-│  │      │              │      UserController.class
-│  │      │              │
-
-│  │      │              ├─dto
-│  │      │              │      AnswerDTO$AnswerDTOBuilder.class
-│  │      │              │      AnswerDTO.class
-│  │      │              │      CodeRequestDto.class
-│  │      │              │      FollowingDTO$FollowingDTOBuilder.class
-│  │      │              │      FollowingDTO.class
-│  │      │              │      IdTokenRequestDto.class
-│  │      │              │      QuestionDTO$QuestionDTOBuilder.class
-│  │      │              │      QuestionDTO.class
-│  │      │              │      ResponseDTO$ResponseDTOBuilder.class
-│  │      │              │      ResponseDTO.class
-│  │      │              │      TestRequestBodyDTO.class
-│  │      │              │      UserUpdateRequestDto$UserUpdateRequestDtoBuilder.class
-│  │      │              │      UserUpdateRequestDto.class
-│  │      │              │
-│  │      │              ├─entity
-│  │      │              │      AnswerEntity$AnswerEntityBuilder.class
-│  │      │              │      AnswerEntity.class
-│  │      │              │      Follow$FollowBuilder.class
-│  │      │              │      Follow.class
-│  │      │              │      QuestionEntity$QuestionEntityBuilder.class
-│  │      │              │      QuestionEntity.class
-│  │      │              │      Role.class
-│  │      │              │      SpaceEntity$SpaceEntityBuilder.class
-│  │      │              │      SpaceEntity.class
-│  │      │              │      UserEntity$UserEntityBuilder.class
-│  │      │              │      UserEntity.class
-│  │      │              │
-│  │      │              ├─persistence
-│  │      │              │      AnswerRepository.class
-│  │      │              │      FollowRepository.class
-│  │      │              │      QuestionRepository.class
-│  │      │              │      SpaceRepository.class
-│  │      │              │      UserRepository.class
-│  │      │              │
-│  │      │              └─service
-│  │      │                      FollowService.class
-│  │      │                      MailService.class
-│  │      │                      QAService.class
-│  │      │                      UserService$1.class
-│  │      │                      UserService.class
-│  │      │
-│  │      └─test
-│  │          └─com
-│  │              └─example
-│  │                  └─ama_backend
-│  │                          AmaBackendApplicationTests.class
-│  │
-│  ├─generated
-│  │  └─sources
-│  │      ├─annotationProcessor
-│  │      │  └─java
-│  │      │      ├─main
-│  │      │      └─test
-│  │      └─headers
-│  │          └─java
-│  │              ├─main
-│  │              └─test
-│  ├─libs
-│  │      mumul-0.0.1-SNAPSHOT-plain.jar
-│  │      mumul-0.0.1-SNAPSHOT.jar
-│  │
-│  ├─reports
-│  │  └─tests
-│  │      └─test
-│  │          │  index.html
-│  │          │
-│  │          ├─classes
-│  │          │      com.example.ama_backend.AmaBackendApplicationTests.html
-│  │          │
-│  │          ├─css
-│  │          │      base-style.css
-│  │          │      style.css
-│  │          │
-│  │          ├─js
-│  │          │      report.js
-│  │          │
-│  │          └─packages
-│  │                  com.example.ama_backend.html
-│  │
-│  ├─resources
-│  │  └─main
-│  │          application-dev.yml
-│  │          application-prod.yml
-│  │          application.yml
-│  │
-│  ├─test-results
-│  │  └─test
-│  │      │  TEST-com.example.ama_backend.AmaBackendApplicationTests.xml
-│  │      │
-│  │      └─binary
-│  │              output.bin
-│  │              output.bin.idx
-│  │              results.bin
-│  │
-│  └─tmp
-│      ├─bootJar
-│      │      MANIFEST.MF
-│      │
-│      ├─compileJava
-│      │  │  previous-compilation-data.bin
-│      │  │
-
-│      │  └─compileTransaction
-│      │      ├─annotation-output
-│      │      ├─compile-output
-│      │      │  └─com
-│      │      │      └─example
-│      │      │          └─ama_backend
-│      │      │              ├─config
-│      │      │              │  └─auth
-│      │      │              ├─controller
-│      │      │              ├─dto
-│      │      │              ├─entity
-│      │      │              ├─persistence
-│      │      │              └─service
-│      │      ├─header-output
-│      │      └─stash-dir
-│      │              AnswerController.class.uniqueId6
-│      │              AnswerDTO$AnswerDTOBuilder.class.uniqueId13
-│      │              AnswerDTO.class.uniqueId8
-│      │              AnswerEntity$AnswerEntityBuilder.class.uniqueId4
-│      │              AnswerEntity.class.uniqueId10
-│      │              AnswerRepository.class.uniqueId15
-│      │              QAService.class.uniqueId12
-│      │              QuestionController.class.uniqueId5
-│      │              QuestionDTO$QuestionDTOBuilder.class.uniqueId9
-│      │              QuestionDTO.class.uniqueId14
-│      │              QuestionEntity$QuestionEntityBuilder.class.uniqueId3
-│      │              QuestionEntity.class.uniqueId1
-│      │              QuestionRepository.class.uniqueId2
-│      │              UserController.class.uniqueId7
-│      │              UserService$1.class.uniqueId11
-│      │              UserService.class.uniqueId0
-│      │
-│      ├─compileTestJava
-│      │      previous-compilation-data.bin
-│      │
-│      ├─jar
-│      │      MANIFEST.MF
-│      │
-│      └─test
-├─gradle
-│  └─wrapper
-│          gradle-wrapper.jar
-│          gradle-wrapper.properties
-│
-└─src
-├─main
-│  ├─java
-│  │  └─com
-│  │      └─example
-│  │          └─ama_backend
-│  │              │  AmaBackendApplication.java
-│  │              │
-│  │              ├─config
-│  │              │  │  JWTRequestFilter.java
-│  │              │  │  JWTUtils.java
-│  │              │  │  WebConfig.java
-│  │              │  │
-│  │              │  ├─auth
-│  │              │  │      SecurityConfig.java
-│  │              │  │
-│  │              │  └─mail
-│  │              │          MailConfig.java
-│  │              │
-│  │              ├─controller
-│  │              │      AnswerController.java
-│  │              │      FollowController.java
-│  │              │      HealthCheckController.java
-│  │              │      QuestionController.java
-│  │              │      SpaceController.java
-│  │              │      UserController.java
-│  │              │
-│  │              ├─dto
-│  │              │      AnswerDTO.java
-│  │              │      CodeRequestDto.java
-│  │              │      FollowingDTO.java
-│  │              │      IdTokenRequestDto.java
-│  │              │      QuestionDTO.java
-│  │              │      ResponseDTO.java
-│  │              │      TestRequestBodyDTO.java
-│  │              │      UserUpdateRequestDto.java
-│  │              │
-│  │              ├─entity
-│  │              │      AnswerEntity.java
-│  │              │      Follow.java
-│  │              │      QuestionEntity.java
-│  │              │      Role.java
-│  │              │      SpaceEntity.java
-│  │              │      UserEntity.java
-│  │              │
-│  │              ├─persistence
-│  │              │      AnswerRepository.java
-│  │              │      FollowRepository.java
-│  │              │      QuestionRepository.java
-│  │              │      SpaceRepository.java
-│  │              │      UserRepository.java
-│  │              │
-│  │              └─service
-│  │                      FollowService.java
-│  │                      MailService.java
-│  │                      QAService.java
-│  │                      UserService.java
-│  │
-│  └─resources
-│          application-dev.yml
-│          application-prod.yml
-│
-└─test
-└─java
-└─com
-└─example
-└─ama_backend
-AmaBackendApplicationTests.java
+mumul.space
+└─ mumul_frontend
+   ├─ .DS_Store
+   ├─ mumul
+   │  ├─ .env
+   │  ├─ .platform
+   │  ├─ package-lock.json
+   │  ├─ package.json
+   │  ├─ public
+   │  │  ├─ favicon.ico
+   │  │  ├─ index.html
+   │  │  ├─ logo192.png
+   │  │  ├─ logo512.png
+   │  │  ├─ manifest.json
+   │  │  └─ robots.txt
+   │  └─ src
+   │     ├─ api
+   │     │  ├─ Follow
+   │     │  │  ├─ getFollowerList.js
+   │     │  │  ├─ getFollowerNumber.js
+   │     │  │  ├─ getFollowingList.js
+   │     │  │  ├─ getFollowingNumber.js
+   │     │  │  ├─ getIsFollow.js
+   │     │  │  ├─ getIsFollower.js
+   │     │  │  ├─ postFollow.js
+   │     │  │  └─ postUnFollow.js
+   │     │  ├─ getSpaceInfo.js
+   │     │  ├─ getUserInfo.js
+   │     │  ├─ logoutUserToken.js
+   │     │  ├─ postLoginToken.js
+   │     │  ├─ putUserProfileEdit.js
+   │     │  ├─ Q&A
+   │     │  │  ├─ createAnswer.js
+   │     │  │  ├─ createQuestion.js
+   │     │  │  ├─ deleteAnswer.js
+   │     │  │  ├─ deleteQuestion.js
+   │     │  │  ├─ getPReceivedComment.js
+   │     │  │  ├─ getPSentComment.js
+   │     │  │  ├─ getQuestionShare.js
+   │     │  │  ├─ getReceivedComment.js
+   │     │  │  └─ getSentComment.js
+   │     │  └─ User
+   │     │     ├─ deleteUser.js
+   │     │     ├─ putAlertSpace.js
+   │     │     └─ putStopSpace.js
+   │     ├─ App.css
+   │     ├─ App.js
+   │     ├─ App.test.js
+   │     ├─ component
+   │     │  ├─ AnonymousAnswer.js
+   │     │  ├─ AnswerButton.js
+   │     │  ├─ Comment.js
+   │     │  ├─ GoogleLogin.js
+   │     │  ├─ Header.js
+   │     │  ├─ KakaoAuthHandle.js
+   │     │  ├─ Loading.js
+   │     │  ├─ MyProfile.js
+   │     │  ├─ popup
+   │     │  │  ├─ ADelete.js
+   │     │  │  ├─ AnswerRegister.js
+   │     │  │  ├─ CantRegister.js
+   │     │  │  ├─ MobileBrowser.js
+   │     │  │  ├─ NoneMember.js
+   │     │  │  ├─ ProfileEdit.js
+   │     │  │  ├─ QDelete.js
+   │     │  │  ├─ QuestionRegister.js
+   │     │  │  └─ Share.js
+   │     │  ├─ QuestionerProfile.js
+   │     │  ├─ ReceiveComment.js
+   │     │  ├─ SendComment.js
+   │     │  ├─ ShareComment.js
+   │     │  ├─ Storyslide.js
+   │     │  └─ UntilAnswering.js
+   │     ├─ css
+   │     │  ├─ reset.css
+   │     │  └─ style.css
+   │     ├─ img
+   │     │  ├─ Ellipse 102.png
+   │     │  ├─ Ellipse 103.png
+   │     │  ├─ Ellipse 104.png
+   │     │  ├─ Ellipse 105.png
+   │     │  ├─ Ellipse 106.png
+   │     │  ├─ Ellipse 107.png
+   │     │  ├─ Ellipse 108.png
+   │     │  ├─ Ellipse 109.png
+   │     │  ├─ Ellipse 110.png
+   │     │  ├─ Ellipse 111.png
+   │     │  ├─ Ellipse 112.png
+   │     │  ├─ Ellipse 113.png
+   │     │  ├─ Group 12.png
+   │     │  ├─ icHeaderBlack.png
+   │     │  ├─ icHeartWhite.png
+   │     │  ├─ icon
+   │     │  │  ├─ close.png
+   │     │  │  ├─ CopyLink.png
+   │     │  │  ├─ gram.png
+   │     │  │  ├─ icBin.png
+   │     │  │  ├─ icCacao.png
+   │     │  │  ├─ icChat.png
+   │     │  │  ├─ icGoggle.png
+   │     │  │  ├─ icGood.png
+   │     │  │  ├─ icGoodRed.png
+   │     │  │  ├─ icMore.png
+   │     │  │  ├─ icShare.png
+   │     │  │  ├─ instagram.png
+   │     │  │  ├─ instaLogo.jpeg
+   │     │  │  ├─ left-chevron.png
+   │     │  │  └─ right-chevron.png
+   │     │  └─ Spinner.gif
+   │     ├─ index.css
+   │     ├─ index.js
+   │     ├─ logo.svg
+   │     ├─ pages
+   │     │  ├─ bookMark.js
+   │     │  ├─ Comment.js
+   │     │  ├─ Intro.js
+   │     │  ├─ Login.js
+   │     │  ├─ Main.js
+   │     │  ├─ Main2.js
+   │     │  ├─ Policy.js
+   │     │  └─ Setting.js
+   │     ├─ reportWebVitals.js
+   │     └─ setupTests.js
+   └─ README.md
 
 ```
 -->
