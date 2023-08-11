@@ -1,7 +1,7 @@
 # mumul_frontend
 익명 질문 사이트(프론트)
 
-|Operation Duration|2023.07.28~2023.08.01|
+|Operation Duration|2023.06.28~2023.08.01|
 |---|---|
 
 # 📎 link
