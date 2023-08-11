@@ -12,9 +12,9 @@
 
 > **개발 버전** : [https://mumul.space](https://mumul.space) <br>
 
-## 프론트엔드 리포지토리 주소
+## 백엔드 리포지토리 주소
 
-> **FrontEnd Repository** : [https://github.com/suucong/mumul_frontend](https://github.com/suucong/mumul_frontend) <br>
+> **FrontEnd Repository** : [https://github.com/suucong/ama_backend](https://github.com/suucong/ama_backend) <br>
 ## 웹개발팀 소개
 
 |      최은영       |          노수진                                                                                                                           
@@ -36,36 +36,38 @@ MUMUL은 **'사람과 사람을 잇다'** 라는 핵심 가치 아래 개발되�
 ### Requirements
 For building and running the application you need:
 
-- Java 17
-- SpringBoot 3.0.5
-- Gradle 8.0
+- npm 6.14.10
+- Node 14.15.4
 
 ### Installation
 ``` bash
-$ git clone https://github.com/suucong/ama_backend.git
+$ git clone https://github.com/suucong/mumul_frontend.git
 ```
-
-
+#### Frontend
+```
+$ nvm use v.1.1.10
+$ npm install 
+$ npm run dev
+```
 
 ---
 
 ## Stacks 🐈
 
 ### Environment
-![intellijidea](https://img.shields.io/badge/intellij-000000?style=for-the-badge&logo=intellijidea&logoColor=white")
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white)
 ![Github](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)             
 
 ### Config
-![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)      
+![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white) 
 
 ### Development
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![SpringBoot](https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white)
-![SpringSecurity](https://img.shields.io/badge/SpringSecurity-6DB33F?style=for-the-badge&logo=SpringSecurity&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
-![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
-![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=Bootstrap&logoColor=white)
+![Material UI](https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=MUI&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white)
 
 
 ### Communication
