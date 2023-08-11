@@ -14,14 +14,14 @@
 
 ## 백엔드 리포지토리 주소
 
-> **FrontEnd Repository** : [https://github.com/suucong/ama_backend](https://github.com/suucong/ama_backend) <br>
+> **BackEnd Repository** : [https://github.com/suucong/ama_backend](https://github.com/suucong/ama_backend) <br>
 ## 웹개발팀 소개
 
 |      최은영       |          노수진                                                                                                                           
 | :------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------: | 
 |   <img width="160px" src="https://avatars.githubusercontent.com/u/76518850?v=4" />    |                      <img width="160px" src="https://avatars.githubusercontent.com/u/109707230?v=4" />    |                  
 |   [@silver0-stack](https://github.com/silver0-stack)   |    [@suucong](https://github.com/suucong)  | 
-| 서울여자대학교 소프트웨어학과 4학년 | 서울여자대학교 소프트웨어학과 3학년 | 
+| 서울여자대학교 소프트웨어융합학과 4학년 | 서울여자대학교 소프트웨어융합학과 3학년 | 
 
 ## 프로젝트 소개
 
@@ -36,8 +36,8 @@ MUMUL은 **'사람과 사람을 잇다'** 라는 핵심 가치 아래 개발되�
 ### Requirements
 For building and running the application you need:
 
-- npm 6.14.10
-- Node 14.15.4
+- ```npm 6.14.10```
+- ```Node 14.15.4```
 
 ### Installation
 ``` bash
